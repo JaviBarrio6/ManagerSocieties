@@ -1,13 +1,13 @@
-# Manager Societies V0.0.1.1
+# Manager Societies V0.0.1.2
 ## Tabla de Contenido:
-- [Inicio](#inicio-🚀)
-- [Entidades](#entidades-📋)
-    + [Tipos de Usuario](#tipos-de-usuarios-👨‍💼👩‍💼)
+- [Inicio](#inicio)
+- [Entidades](#entidades)
+    + [Tipos de Usuario](#tipos-de-usuarios)
     + [Entidades Secundarias](#entidadades-secundarias)
-- [Instalación](#instalación-🔧)
-- [Testing](#testing-⚙️)
-- [Herramientas](#herramientas-utilizadas-🛠️)
-- [Autores](#autores-✒️)
+- [Instalación](#instalación)
+- [Testing](#testing)
+- [Herramientas](#herramientas-utilizadas)
+- [Autores](#autores)
 
 El objetivo del proyecto es el diseño y desarrollo de una WEB APP que ofrezca un ERP completo para autónomos y PYMES.
 
