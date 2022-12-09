@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Inicio - Manager Societies</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/img/favicon.png" rel="icon">
+  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/css/style.css" rel="stylesheet">
+
+    <!-- Calendar CSS -->
+  <link href="/css/calendar.css" rel="stylesheet">
+  <script src="/js/calendar.js" defer></script>
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.4.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <!-- == Logo == -->
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index" class="logo d-flex align-items-center">
+        <img src="/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Manager Societies</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+    <!-- == End Logo == -->
+
+    <!-- == Icons Navigation == -->
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <!-- == Profile Nav == -->
+        <li class="nav-item dropdown pe-3">
+          <!-- == Profile Image Icon == -->
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">J. Barrio</span>
+          </a>
+          <!-- End Profile Image Icon -->
+
+          <!-- == Profile Dropdown Items == -->
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Javier Barrio</h6>
+              <span>Administrador</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile">
+                <i class="bi bi-person"></i>
+                <span>Mi Perfil</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-profile">
+                <i class="bi bi-gear"></i>
+                <span>Ajustes de Cuenta</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Salir</span>
+              </a>
+            </li>
+
+          </ul>
+          <!-- == End Profile Dropdown Items == -->
+        </li>
+        <!-- == End Profile Nav == -->
+
+      </ul>
+    </nav>
+    <!-- == End Icons Navigation == -->
+
+  </header>
+  <!-- == End Header == -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="index">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#agenda-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Agenda</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="agenda-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="agenda-clientes">
+              <i class="bi bi-circle"></i><span>Clientes</span>
+            </a>
+          </li>
+          <li>
+            <a href="agenda-empleados">
+              <i class="bi bi-circle"></i><span>Empleados</span>
+            </a>
+          </li>
+          <li>
+            <a href="agenda-empresassubcontratadas">
+              <i class="bi bi-circle"></i><span>Empresas Subcontratadas</span>
+            </a>
+          </li>
+          <li>
+            <a href="agenda-proveedores">
+              <i class="bi bi-circle"></i><span>Proveedores</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Agenda Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="calendario">
+          <i class="bi bi-calendar-date"></i><span>Calendario</span>
+        </a>
+      </li><!-- End Calendario Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#facturacion-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-receipt"></i><span>Facturación</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="facturacion-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="facturacion-albaranes">
+              <i class="bi bi-circle"></i><span>Albaranes</span>
+            </a>
+            <a href="facturacion-facturas">
+              <i class="bi bi-circle"></i><span>Facturas</span>
+            </a>
+            <a href="facturacion-gastos">
+              <i class="bi bi-circle"></i><span>Gastos Externos</span>
+            </a>
+            <a href="facturacion-nominas">
+              <i class="bi bi-circle"></i><span>Nóminas</span>
+            </a>
+            <a href="facturacion-presupuestos">
+              <i class="bi bi-circle"></i><span>Presupuestos</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Facturación Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="finanzas">
+          <i class="bi bi-cash-coin"></i>
+          <span>Finanzas</span>
+
+        </a>
+      </li><!-- End Finanzas Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#inventario-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-archive"></i><span>Inventario</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="inventario-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="inventario-herramientas">
+              <i class="bi bi-circle"></i><span>Herramientas</span>
+            </a>
+          </li>
+          <a href="inventario-maquinas">
+            <i class="bi bi-circle"></i><span>Máquinas</span>
+          </a>
+          <li>
+            <a href="inventario-materiales">
+              <i class="bi bi-circle"></i><span>Materiales</span>
+            </a>
+          </li>
+          <li>
+            <a href="inventario-productos">
+              <i class="bi bi-circle"></i><span>Productos</span>
+            </a>
+          </li>
+          <li>
+            <a href="inventario-vehiculos">
+              <i class="bi bi-circle"></i><span>Vehículos</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Inventario Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="tareas">
+          <i class="bi bi-hourglass-split"></i><span>Tareas</span>
+        </a>
+      </li>
+      <!-- End Tareas Nav -->
+
+      <li class="nav-heading">Administrador</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-register">
+          <i class="bi bi-card-list"></i>
+          <span>Crear Usuario</span>
+        </a>
+      </li><!-- End Register Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index">Inicio</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtrar</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Ventas <span>| Hoy</span></h5>
+
+                  <div class="d-flex align-items-center justify-content-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-cart"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 class="text-center">145</h6>
+                      <span class="text-success small pt-1 fw-bold">+ 12% <i class="bi bi-arrow-right"></i> 18 </span>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtrar</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Ingresos <span>| Este Mes</span></h5>
+
+                  <div class="d-flex align-items-center justify-content-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-currency-euro"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>3.264€</h6>
+                      <span class="text-success small pt-1 fw-bold">+ 8% <i class="bi bi-arrow-right"></i> 261 € </span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-4 col-xl-12">
+
+              <div class="card info-card customers-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtrar</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Clientes <span>| Este Año</span></h5>
+
+                  <div class="d-flex align-items-center justify-content-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>1244</h6>
+                      <span class="text-danger small pt-1 fw-bold">- 12% <i class="bi bi-arrow-right"></i> 30 </span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+
+            <!-- Reports -->
+            <div class="col-12">
+              <div class="card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtrar</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Informes <span>/ Hoy</span></h5>
+
+                  <!-- Line Chart -->
+                  <div id="reportsChart"></div>
+
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                      new ApexCharts(document.querySelector("#reportsChart"), {
+                        series: [{
+                          name: 'Ventas',
+                          data: [0, 31, 40, 28, 51, 42, 82, 56, 25, 10, 0, 0],
+                        }, {
+                          name: 'Ingresos',
+                          data: [0, 11, 32, 45, 32, 34, 52, 41, 10, 25, 0, 0]
+                        }, {
+                          name: 'Clientes',
+                          data: [0, 15, 11, 32, 18, 9, 24, 11, 0, 2, 0, 0]
+                        }],
+                        chart: {
+                          height: 350,
+                          type: 'area',
+                          toolbar: {
+                            show: false
+                          },
+                        },
+                        markers: {
+                          size: 4
+                        },
+                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                        fill: {
+                          type: "gradient",
+                          gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.4,
+                            stops: [0, 90, 100]
+                          }
+                        },
+                        dataLabels: {
+                          enabled: false
+                        },
+                        stroke: {
+                          curve: 'smooth',
+                          width: 2
+                        },
+                        xaxis: {
+                          type: 'datetime',
+                          categories: ["2022-11-23T08:00:00.000Z", "2022-11-23T09:30:00.000Z", "2022-11-23T11:00:00.000Z", "2022-11-23T12:30:00.000Z", "2022-11-23T14:00:00.000Z",
+                           "2022-11-23T15:30:00.000Z", "2022-11-23T16:00:00.000Z", "2022-11-23T17:30:00.000Z", "2022-11-23T19:00:00.000Z", "2022-11-23T20:30:00.000Z", "2022-11-23T21:00:00.000Z"]
+                        },
+                        tooltip: {
+                          x: {
+                            format: 'dd/MM/yy HH:mm'
+                          },
+                        }
+                      }).render();
+                    });
+                  </script>
+                  <!-- End Line Chart -->
+
+                </div>
+
+              </div>
+            </div><!-- End Reports -->
+
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtrar</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Ventas Recientes <span>| Hoy</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row"><a href="#">#30</a></th>
+                        <td>Juan José Rodríguez</td>
+                        <td><a href="#" class="text-primary">D-1 Decapante Ácido</a></td>
+                        <td>23 €</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#">#37</a></th>
+                        <td>Emiliano Pérez</td>
+                        <td><a href="#" class="text-primary">S-1 Restaurador Abrillantador</a></td>
+                        <td>31 €</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#">#40</a></th>
+                        <td>Mireia Gaya</td>
+                        <td><a href="#" class="text-primary">SUPERLUX A 330 S</a></td>
+                        <td>247 €</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#">#45</a></th>
+                        <td>Manuel Pujol</td>
+                        <td><a href="#" class="text-primar">SUPERLUX A 500 S</a></td>
+                        <td>437 €</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#">#62</a></th>
+                        <td>Alejandra Martín</td>
+                        <td><a href="#" class="text-primary">Cepillo 330 Acero</a></td>
+                        <td>12 €</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
+
+            <!-- Top Selling -->
+            <div class="col-12">
+              <div class="card top-selling overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filtrar</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Más Vendidos <span>| Hoy</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col" data-sortable = "false">Foto</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Precio|Unid.</th>
+                        <th scope="col">Unidades</th>
+                        <th scope="col">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row"><a href="#"><img src="/img/X3.png" alt=""></a></th>
+                        <td><a href="#" class="text-primary fw-bold">X-3 Cristalizador Rosa</a></td>
+                        <td>31 €</td>
+                        <td class="fw-bold">72</td>
+                        <td>2.232 €</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#"><img src="/img/D2.png" alt=""></a></th>
+                        <td><a href="#" class="text-primary fw-bold">D-2 Decapante Alcalino</a></td>
+                        <td>28 €</td>
+                        <td class="fw-bold">40</td>
+                        <td>1.120 €</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#"><img src="/img/A4.png" alt=""></a></th>
+                        <td><a href="#" class="text-primary fw-bold">A-4 Abrillantador Suelos Pizarra</a></td>
+                        <td>59 €</td>
+                        <td class="fw-bold">74</td>
+                        <td>4.366 €</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#"><img src="/img/A330.jpg" alt=""></a></th>
+                        <td><a href="#" class="text-primary fw-bold">SUPERLUX A 330 S</a></td>
+                        <td>247 €</td>
+                        <td class="fw-bold">10</td>
+                        <td>2.247 €</td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#"><img src="/img/A28.jpg" alt=""></a></th>
+                        <td><a href="#" class="text-primary fw-bold">SUPERLUX A 28 S</a></td>
+                        <td>130 €</td>
+                        <td class="fw-bold">5</td>
+                        <td>650 €</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Top Selling -->
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filtrar</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Hoy</a></li>
+                <li><a class="dropdown-item" href="#">Este Mes</a></li>
+                <li><a class="dropdown-item" href="#">Este Año</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body" style="min-height: 270px">
+              <h5 class="card-title">Actividad Reciente <span>| Hoy</span></h5>
+
+              <div class="activity">
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">32 min</div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <div class="activity-content">
+                    <a href="#" class="fw-bold text-dark">[Facturación]</a> ¡Nuevo ingreso registrado!
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">56 min</div>
+                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+                  <div class="activity-content">
+                    <a href="#" class="fw-bold text-dark">[Facturación]</a> ¡Nuevo gasto registrado!
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">2 hrs</div>
+                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+                  <div class="activity-content">
+                    <a href="#" class="fw-bold text-dark">[Agenda]</a> ¡Nuevo cliente registrado!
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">1 day</div>
+                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+                  <div class="activity-content">
+                    <a href="#" class="fw-bold text-dark">[Inventario]</a> ¡El inventario se ha modificado!
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">2 days</div>
+                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+                  <div class="activity-content">
+                    <a href="#" class="fw-bold text-dark">[Trabajos]</a> ¡Nuevo trabajo registrado!
+                  </div>
+                </div><!-- End activity item-->
+              </div>
+
+            </div>
+          </div><!-- End Recent Activity -->
+
+          <!-- Budget Report -->
+          <div class="card">
+            <div class="card-body pb-0">
+              <a href="calendario"><h5 class="card-title" style="padding-bottom: 0px;">Calendario</h5></a>
+
+              <div class="cal">
+                <div class="wrapper">
+                  <header>
+                    <p class="current-date"></p>
+                    <div class="icons">
+                      <span id = "today" class="bi bi-calendar-day"></span>
+                      <span id = "prev" class="bi bi-arrow-left-circle"></span>
+                      <span id = "next" class="bi bi-arrow-right-circle"></span>
+                    </div>
+                  </header>
+  
+                  <div class="calendar">
+                    <ul class="weeks">
+                      <li>Lun</li>
+                      <li>Mar</li>
+                      <li>Mie</li>
+                      <li>Jue</li>
+                      <li>Vie</li>
+                      <li>Sab</li>
+                      <li>Dom</li>
+                    </ul>
+                    <ul class="days"></ul>
+                  </div>
+                </div>
+              </div>
+          
+
+            <script src = "/js/calendar.js"></script>
+
+            </div>
+          </div>
+          <!-- End Budget Report -->
+          <!-- Trabajos -->
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filtrar</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Hoy</a></li>
+                <li><a class="dropdown-item" href="#">Este Mes</a></li>
+                <li><a class="dropdown-item" href="#">Este Año</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">Trabajos <span>| Hoy</span></h5>
+
+              <div class="activity">
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">32 min</div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <div class="activity-content">
+                    [Trabajo] Realizar <a href="#" class="fw-bold text-dark"> trabajo </a> calle real
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">56 min</div>
+                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+                  <div class="activity-content">
+                    Voluptatem blanditiis blanditiis eveniet
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">2 hrs</div>
+                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+                  <div class="activity-content">
+                    Voluptates corrupti molestias voluptatem
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">1 day</div>
+                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+                  <div class="activity-content">
+                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">2 days</div>
+                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+                  <div class="activity-content">
+                    Est sit eum reiciendis exercitationem
+                  </div>
+                </div><!-- End activity item-->
+
+                <div class="activity-item d-flex">
+                  <div class="activite-label">4 weeks</div>
+                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                  <div class="activity-content">
+                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
+                  </div>
+                </div><!-- End activity item-->
+
+              </div>
+
+            </div>
+          </div><!-- End Recent Activity -->
+        </div><!-- End Right side columns -->
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Javier Barrio</span></strong>. Todos los derechos reservados
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      Diseñado por <a href="https://github.com/JaviBarrio6">Javier Barrio</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/chart.js/chart.min.js"></script>
+  <script src="/vendor/echarts/echarts.min.js"></script>
+  <script src="/vendor/quill/quill.min.js"></script>
+  <script src="/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/vendor/tinymce/tinymce.min.js"></script>
+  <script src="/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/js/main.js"></script>
+
+</body>
+
+</html>
