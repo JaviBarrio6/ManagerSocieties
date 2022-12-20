@@ -1,15 +1,15 @@
 package com.Application;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.Agenda.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
-@RestController
+@Controller
 public class ApplicationController {
+
+    Clientes clientes = new Clientes();
 
     ModelAndView model = new ModelAndView();
     @RequestMapping("/")
@@ -21,7 +21,39 @@ public class ApplicationController {
     @RequestMapping("/agenda-clientes")
     public ModelAndView agendaClientes() {
         model.setViewName("agenda-clientes.html");
+        model.addObject("clientes", clientes.clientes);
+        model.addObject("numClientes", clientes.getClientesEmpresas()[0]);
+        model.addObject("numEmpresas", clientes.getClientesEmpresas()[1]);
         return model;
+    }
+
+    @PostMapping("/anyadirCliente")
+    public ModelAndView anayadirCliente(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
+        Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium);
+        clientes.clientes.add(cliente);
+
+        return agendaClientes();
+    }
+
+    @PostMapping("/borrarCliente")
+    public ModelAndView borrarCliente(String ref) {
+        clientes.clientes.remove(clientes.findByRef(ref));
+
+        return agendaClientes();
+    }
+
+    @PostMapping("/dameCliente")
+    public ModelAndView dameCliente(String ref) {
+        model.addObject("cliente", clientes.findByRef(ref));
+
+        return agendaClientes();
+    }
+
+    @PostMapping("/editarCliente")
+    public ModelAndView editarCliente(String ref, String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
+        clientes.editarCliente(ref, nombre, apellidos, id, telefono, correo, dir, premium);
+
+        return agendaClientes();
     }
 
     @RequestMapping("/agenda-empleados")

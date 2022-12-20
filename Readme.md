@@ -1,4 +1,4 @@
-# Manager Societies V2.1.0
+# Manager Societies V2.2.0
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Entidades](#entidades)

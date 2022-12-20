@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th = "http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -269,7 +269,7 @@
                       <i class="bi bi-person"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>5</h6>
+                      <h6 th:text="${numClientes}"></h6>
                     </div>
                   </div>
                 </div>
@@ -286,7 +286,7 @@
                       <i class="bi bi-house"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1</h6>
+                      <h6 th:text="${numEmpresas}"></h6>
                     </div>
                   </div>
                 </div>
@@ -314,55 +314,128 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirCliente}" method="post">
                         <div class="row mb-3">
                           <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
                           <div class="col-sm-10">
-                            <input id="nombre" type="text" class="form-control">
+                            <input id="nombre" name="nombre" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
                           <div class="col-sm-10">
-                            <input id="apellidos" type="text" class="form-control">
+                            <input id="apellidos" name="apellidos" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="dni" class="col-sm-2 col-form-label">DNI | CIF</label>
+                          <label for="id" class="col-sm-2 col-form-label">DNI | CIF</label>
                           <div class="col-sm-10">
-                            <input id="dni" type="text" class="form-control">
+                            <input id="id" name="id" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
                           <div class="col-sm-10">
-                            <input id="telefono" type="number" class="form-control">
+                            <input id="telefono" name="telefono" type="number" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="email" class="col-sm-2 col-form-label">Correo</label>
+                          <label for="correo" class="col-sm-2 col-form-label">Correo</label>
                           <div class="col-sm-10">
-                            <input id="email" type="text" class="form-control">
+                            <input id="correo" name="correo" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
+                          <label for="dir" class="col-sm-2 col-form-label">Dirección</label>
                           <div class="col-sm-10">
-                            <input id="direccion" type="text" class="form-control">
+                            <input id="dir" name="dir" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <legend class="col-form-label col-sm-2 pt-0">Premium</legend>
                           <div class="col-sm-10">
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="premium">
+                              <input class="form-check-input" name="premium" type="checkbox" id="premium">
                               <label class="form-check-label" for="premium"></label>
                             </div>
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                          <button type="submit" class="btn btn-primary" onclick="">Crear Cliente</button>
+                          <button type="submit" value="submit" class="btn btn-primary">Crear Cliente</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="cliente: ${clientes}" class="modal fade" th:id="editarCliente+${cliente.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarCliente}"method="post">
+                        <div class="row mb-3">
+                          <label for="ref" class="col-sm-2 col-form-label">Ref</label>
+                          <div class="col-sm-10">
+                            <input name="ref" id = "ref" th:value="${cliente.ref}" type="text" class="form-control" required readonly>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                          <div class="col-sm-10">
+                            <input name="nombre" th:value="${cliente.nombre}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
+                          <div class="col-sm-10">
+                            <input name="apellidos" th:value="${cliente.apellidos}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="id" class="col-sm-2 col-form-label">DNI | CIF</label>
+                          <div class="col-sm-10">
+                            <input name="id" th:value="${cliente.id}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
+                          <div class="col-sm-10">
+                            <input name="telefono" th:value="${cliente.telefono}" type="number" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="correo" class="col-sm-2 col-form-label">Correo</label>
+                          <div class="col-sm-10">
+                            <input name="correo" th:value="${cliente.email}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="dir" class="col-sm-2 col-form-label">Dirección</label>
+                          <div class="col-sm-10">
+                            <input name="dir" th:value="${cliente.direccion}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <legend class="col-form-label col-sm-2 pt-0">Premium</legend>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input th:if="${cliente.premium}" class="form-check-input" name="premium" type="checkbox" checked>
+                              <input th:unless="${cliente.premium}" class="form-check-input" name="premium" type="checkbox">
+                              <label class="form-check-label" for="premium"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" value="submit" class="btn btn-primary">Editar Cliente</button>
                         </div>
                       </form>
                     </div>
@@ -445,89 +518,24 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr th:each = "cliente: ${clientes}">
                     <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>1</td>
-                    <td>Juan José</td>
-                    <td>Rodríguez</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>juan@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-star-fill" href="#"></a></td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>2</td>
-                    <td>Emiliano</td>
-                    <td>Pérez</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>emiliano@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-star" href="#"></a></td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>3</td>
-                    <td>Mireia</td>
-                    <td>Gayá</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>mireia@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-star" href="#"></a></td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>4</td>
-                    <td>Manuel</td>
-                    <td>Pujol</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>manuel@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-star-fill" href="#"></a></td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>5</td>
-                    <td>Alejandra</td>
-                    <td>Martín</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>jandra@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-star" href="#"></a></td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>6</td>
-                    <td>Suelos</td>
-                    <td>S.L.</td>
-                    <td>B7584256H</td>
-                    <td>674851283</td>
-                    <td>suelossl@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-star" href="#"></a></td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
+                    <td th:text = "${cliente.ref}"></td>
+                    <td th:text = "${cliente.nombre}"></td>
+                    <td th:text = "${cliente.apellidos}"></td>
+                    <td th:text = "${cliente.id}"></td>
+                    <td th:text = "${cliente.telefono}"></td>
+                    <td th:text = "${cliente.email}"></td>
+                    <td th:text = "${cliente.direccion}"></td>
+                    <td th:if = "${cliente.premium}"><a class="dropdown-item bi-star-fill" href="#"></a></td>
+                    <td th:unless = "${cliente.premium}"><a class="dropdown-item bi-star" href="#"></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarCliente+${cliente.ref}"><i class="bi bi-book"></i></a></td>
+                    <td>
+                      <form action="#" th:action="@{/borrarCliente}" method="post">
+                        <button class="dropdown-item bi-person-x" name = "ref" th:value="${cliente.ref}" type="submit"></button>
+                      </form>
+                    </td>
                   </tr>
                 </tbody>
               </table>
