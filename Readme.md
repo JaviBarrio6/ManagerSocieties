@@ -10,6 +10,8 @@
     + [V2.1.0](#V210)
     + [V2.2.0](#V220)
     + [V2.3.0](#V230)
+    + [V2.3.1](#V231)
+    + [V2.4.0](#V240)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -74,6 +76,11 @@ versión anterior. Y utilizada para el resto de la agenda, Clientes, Empleados, 
 ### V2.3.1
 
 * Revisión del documento README para la corrección de errores.
+
+### V2.4.0
+
+* Se ha realizado un refactor de nuestro controlador principal, para ello, hemos creado un controlador específico para 
+la agenda, de esta forma, nuestro controlador posee una mayor encapsulación y limpieza del código.
 
 ## Instalación:
 

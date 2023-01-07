@@ -379,11 +379,6 @@
                             <input name="id" th:value="${empresa.id}" type="text" class="form-control" required minlength="9" maxlength="9"
                                    pattern="[A-Z]{1}[\d]{8}" title="Utilice una letra seguida de 8 números">
                           </div>
-                          <div th:else = "${esCIFCorrecto}" class="invalid-feedback">
-                            <span style="vertical-align: inherit;">
-                              <span style="vertical-align: inherit;">Por favor, elija un nombre de usuario.</span>
-                            </span>
-                          </div>
                         </div>
                         <div class="row mb-3">
                           <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>

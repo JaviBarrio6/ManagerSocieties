@@ -11,7 +11,7 @@ public class CustomErrorController implements ErrorController {
     private static final String PATH = "/error";
 
     @RequestMapping (value = PATH)
-    public ModelAndView error () {
+    public ModelAndView errorModel () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("pages-error-404.html");
         return modelAndView;

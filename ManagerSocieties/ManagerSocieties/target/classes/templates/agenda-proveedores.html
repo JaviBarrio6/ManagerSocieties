@@ -370,32 +370,32 @@
                         <div class="row mb-3">
                           <label for="tipo" class="col-sm-2 col-form-label">Tipo</label>
                           <div class="col-sm-10">
-                            <input name="tipo"  th:value="${proveedor.tipo}" type="text" class="form-control" required>
+                            <input th:value="${proveedor.tipo}" name="tipo"  type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="id" class="col-sm-2 col-form-label">CIF</label>
                           <div class="col-sm-10">
-                            <input name="id" th:value="${proveedor.id}" type="text" class="form-control" required minlength="9" maxlength="9"
+                            <input th:value="${proveedor.id}" name="id" type="text" class="form-control" required minlength="9" maxlength="9"
                                    pattern="[\d]{8}[A-Z]{1}|[A-Z]{1}[\d]{8}" title="Utilice una letra seguida de 8 números o viceversa">
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
                           <div class="col-sm-10">
-                            <input name="telefono" th:value="${proveedor.telefono}" type="text" class="form-control" required minlength="9" maxlength="9">
+                            <input th:value="${proveedor.telefono}" name="telefono" type="text" class="form-control" required minlength="9" maxlength="9">
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="email" class="col-sm-2 col-form-label">Correo</label>
                           <div class="col-sm-10">
-                            <input name = "email" th:value="${proveedor.email}" type="text" class="form-control" required>
+                            <input th:value="${proveedor.email}" name = "email" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
                           <div class="col-sm-10">
-                            <input name = "direccion" th:value="${proveedor.direccion}" type="text" class="form-control" required>
+                            <input th:value="${proveedor.direccion}" name = "direccion" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="modal-footer">
