@@ -2,14 +2,14 @@
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Control de Versiones](#control-de-versiones)
-    + [V0.0.0](#V0.0.0)
-    + [V0.1.3](#V0.1.3)
-    + [V1.0.0](#V1.0.0)
-    + [V1.0.1](#V1.0.1)
-    + [V2.0.0](#V2.0.0)
-    + [V2.1.0](#V2.1.0)
-    + [V2.2.0](#V2.2.0)
-    + [V2.3.0](#V2.3.0)
+    + [V0.0.0](#V000)
+    + [V0.1.3](#V013)
+    + [V1.0.0](#V100)
+    + [V1.0.1](#V101)
+    + [V2.0.0](#V200)
+    + [V2.1.0](#V210)
+    + [V2.2.0](#V220)
+    + [V2.3.0](#V230)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -70,6 +70,10 @@ facturas de los clientes quedan limitadas hasta la creación del apartado de fac
 
 * Se genera el código Java que permite la funcionalidad de toda la agenda, además, se realiza un refactor para mejorar el código realizado en la
 versión anterior. Y utilizada para el resto de la agenda, Clientes, Empleados, Empresas y Proveedores.
+
+### V2.3.1
+
+* Revisión del documento README para la corrección de errores.
 
 ## Instalación:
 
