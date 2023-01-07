@@ -269,7 +269,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>3</h6>
+                      <h6 th:text="${numEmpleados}"></h6>
                     </div>
                   </div>
                 </div>
@@ -284,10 +284,10 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-person-plus" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearEmpleado"><i class="bi bi-person-plus" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="crearEmpleado" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -296,70 +296,159 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirEmpleado}" method="post">
                         <div class="row mb-3">
                           <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
                           <div class="col-sm-10">
-                            <input id="nombre" type="text" class="form-control">
+                            <input id="nombre" name = "nombre" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
                           <div class="col-sm-10">
-                            <input id="apellidos" type="text" class="form-control">
+                            <input id="apellidos" name = "apellidos" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="usuario" class="col-sm-2 col-form-label">Usuario</label>
                           <div class="col-sm-10">
-                            <input id="usuario" type="text" class="form-control">
+                            <input id="usuario" name = "usuario" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="dni" class="col-sm-2 col-form-label">DNI</label>
+                          <label for="id" class="col-sm-2 col-form-label">DNI</label>
                           <div class="col-sm-10">
-                            <input id="dni" type="text" class="form-control">
+                            <input id="id" name = "id" type="text" class="form-control" required minlength="9" maxlength="9"
+                                   pattern="[\d]{8}[A-Z]{1}" title="Utilice una letra seguida de 8 números o viceversa">
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
                           <div class="col-sm-10">
-                            <input id="telefono" type="number" class="form-control">
+                            <input id="telefono" name = "telefono" type="text" class="form-control" required minlength="9" maxlength="9">
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="email" class="col-sm-2 col-form-label">Correo</label>
                           <div class="col-sm-10">
-                            <input id="email" type="text" class="form-control">
+                            <input id="email" name = "email" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
                           <div class="col-sm-10">
-                            <input id="direccion" type="text" class="form-control">
+                            <input id="direccion" name = "direccion" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="antiguedad" class="col-sm-2 col-form-label">Antigüedad</label>
                           <div class="col-sm-10">
-                            <input id="antiguedad" type="number" class="form-control">
+                            <input id="antiguedad" name = "antiguedad" type="number" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="puesto" class="col-sm-2 col-form-label">Puesto</label>
                           <div class="col-sm-10">
-                            <input id="puesto" type="text" class="form-control">
+                            <input id="puesto" name = "puesto" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="contrato" class="col-sm-2 col-form-label">Contrato</label>
                           <div class="col-sm-10">
-                            <input id="contrato" type="file" class="form-control">
+                            <input id="contrato" name = "contrato" type="file" class="form-control">
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                          <button type="submit" class="btn btn-primary" onclick="">Crear Empleado</button>
+                          <button type="submit" value ="submit" class="btn btn-primary" onclick="">Crear Empleado</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="empleado: ${empleados}" class="modal fade" th:id="editarEmpleado+${empleado.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Empleado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarEmpleado}" method="post">
+                        <div class="row mb-3">
+                          <label for="ref" class="col-sm-2 col-form-label">Ref</label>
+                          <div class="col-sm-10">
+                            <input id = "ref" name = "ref" th:value="${empleado.ref}" type="text" class="form-control" required readonly>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                          <div class="col-sm-10">
+                            <input name = "nombre" th:value="${empleado.nombre}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
+                          <div class="col-sm-10">
+                            <input name = "apellidos" th:value="${empleado.apellidos}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="usuario" class="col-sm-2 col-form-label">Usuario</label>
+                          <div class="col-sm-10">
+                            <input name = "usuario" th:value="${empleado.usuario}"type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="id" class="col-sm-2 col-form-label">DNI</label>
+                          <div class="col-sm-10">
+                            <input th:value="${empleado.id}" name = "id" type="text" class="form-control" required minlength="9" maxlength="9"
+                                   pattern="[\d]{8}[A-Z]{1}" title="Utilice una letra seguida de 8 números o viceversa">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
+                          <div class="col-sm-10">
+                            <input name = "telefono" th:value="${empleado.telefono}" type="text" class="form-control" required minlength="9" maxlength="9">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="email" class="col-sm-2 col-form-label">Correo</label>
+                          <div class="col-sm-10">
+                            <input name = "email" th:value="${empleado.email}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
+                          <div class="col-sm-10">
+                            <input name = "direccion" th:value="${empleado.direccion}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="antiguedad" class="col-sm-2 col-form-label">Antigüedad</label>
+                          <div class="col-sm-10">
+                            <input name = "antiguedad" th:value="${empleado.antiguedad}" type="number" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="puesto" class="col-sm-2 col-form-label">Puesto</label>
+                          <div class="col-sm-10">
+                            <input name = "puesto" th:value="${empleado.puesto}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="contrato" class="col-sm-2 col-form-label">Contrato</label>
+                          <div class="col-sm-10">
+                            <input name = "contrato" type="file" class="form-control">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" value ="submit" class="btn btn-primary" onclick="">Editar Empleado</button>
                         </div>
                       </form>
                     </div>
@@ -427,7 +516,6 @@
               <table class="table table-borderless datatable" style = "font-size: 0.8rem;">
                 <thead>
                   <tr>
-                    <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
                     <th scope="col">Ref</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellidos</th>
@@ -444,53 +532,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>1</td>
-                    <td>Javier</td>
-                    <td>Ramírez</td>
-                    <td>jramirez</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>juan@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td>2</td>
-                    <td>RRHH</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>2</td>
-                    <td>Paco</td>
-                    <td>López</td>
-                    <td>pLopez</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>plopez@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td>0</td>
-                    <td>Repartidor</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>3</td>
-                    <td>Manuela</td>
-                    <td>Gracia</td>
-                    <td>mgracia</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>mgracia@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td>10</td>
-                    <td>CEO</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
+                  <tr th:each = "empleado: ${empleados}">
+                    <td th:text = "${empleado.ref}"></td>
+                    <td th:text = "${empleado.nombre}"></td>
+                    <td th:text = "${empleado.apellidos}"></td>
+                    <td th:text = "${empleado.usuario}"></td>
+                    <td th:text = "${empleado.id}"></td>
+                    <td th:text = "${empleado.telefono}"></td>
+                    <td th:text = "${empleado.email}"></td>
+                    <td th:text = "${empleado.direccion}"></td>
+                    <td th:text = "${empleado.antiguedad}"></td>
+                    <td th:text = "${empleado.puesto}"></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarEmpleado+${empleado.ref}"><i class="bi bi-eraser"></i></a></td>
+                    <td>
+                      <form action="#" th:action="@{/borrarEmpleado}" method="post">
+                        <button class = "dropdown-item bi-person-x" name = "ref" th:value="${empleado.ref}" type = "submit"></button>
+                      </form>
                   </tr>
                 </tbody>
               </table>

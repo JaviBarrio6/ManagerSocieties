@@ -2,7 +2,6 @@ package com.Application;
 
 import com.Agenda.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,6 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ApplicationController {
 
     Clientes clientes = new Clientes();
+    Empleados empleados = new Empleados();
+    Empresas empresas = new Empresas();
+    Proveedores proveedores = new Proveedores();
 
     ModelAndView model = new ModelAndView();
     @RequestMapping("/")
@@ -18,10 +20,14 @@ public class ApplicationController {
         return model;
     }
 
+    // Inicio Agenda
+
+    // Inicio Clientes
+
     @RequestMapping("/agenda-clientes")
     public ModelAndView agendaClientes() {
         model.setViewName("agenda-clientes.html");
-        model.addObject("clientes", clientes.clientes);
+        model.addObject("clientes", clientes.clientes.values());
         model.addObject("numClientes", clientes.getClientesEmpresas()[0]);
         model.addObject("numEmpresas", clientes.getClientesEmpresas()[1]);
         return model;
@@ -30,21 +36,14 @@ public class ApplicationController {
     @PostMapping("/anyadirCliente")
     public ModelAndView anayadirCliente(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
         Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium);
-        clientes.clientes.add(cliente);
+        clientes.clientes.put(cliente.getRef(), cliente);
 
         return agendaClientes();
     }
 
     @PostMapping("/borrarCliente")
     public ModelAndView borrarCliente(String ref) {
-        clientes.clientes.remove(clientes.findByRef(ref));
-
-        return agendaClientes();
-    }
-
-    @PostMapping("/dameCliente")
-    public ModelAndView dameCliente(String ref) {
-        model.addObject("cliente", clientes.findByRef(ref));
+        clientes.clientes.remove(ref);
 
         return agendaClientes();
     }
@@ -56,23 +55,111 @@ public class ApplicationController {
         return agendaClientes();
     }
 
+    // Fin Clientes
+
+    // Inicio Empleados
+
     @RequestMapping("/agenda-empleados")
     public ModelAndView agendaEmpleados() {
         model.setViewName("agenda-empleados.html");
+        model.addObject("empleados", empleados.empleados.values());
+        model.addObject("numEmpleados", empleados.empleados.size());
         return model;
     }
+
+    @PostMapping("/anyadirEmpleado")
+    public ModelAndView anayadirEmpleado(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
+        Empleado empleado = new Empleado(nombre, apellidos, id, telefono, email, direccion, usuario, puesto, Integer.parseInt(antiguedad));
+        empleados.empleados.put(empleado.getRef(), empleado);
+
+        return agendaEmpleados();
+    }
+
+    @PostMapping("/borrarEmpleado")
+    public ModelAndView borrarEmpleado(String ref) {
+        empleados.empleados.remove(ref);
+
+        return agendaEmpleados();
+    }
+
+    @PostMapping("/editarEmpleado")
+    public ModelAndView editarEmpleado(String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
+        empleados.editarEmpleado(ref, nombre, apellidos, id, telefono, email, direccion, usuario, puesto, Integer.parseInt(antiguedad));
+
+        return agendaEmpleados();
+    }
+
+    // Fin Empleados
+
+    // Inicio Empresas Subcontratadas
 
     @RequestMapping("/agenda-empresassubcontratadas")
     public ModelAndView agendaEmpresasSubcontratadas() {
         model.setViewName("agenda-empresassubcontratadas.html");
+        model.addObject("empresas", empresas.empresas.values());
+        model.addObject("numEmpresas", empresas.empresas.values().size());
         return model;
     }
+
+    @PostMapping("/anyadirEmpresa")
+    public ModelAndView anyadirEmpresa(String nombre, String tipo, String id, String telefono, String email, String direccion) {
+        Empresa empresa = new Empresa(nombre, tipo, id, telefono, email, direccion);
+        empresas.empresas.put(empresa.getRef(), empresa);
+
+        return agendaEmpresasSubcontratadas();
+    }
+
+    @PostMapping("/borrarEmpresa")
+    public ModelAndView borrarEmpresa(String ref) {
+        empresas.empresas.remove(ref);
+
+        return agendaEmpresasSubcontratadas();
+    }
+
+    @PostMapping("/editarEmpresa")
+    public ModelAndView editarEmpresa(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
+        empresas.editarEmpresa(ref, nombre, tipo, id, telefono, email, direccion);
+
+        return agendaEmpresasSubcontratadas();
+    }
+
+    // Fin Empresas Subcontratadas
+
+    // Inicio Proveedores
 
     @RequestMapping("/agenda-proveedores")
     public ModelAndView agendaProveedores() {
         model.setViewName("agenda-proveedores.html");
+        model.addObject("proveedores", proveedores.proveedores.values());
+        model.addObject("numProveedores", proveedores.proveedores.values().size());
         return model;
     }
+
+    @PostMapping("/anyadirProveedor")
+    public ModelAndView anyadirProveedor(String nombre, String tipo, String id, String telefono, String email, String direccion) {
+        Proveedor proveedor = new Proveedor(nombre, tipo, id, telefono, email, direccion);
+        proveedores.proveedores.put(proveedor.getRef(), proveedor);
+
+        return agendaProveedores();
+    }
+
+    @PostMapping("/borrarProveedor")
+    public ModelAndView borrarProveedor(String ref) {
+        proveedores.proveedores.remove(ref);
+
+        return agendaProveedores();
+    }
+
+    @PostMapping("/editarProveedor")
+    public ModelAndView editarProveedor(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
+        proveedores.editarProveedor(ref, nombre, tipo, id, telefono, email, direccion);
+
+        return agendaProveedores();
+    }
+
+    // Fin Proveedores
+
+    // Fin Agenda
 
     @RequestMapping("/calendario")
     public ModelAndView calendario() {

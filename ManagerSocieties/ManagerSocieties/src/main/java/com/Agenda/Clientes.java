@@ -2,11 +2,11 @@ package com.Agenda;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 @Component
 public class Clientes {
-    public ArrayList<Cliente> clientes = new ArrayList<>();
+    public LinkedHashMap<String, Cliente> clientes = new LinkedHashMap<>();
 
     Cliente cliente01 = new Cliente("Juan José", "Rodríguez", "53852030Z", "674851283",
             "juan@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", true);
@@ -18,21 +18,21 @@ public class Clientes {
             "manuel@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", true);
     Cliente cliente05 = new Cliente("Alejandra", "Martín", "53852030Z", "674851283",
             "ale@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", false);
-    Cliente cliente06 = new Cliente("Suelos", "S.L.", "B7584256H", "674851283",
+    Cliente cliente06 = new Cliente("Suelos", "S.L.", "B20846838", "674851283",
             "suelossl@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", false);
 
     public Clientes (){
-        this.clientes.add(cliente01);
-        this.clientes.add(cliente02);
-        this.clientes.add(cliente03);
-        this.clientes.add(cliente04);
-        this.clientes.add(cliente05);
-        this.clientes.add(cliente06);
+        this.clientes.put(cliente01.getRef(), cliente01);
+        this.clientes.put(cliente02.getRef(), cliente02);
+        this.clientes.put(cliente03.getRef(), cliente03);
+        this.clientes.put(cliente04.getRef(), cliente04);
+        this.clientes.put(cliente05.getRef(), cliente05);
+        this.clientes.put(cliente06.getRef(), cliente06);
     }
 
     public int[] getClientesEmpresas () {
         int[] empresas = {0, 0};
-        for (Cliente c: this.clientes) {
+        for (Cliente c: this.clientes.values()) {
             if (c.esDni(c.getId())){
                 empresas[0] += 1;
             } else {
@@ -42,23 +42,7 @@ public class Clientes {
         return empresas;
     }
 
-    public Cliente findByRef (String ref) {
-        for (Cliente cliente: this.clientes){
-            if (cliente.getRef().equals(ref)){
-                return cliente;
-            }
-        }
-        return null;
-    }
-
     public void editarCliente (String ref, String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
-        int pos = 0;
-        for (Cliente cliente: this.clientes){
-            if (cliente.getRef().equals(ref)){
-                this.clientes.get(pos).editarCliente(nombre, apellidos, id, telefono, correo, dir, premium);
-            } else {
-                pos += 1;
-            }
-        }
+        this.clientes.put(ref, new Cliente(ref, nombre, apellidos, id, telefono, correo, dir, premium));
     }
 }

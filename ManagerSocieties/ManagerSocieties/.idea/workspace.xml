@@ -5,35 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38014811-25bb-4747-960b-9f5e827b4579" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Clientes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Empleado.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Empleados.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Empresa.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Empresas.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Proveedor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Proveedores.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Clientes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Clientes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application/ApplicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.rtl.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/agenda-clientes.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/agenda-clientes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/agenda-empleados.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/agenda-empleados.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/agenda-empresassubcontratadas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/agenda-empresassubcontratadas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/agenda-proveedores.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/agenda-proveedores.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Cliente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Clientes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Clientes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Persona.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Persona.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/Application/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application/ApplicationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/card.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/messages-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/messages-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/messages-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/news-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/news-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/news-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/news-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/news-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/product-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/product-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/product-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/product-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/product-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/slides-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/slides-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/img/slides-3.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/agenda-clientes.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/agenda-clientes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/agenda-empleados.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/agenda-empleados.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/agenda-empresassubcontratadas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/agenda-empresassubcontratadas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/agenda-proveedores.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/agenda-proveedores.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,6 +78,7 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Javic/Desktop/GitHub/ManagerSocieties/ManagerSocieties/ManagerSocieties&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -93,7 +89,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;2915ffa6bd1348b12d75cf10349c4126&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -148,6 +144,10 @@
       <workItem from="1670603518798" duration="1940000" />
       <workItem from="1670607679642" duration="13508000" />
       <workItem from="1671554351913" duration="12022000" />
+      <workItem from="1671630970206" duration="829000" />
+      <workItem from="1672913449351" duration="2639000" />
+      <workItem from="1672937876234" duration="25536000" />
+      <workItem from="1673115911665" duration="1402000" />
     </task>
     <servers />
   </component>

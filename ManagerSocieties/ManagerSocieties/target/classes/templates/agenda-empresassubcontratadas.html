@@ -118,7 +118,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="index">
           <i class="bi bi-grid"></i>
-          <span>Dashbard</span>
+          <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -269,7 +269,7 @@
                       <i class="bi bi-building"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>6</h6>
+                      <h6 th:text = "${numEmpresas}"></h6>
                     </div>
                   </div>
                 </div>
@@ -284,10 +284,10 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-person-plus" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearEmpresa"><i class="bi bi-person-plus" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="crearEmpresa" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -296,46 +296,116 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirEmpresa}" method="post">
                         <div class="row mb-3">
                           <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
                           <div class="col-sm-10">
-                            <input id="nombre" type="text" class="form-control">
+                            <input id="nombre" name = "nombre" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
+                          <label for="Tipo" class="col-sm-2 col-form-label">Apellidos</label>
                           <div class="col-sm-10">
-                            <input id="apellidos" type="text" class="form-control">
+                            <input id="Tipo" name = "tipo" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="dni" class="col-sm-2 col-form-label">CIF</label>
+                          <label for="id" class="col-sm-2 col-form-label">CIF</label>
                           <div class="col-sm-10">
-                            <input id="dni" type="text" class="form-control">
+                            <input id="id" name = "id" type="text" class="form-control" required minlength="9" maxlength="9"
+                                   pattern="[A-Z]{1}[\d]{8}" title="Utilice una letra seguida de 8 números">
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
                           <div class="col-sm-10">
-                            <input id="telefono" type="number" class="form-control">
+                            <input id="telefono" name = "telefono" type="text" class="form-control" required minlength="9" maxlength="9">
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="email" class="col-sm-2 col-form-label">Correo</label>
                           <div class="col-sm-10">
-                            <input id="email" type="text" class="form-control">
+                            <input id="email" name = "email" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
                           <div class="col-sm-10">
-                            <input id="direccion" type="text" class="form-control">
+                            <input id="direccion" name = "direccion" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
                           <button type="submit" class="btn btn-primary" onclick="">Crear Empresa Subcontratada</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="empresa: ${empresas}" class="modal fade" th:id="editarEmpresa+${empresa.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Empresa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarEmpresa}"method="post">
+                        <div class="row mb-3">
+                          <label for="ref" class="col-sm-2 col-form-label">Ref</label>
+                          <div class="col-sm-10">
+                            <input name="ref" id = "ref" th:value="${empresa.ref}" type="text" class="form-control" required readonly>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                          <div class="col-sm-10">
+                            <input name="nombre" th:value="${empresa.nombre}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="tipo" class="col-sm-2 col-form-label">Tipo</label>
+                          <div class="col-sm-10">
+                            <input name="tipo" th:value="${empresa.apellidos}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="id" class="col-sm-2 col-form-label">CIF</label>
+                          <div class="col-sm-10">
+                            <input name="id" th:value="${empresa.id}" type="text" class="form-control" required minlength="9" maxlength="9"
+                                   pattern="[A-Z]{1}[\d]{8}" title="Utilice una letra seguida de 8 números">
+                          </div>
+                          <div th:else = "${esCIFCorrecto}" class="invalid-feedback">
+                            <span style="vertical-align: inherit;">
+                              <span style="vertical-align: inherit;">Por favor, elija un nombre de usuario.</span>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
+                          <div class="col-sm-10">
+                            <input name="telefono" th:value="${empresa.telefono}" type="text" class="form-control" required minlength="9" maxlength="9">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="email" class="col-sm-2 col-form-label">Correo</label>
+                          <div class="col-sm-10">
+                            <input name="email" th:value="${empresa.email}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
+                          <div class="col-sm-10">
+                            <input name="direccion" th:value="${empresa.direccion}" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" value="submit" class="btn btn-primary">Editar Empresa Subcontratada</button>
                         </div>
                       </form>
                     </div>
@@ -403,10 +473,9 @@
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
                     <th scope="col">Ref</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Apellidos</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">CIF</th>
                     <th scope="col">Teléfono</th>
                     <th scope="col">Correo</th>
@@ -417,83 +486,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>1</td>
-                    <td>Juan José</td>
-                    <td>Rodríguez</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>juan@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>2</td>
-                    <td>Emiliano</td>
-                    <td>Pérez</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>emiliano@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>3</td>
-                    <td>Mireia</td>
-                    <td>Gayá</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>mireia@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>4</td>
-                    <td>Manuel</td>
-                    <td>Pujol</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>manuel@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>5</td>
-                    <td>Alejandra</td>
-                    <td>Martín</td>
-                    <td>53852030Z</td>
-                    <td>674851283</td>
-                    <td>jandra@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>6</td>
-                    <td>Suelos</td>
-                    <td>S.L.</td>
-                    <td>B7584256H</td>
-                    <td>674851283</td>
-                    <td>suelossl@gmail.com</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
+                  <tr th:each = "empresa: ${empresas}">
+                    <td th:text = "${empresa.ref}"></td>
+                    <td th:text = "${empresa.nombre}"></td>
+                    <td th:text = "${empresa.tipo}"></td>
+                    <td th:text = "${empresa.id}"></td>
+                    <td th:text = "${empresa.telefono}"></td>
+                    <td th:text = "${empresa.email}"></td>
+                    <td th:text = "${empresa.direccion}"></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarEmpresa+${empresa.ref}"><i class="bi bi-eraser"></i></a></td>
+                    <td>
+                      <form action="#" th:action="@{/borrarEmpresa}" method="post">
+                        <button class="dropdown-item bi-person-x" name = "ref" th:value="${empresa.ref}" type="submit"></button>
+                      </form>
+                    </td>
                   </tr>
                 </tbody>
               </table>
