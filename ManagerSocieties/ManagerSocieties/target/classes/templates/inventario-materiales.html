@@ -269,7 +269,7 @@
                       <i class="bi bi-box-seam"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>2</h6>
+                      <h6 th:text="${numMateriales}"></h6>
                     </div>
                   </div>
                 </div>
@@ -285,10 +285,10 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearMaterial"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="crearMaterial" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -297,40 +297,97 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirMaterial}" method="post">
                         <div class="row mb-3">
-                          <label for="ref" class="col-sm-2 col-form-label">Ref</label>
+                          <label for="marca" class="col-sm-2 col-form-label">Marca</label>
                           <div class="col-sm-10">
-                            <input id="ref" type="text" class="form-control">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label for="pack" class="col-sm-2 col-form-label">Ud por Pack</label>
-                          <div class="col-sm-10">
-                            <input id="pack" type="number" class="form-control">
+                            <input id="marca" name="marca" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
                           <div class="col-sm-10">
-                            <input id="modelo" type="text" class="form-control">
+                            <input id="modelo" name="modelo" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="precio" class="col-sm-2 col-form-label">Precio</label>
                           <div class="col-sm-10">
-                            <input id="precio" type="text" class="form-control">
+                            <input id="precio" name="precio" type="number" class="form-control" step="0.01" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
                           <div class="col-sm-10">
-                            <input id="cantidad" type="number" class="form-control">
+                            <input id="cantidad" name="cantidad" type="number" class="form-control" required min="1">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="unidades" class="col-sm-2 col-form-label">Ud por Pack</label>
+                          <div class="col-sm-10">
+                            <input id="unidades" name="unidades" type="number" class="form-control" required min="1">
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
                           <button type="submit" class="btn btn-primary" onclick="">Crear Material</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="material: ${materiales}" class="modal fade" th:id="editarMaterial+${material.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarMaterial}" method="post">
+                        <div class="row mb-3">
+                          <label for="ref" class="col-sm-2 col-form-label">Marca</label>
+                          <div class="col-sm-10">
+                            <input th:value="${material.ref}" id = "ref" name="ref" type="text" class="form-control" required readonly>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="marca" class="col-sm-2 col-form-label">Marca</label>
+                          <div class="col-sm-10">
+                            <input th:value="${material.marca}" name="marca" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
+                          <div class="col-sm-10">
+                            <input th:value="${material.modelo}" name="modelo" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="precio" class="col-sm-2 col-form-label">Precio</label>
+                          <div class="col-sm-10">
+                            <input th:value="${material.precio}" name="precio" type="number" class="form-control" step="0.01" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
+                          <div class="col-sm-10">
+                            <input th:value="${material.cantidad}" name="cantidad" type="number" class="form-control" required min="1">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="unidades" class="col-sm-2 col-form-label">Ud por Pack</label>
+                          <div class="col-sm-10">
+                            <input th:value="${material.unidades}" name="unidades" type="number" class="form-control" required min="1">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Editar Material</button>
                         </div>
                       </form>
                     </div>
@@ -398,9 +455,9 @@
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
                     <th scope="col">Ref</th>
                     <th scope="col">Ud por Pack</th>
+                    <th scope="col">Marca</th>
                     <th scope="col">Modelo</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Cantidad</th>
@@ -410,27 +467,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>1</td>
-                    <td>Pack 35</td>
-                    <td>Tornillos madera 16 mm</td>
-                    <td>1,59 €</td>
-                    <td>347</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>2</td>
-                    <td>Pack 8</td>
-                    <td>Tornillo de Métrica de acero de 30 mm</td>
-                    <td>2,89 €</td>
-                    <td>215</td>
-                    <td><a class="dropdown-item bi-book" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
+                  <tr th:each = "material: ${materiales}">
+                    <td th:text = "${material.ref}"></td>
+                    <td th:text = "'Pack de ' + ${material.unidades}"></td>
+                    <td th:text = "${material.marca}"></td>
+                    <td th:text = "${material.modelo}"></td>
+                    <td th:text = "${material.precio} + ' €'"></td>
+                    <td th:text = "${material.cantidad}"></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarMaterial+${material.ref}"><i class="bi bi-eraser"></i></a></td>
+                    <td>
+                      <form action="#" th:action="@{/borrarMaterial}" method="post">
+                        <button class="dropdown-item bi-trash" name = "ref" th:value="${material.ref}" type="submit"></button>
+                      </form>
+                    </td>
                   </tr>
                 </tbody>
               </table>

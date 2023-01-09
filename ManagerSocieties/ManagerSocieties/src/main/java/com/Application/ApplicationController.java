@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ApplicationController {
     ModelAndView model = new ModelAndView();
     AgendaController agendaController = new AgendaController();
+    InventarioController inventarioController = new InventarioController();
     @RequestMapping("/")
     public ModelAndView login() {
         model.setViewName("pages-login.html");
@@ -24,8 +25,8 @@ public class ApplicationController {
     }
 
     @PostMapping("/anyadirCliente")
-    public ModelAndView anayadirClienteModel(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
-        return agendaController.anayadirCliente(nombre, apellidos, id, telefono, correo, dir, premium);
+    public ModelAndView anyadirClienteModel(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
+        return agendaController.anyadirCliente(nombre, apellidos, id, telefono, correo, dir, premium);
     }
 
     @PostMapping("/borrarCliente")
@@ -48,8 +49,8 @@ public class ApplicationController {
     }
 
     @PostMapping("/anyadirEmpleado")
-    public ModelAndView anayadirEmpleadoModel(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
-        return agendaController.anayadirEmpleado(nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, puesto);
+    public ModelAndView anyadirEmpleadoModel(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
+        return agendaController.anyadirEmpleado(nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, puesto);
     }
 
     @PostMapping("/borrarEmpleado")
@@ -162,35 +163,112 @@ public class ApplicationController {
         return model;
     }
 
+    // Inicio Inventario
+
+    // Inicio Herramientas
+
     @RequestMapping("/inventario-herramientas")
-    public ModelAndView inventarioHerramientas() {
-        model.setViewName("inventario-herramientas.html");
-        return model;
+    public ModelAndView inventarioHerramientasModel() {
+        return inventarioController.inventarioHerramientas();
     }
+
+    @RequestMapping("/anyadirHerramienta")
+    public ModelAndView anyadirHerramientaModel(String marca, String modelo, double precio, int cantidad) {
+        return inventarioController.anyadirHerramienta(marca, modelo, precio, cantidad);
+    }
+
+    @RequestMapping("/borrarHerramienta")
+    public ModelAndView borrarHerramientaModel(String ref) {
+        return inventarioController.borrarHerramienta(ref);
+    }
+
+    @RequestMapping("/editarHerramienta")
+    public ModelAndView editarHerramientaModel(String ref, String marca, String modelo, double precio, int cantidad) {
+        return inventarioController.editarHerramienta(ref, marca, modelo, precio, cantidad);
+    }
+
+    // Fin Herramientas
+
+    // Inicio Máquinas
 
     @RequestMapping("/inventario-maquinas")
-    public ModelAndView inventarioMaquinas() {
-        model.setViewName("inventario-maquinas.html");
-        return model;
+    public ModelAndView inventarioMaquinasModel() {
+        return inventarioController.inventarioMaquinas();
     }
+
+    @RequestMapping("/anyadirMaquina")
+    public ModelAndView anyadirMaquinaModel(String marca, String modelo, double precio, int cantidad) {
+        return inventarioController.anyadirMaquina(marca, modelo, precio, cantidad);
+    }
+
+    @RequestMapping("/borrarMaquina")
+    public ModelAndView borrarMaquinaModel(String ref) {
+        return inventarioController.borrarMaquina(ref);
+    }
+
+    @RequestMapping("/editarMaquina")
+    public ModelAndView editarMaquinaModel(String ref, String marca, String modelo, double precio, int cantidad) {
+        return inventarioController.editarMaquina(ref, marca, modelo, precio, cantidad);
+    }
+
+    // Fin Máquinas
+
+    // Inicio Materiales
 
     @RequestMapping("/inventario-materiales")
-    public ModelAndView inventarioMateriales() {
-        model.setViewName("inventario-materiales.html");
-        return model;
+    public ModelAndView inventarioMaterialesModel() {
+        return inventarioController.inventarioMateriales();
     }
 
+    @RequestMapping("/anyadirMaterial")
+    public ModelAndView anyadirMaterialModel(String marca, String modelo, double precio, int cantidad, int unidades) {
+        return inventarioController.anyadirMaterial(marca, modelo, precio, cantidad, unidades);
+    }
+
+    @RequestMapping("/borrarMaterial")
+    public ModelAndView borrarMaterialModel(String ref) {
+        return inventarioController.borrarMaterial(ref);
+    }
+
+    @RequestMapping("/editarMaterial")
+    public ModelAndView editarMaterialModel(String ref, String marca, String modelo, double precio, int cantidad, int unidades) {
+        return inventarioController.editarMaterial(ref, marca, modelo, precio, cantidad, unidades);
+    }
+
+    // Fin Materiales
+
+    // Inicio Productos
     @RequestMapping("/inventario-productos")
     public ModelAndView inventarioProductos() {
         model.setViewName("inventario-productos.html");
         return model;
     }
 
+    // Fin Productos
+
+    // Inicio Vehículos
+
     @RequestMapping("/inventario-vehiculos")
-    public ModelAndView inventarioVehiculos() {
-        model.setViewName("inventario-vehiculos.html");
-        return model;
+    public ModelAndView inventarioVehiculosModel() {
+        return inventarioController.inventarioVehiculos();
     }
+
+    @RequestMapping("/anyadirVehiculo")
+    public ModelAndView anyadirVehiculoModel(String marca, String modelo, String matricula, String color) {
+        return inventarioController.anyadirVehiculo(marca, modelo, matricula, color);
+    }
+
+    @RequestMapping("/borrarVehiculo")
+    public ModelAndView borrarVehiculoModel(String ref) {
+        return inventarioController.borrarVehiculo(ref);
+    }
+
+    @RequestMapping("/editarVehiculo")
+    public ModelAndView editarVehiculoModel(String ref, String marca, String modelo, String matricula, String color) {
+        return inventarioController.editarVehiculo(ref, marca, modelo, matricula, color);
+    }
+
+    // Fin Vehículos
 
     @RequestMapping("/pages-register")
     public ModelAndView register() {

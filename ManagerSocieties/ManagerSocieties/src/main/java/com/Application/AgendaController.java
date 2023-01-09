@@ -19,7 +19,7 @@ public class AgendaController {
         return agendaModel;
     }
 
-    public ModelAndView anayadirCliente(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
+    public ModelAndView anyadirCliente(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
         Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium);
         clientes.clientes.put(cliente.getRef(), cliente);
 
@@ -45,7 +45,7 @@ public class AgendaController {
         return agendaModel;
     }
 
-    public ModelAndView anayadirEmpleado(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
+    public ModelAndView anyadirEmpleado(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
         Empleado empleado = new Empleado(nombre, apellidos, id, telefono, email, direccion, usuario, puesto, Integer.parseInt(antiguedad));
         empleados.empleados.put(empleado.getRef(), empleado);
 

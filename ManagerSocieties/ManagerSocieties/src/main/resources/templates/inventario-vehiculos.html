@@ -269,7 +269,7 @@
                       <i class="bi bi-truck"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>5</h6>
+                      <h6 th:text="${numVehiculos}"></h6>
                     </div>
                   </div>
                 </div>
@@ -284,10 +284,10 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearVehiculo"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="crearVehiculo" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -296,29 +296,30 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirVehiculo}" method="post">
                         <div class="row mb-3">
                           <label for="matricula" class="col-sm-2 col-form-label">Matrícula</label>
                           <div class="col-sm-10">
-                            <input id="matricula" type="text" class="form-control">
+                            <input id="matricula" name="matricula" type="text" class="form-control" required minlength="7" maxlength="7"
+                                   pattern="[\d]{4}[BCDFGHJKLMNPQRSTVWXYZ]{3}" title="Utilice cuatro números seguidos de 3 letras consonantes">
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="marca" class="col-sm-2 col-form-label">Marca</label>
                           <div class="col-sm-10">
-                            <input id="marca" type="text" class="form-control">
+                            <input id="marca" name="marca" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
                           <div class="col-sm-10">
-                            <input id="modelo" type="text" class="form-control">
+                            <input id="modelo" name="modelo" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="color" class="col-sm-2 col-form-label">Color</label>
                           <div class="col-sm-10">
-                            <input id="color" type="text" class="form-control">
+                            <input id="color" name="color" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -336,6 +337,70 @@
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
                           <button type="submit" class="btn btn-primary" onclick="">Crear Vehículo</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="vehiculo: ${vehiculos}" class="modal fade" th:id="editarVehiculo+${vehiculo.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Vehículo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarVehiculo}" method="post">
+                        <div class="row mb-3">
+                          <label for="ref" class="col-sm-2 col-form-label">Marca</label>
+                          <div class="col-sm-10">
+                            <input th:value="${vehiculo.ref}" id = "ref" name="ref" type="text" class="form-control" required readonly>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="matricula" class="col-sm-2 col-form-label">Matrícula</label>
+                          <div class="col-sm-10">
+                            <input th:value="${vehiculo.matricula}" name="matricula" type="text" class="form-control" required minlength="7" maxlength="7"
+                                   pattern="[\d]{4}[BCDFGHJKLMNPQRSTVWXYZ]{3}" title="Utilice cuatro números seguidos de 3 letras consonantes">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="marca" class="col-sm-2 col-form-label">Marca</label>
+                          <div class="col-sm-10">
+                            <input th:value="${vehiculo.marca}" name="marca" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
+                          <div class="col-sm-10">
+                            <input th:value="${vehiculo.modelo}" name="modelo" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="color" class="col-sm-2 col-form-label">Color</label>
+                          <div class="col-sm-10">
+                            <input th:value="${vehiculo.color}" name="color" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="papeles" class="col-sm-2 col-form-label" style="font-size: 0.7rem;">Documentación</label>
+                          <div class="col-sm-10">
+                            <input type="file" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="seguro" class="col-sm-2 col-form-label">Seguro</label>
+                          <div class="col-sm-10">
+                            <input type="file" class="form-control">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Editar Vehículo</button>
                         </div>
                       </form>
                     </div>
@@ -411,7 +476,6 @@
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
                     <th scope="col">Ref</th>
                     <th scope="col">Matrícula</th>
                     <th scope="col">Marca</th>
@@ -423,27 +487,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>#01</td>
-                    <td>2652WHJ</td>
-                    <td>Citroen</td>
-                    <td>Nuevo Berlingo</td>
-                    <td>Blanca</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>#02</td>
-                    <td>4010TFR</td>
-                    <td>Renault</td>
-                    <td>Master</td>
-                    <td>Blanca</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
+                  <tr th:each = "vehiculo: ${vehiculos}">
+                    <td th:text = "${vehiculo.ref}"></td>
+                    <td th:text = "${vehiculo.matricula}"></td>
+                    <td th:text = "${vehiculo.marca}"></td>
+                    <td th:text = "${vehiculo.modelo}"></td>
+                    <td th:text = "${vehiculo.color}"></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarVehiculo+${vehiculo.ref}"><i class="bi bi-eraser"></i></a></td>
+                    <td>
+                      <form action="#" th:action="@{/borrarVehiculo}" method="post">
+                        <button class="dropdown-item bi-trash" name = "ref" th:value="${vehiculo.ref}" type="submit"></button>
+                      </form>
+                    </td>
                   </tr>
                 </tbody>
               </table>

@@ -22,12 +22,12 @@ public class Persona implements Serializable {
     // Inicio Constructores
 
     public Persona (String nombre, String apellidos, String id, String telefono, String email, String direccion){
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.id = id;
-        this.telefono = telefono;
-        this.email = email;
-        this.direccion = direccion;
+        setNombre(nombre);
+        setApellidos(apellidos);
+        setId(id);
+        setTelefono(telefono);
+        setEmail(email);
+        setDireccion(direccion);
         this.documentos = new ArrayList<>();
     }
 
