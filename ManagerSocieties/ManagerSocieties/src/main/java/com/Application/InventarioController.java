@@ -8,6 +8,8 @@ public class InventarioController {
     Herramientas herramientas = new Herramientas();
     Maquinas maquinas = new Maquinas();
     Materiales materiales = new Materiales();
+
+    Productos productos = new Productos();
     Vehiculos vehiculos = new Vehiculos();
     ModelAndView inventarioModel = new ModelAndView();
 
@@ -96,6 +98,34 @@ public class InventarioController {
         return inventarioMateriales();
     }
     // Fin Materiales
+
+    // Inicio Productos
+    public ModelAndView inventarioProductos(){
+        inventarioModel.setViewName("inventario-productos.html");
+        inventarioModel.addObject("productos", productos.productos.values());
+        inventarioModel.addObject("numProductos", productos.productos.values().size());
+        return inventarioModel;
+    }
+
+    public ModelAndView anyadirProducto (String modelo, double precio, int stock, String urlFoto){
+        Producto producto = new Producto (modelo, precio, stock, urlFoto);
+        productos.productos.put(producto.getRef(), producto);
+
+        return inventarioProductos();
+    }
+
+    public ModelAndView borrarProducto (String ref){
+        productos.productos.remove(ref);
+
+        return inventarioProductos();
+    }
+
+    public ModelAndView editarProducto (String ref, String modelo, double precio, int stock, String urlFoto){
+        productos.editarProducto(ref, modelo, precio, stock, urlFoto);
+
+        return inventarioProductos();
+    }
+    // Fin Vehículos
 
     // Inicio Vehículos
     public ModelAndView inventarioVehiculos(){

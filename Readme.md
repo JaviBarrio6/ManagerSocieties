@@ -1,4 +1,4 @@
-# Manager Societies V2.3.0
+# Manager Societies V2.6.0
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Control de Versiones](#control-de-versiones)
@@ -12,6 +12,8 @@
     + [V2.3.0](#V230)
     + [V2.3.1](#V231)
     + [V2.4.0](#V240)
+    + [V2.5.0](#V250)
+    + [V2.6.0](#V260)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -81,6 +83,15 @@ versión anterior. Y utilizada para el resto de la agenda, Clientes, Empleados, 
 
 * Se ha realizado un refactor de nuestro controlador principal, para ello, hemos creado un controlador específico para 
 la agenda, de esta forma, nuestro controlador posee una mayor encapsulación y limpieza del código.
+
+### V2.5.0
+
+* Se genera el código Java que permite la funcionalidad de toda el inventario a excepción de los productos.
+
+### V2.6.0
+
+* Se genera el código Java que permite la funcionalidad de los productos del inventario.
+
 
 ## Instalación:
 

@@ -239,9 +239,23 @@ public class ApplicationController {
 
     // Inicio Productos
     @RequestMapping("/inventario-productos")
-    public ModelAndView inventarioProductos() {
-        model.setViewName("inventario-productos.html");
-        return model;
+    public ModelAndView inventarioProductosModel() {
+        return inventarioController.inventarioProductos();
+    }
+
+    @RequestMapping("/anyadirProducto")
+    public ModelAndView anyadirProductoModel (String modelo, double precio, int stock, String urlFoto){
+        return inventarioController.anyadirProducto(modelo, precio, stock, urlFoto);
+    }
+
+    @RequestMapping("/borrarProducto")
+    public ModelAndView borrarProductoModel (String ref){
+        return inventarioController.borrarProducto(ref);
+    }
+
+    @RequestMapping("/editarProducto")
+    public ModelAndView editarProductoModel (String ref, String modelo, double precio, int stock, String urlFoto){
+        return inventarioController.editarProducto(ref, modelo, precio, stock, urlFoto);
     }
 
     // Fin Productos

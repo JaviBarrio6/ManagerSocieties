@@ -5,32 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38014811-25bb-4747-960b-9f5e827b4579" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Application/InventarioController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Herramienta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Herramientas.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Maquina.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Maquinas.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Material.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Materiales.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Objeto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Vehiculo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Vehiculos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Producto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Productos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/AgendaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application/AgendaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application/ApplicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-herramientas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-herramientas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-maquinas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-maquinas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-materiales.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-materiales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-vehiculos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-vehiculos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Persona.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Persona.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/AgendaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application/AgendaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/InventarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application/InventarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-productos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-productos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application/Application.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/Application/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application/ApplicationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-herramientas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-herramientas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-maquinas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-maquinas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-materiales.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-materiales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/tareas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/InventarioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application/InventarioController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-productos.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-productos.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,6 +138,9 @@
       <workItem from="1673199014272" duration="535000" />
       <workItem from="1673199632319" duration="7970000" />
       <workItem from="1673275616294" duration="3683000" />
+      <workItem from="1673291069050" duration="2811000" />
+      <workItem from="1673363992945" duration="546000" />
+      <workItem from="1673364601766" duration="172000" />
     </task>
     <servers />
   </component>
@@ -177,6 +165,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/Application/AgendaController.java</url>
           <line>117</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/Inventario/Producto.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/Inventario/Productos.java</url>
+          <line>8</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

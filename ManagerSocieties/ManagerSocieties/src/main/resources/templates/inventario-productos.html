@@ -269,7 +269,7 @@
                       <i class="bi bi-cart"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>5</h6>
+                      <h6 th:text="${numProductos}"></h6>
                     </div>
                   </div>
                 </div>
@@ -284,10 +284,10 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearProducto"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="crearProducto" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -296,11 +296,23 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirProducto}" method="post">
                         <div class="row mb-3">
-                          <label for="ref" class="col-sm-2 col-form-label">Ref</label>
+                          <label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
                           <div class="col-sm-10">
-                            <input id="ref" type="text" class="form-control">
+                            <input id="modelo" name="modelo" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="precio" class="col-sm-2 col-form-label">Precio</label>
+                          <div class="col-sm-10">
+                            <input id="precio" name="precio" type="number" class="form-control" required step="0.01" min="0.01">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+                          <div class="col-sm-10">
+                            <input id="stock" name="stock" type="number" class="form-control" required min="1">
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -309,27 +321,60 @@
                             <input id="foto" type="file" class="form-control">
                           </div>
                         </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
+                          <button type="submit" class="btn btn-primary" onclick="">Crear Producto</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="producto: ${productos}" class="modal fade" th:id="editarProducto+${producto.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarProducto}" method="post">
+                        <div class="row mb-3">
+                          <label for="ref" class="col-sm-2 col-form-label">Modelo</label>
+                          <div class="col-sm-10">
+                            <input th:value="${producto.ref}" id="ref" name="ref" type="text" class="form-control" required readonly>
+                          </div>
+                        </div>
                         <div class="row mb-3">
                           <label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
                           <div class="col-sm-10">
-                            <input id="modelo" type="text" class="form-control">
+                            <input th:value="${producto.modelo}" name="modelo" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="precio" class="col-sm-2 col-form-label">Precio</label>
                           <div class="col-sm-10">
-                            <input id="precio" type="text" class="form-control">
+                            <input th:value="${producto.precio}" name="precio" type="number" class="form-control" required step="0.01" min="0.01">
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="stock" class="col-sm-2 col-form-label">Stock</label>
                           <div class="col-sm-10">
-                            <input id="stock" type="number" class="form-control">
+                            <input th:value="${producto.stock}" name="stock" type="number" class="form-control" required min="1">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="foto" class="col-sm-2 col-form-label">Foto</label>
+                          <div class="col-sm-10">
+                            <input type="file" class="form-control">
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                          <button type="submit" class="btn btn-primary" onclick="">Crear Producto</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Editar Producto</button>
                         </div>
                       </form>
                     </div>
@@ -397,7 +442,6 @@
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
                     <th scope="col">Ref</th>
                     <th scope="col">Foto</th>
                     <th scope="col">Modelo</th>
@@ -409,60 +453,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>#256</td>
-                    <th scope="row"><a href="#"><img src="/img/X3.png" alt=""></a></th>
-                    <td>X-3 Cristalizador Rosa</td>
-                    <td>31 €</td>
-                    <td>100</td>
+                <tr th:each = "producto: ${productos}">
+                  <td th:text = "${producto.ref}"></td>
+                    <th scope="row"><a href="#"><img th:src="${producto.urlFoto}"alt=""></a></th>
+                    <td th:text = "${producto.modelo}"></td>
+                    <td th:text ="${producto.precio} + ' €'"></td>
+                    <td th:text = "${producto.stock}"></td>
                     <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>#146</td>
-                    <th scope="row"><a href="#"><img src="/img/D2.png" alt=""></a></th>
-                    <td>D-2 Decapante Alcalino</td>
-                    <td>28 €</td>
-                    <td>72</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>#010</td>
-                    <th scope="row"><a href="#"><img src="/img/A4.png" alt=""></a></th>
-                    <td>A-4 Abrillantador Suelos Pizarra</td>
-                    <td>59 €</td>
-                    <td>3</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>#025</td>
-                    <th scope="row"><a href="#"><img src="/img/A330.jpg" alt=""></a></th>
-                    <td>SUPERLUX A 330 S</td>
-                    <td>247 €</td>
-                    <td>4</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>#026</td>
-                    <th scope="row"><a href="#"><img src="/img/A28.jpg" alt=""></a></th>
-                    <td>SUPERLUX A 28 S</td>
-                    <td>130 €</td>
-                    <td>2</td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-trash" href="#"></a></td>
+                  <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarProducto+${producto.ref}"><i class="bi bi-eraser"></i></a></td>
+                  <td>
+                    <form action="#" th:action="@{/borrarProducto}" method="post">
+                      <button class="dropdown-item bi-trash" name = "ref" th:value="${producto.ref}" type="submit"></button>
+                    </form>
+                  </td>
                   </tr>
                 </tbody>
               </table>
