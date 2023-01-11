@@ -8,17 +8,17 @@ import java.util.LinkedHashMap;
 public class Clientes {
     public LinkedHashMap<String, Cliente> clientes = new LinkedHashMap<>();
 
-    Cliente cliente01 = new Cliente("Juan José", "Rodríguez", "53852030Z", "674851283",
+    Cliente cliente01 = new Cliente("CLI0001","Juan José", "Rodríguez", "53852030Z", "674851283",
             "juan@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", true);
-    Cliente cliente02 = new Cliente("Emiliano", "Pérez", "53852030Z", "674851283",
+    Cliente cliente02 = new Cliente("CLI0002","Emiliano", "Pérez", "53852030Z", "674851283",
             "emiliano@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", false);
-    Cliente cliente03 = new Cliente("Mireia", "Gaya", "53852030Z", "674851283",
+    Cliente cliente03 = new Cliente("CLI0003","Mireia", "Gaya", "53852030Z", "674851283",
             "mireia@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", false);
-    Cliente cliente04 = new Cliente("Manuel", "Pujol", "53852030Z", "674851283",
+    Cliente cliente04 = new Cliente("CLI0004","Manuel", "Pujol", "53852030Z", "674851283",
             "manuel@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", true);
-    Cliente cliente05 = new Cliente("Alejandra", "Martín", "53852030Z", "674851283",
+    Cliente cliente05 = new Cliente("CLI0005","Alejandra", "Martín", "53852030Z", "674851283",
             "ale@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", false);
-    Cliente cliente06 = new Cliente("Suelos", "S.L.", "B20846838", "674851283",
+    Cliente cliente06 = new Cliente("CLI0006","Suelos", "S.L.", "B20846838", "674851283",
             "suelossl@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", false);
 
     public Clientes (){

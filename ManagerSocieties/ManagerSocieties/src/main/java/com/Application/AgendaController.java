@@ -119,4 +119,25 @@ public class AgendaController {
 
         return agendaProveedores();
     }
+
+    // Inicio Getters
+
+    public Clientes getClientes() {
+        return this.clientes;
+    }
+
+    public Empleados getEmpleados() {
+        return this.empleados;
+    }
+
+    public Empresas getEmpresas() {
+        return this.empresas;
+    }
+
+    public Proveedores getProveedores() {
+        return this.proveedores;
+    }
+
+    // Fin Getters
+
 }

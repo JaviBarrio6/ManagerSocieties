@@ -6,7 +6,7 @@ public class Vehiculo extends Objeto implements Serializable {
 
     // Inicio Variables
     public static int generadorId = 0;
-    private static final String refHerramienta = "VEH";
+    private static final String refVehiculo = "VEH";
 
     private String matricula;
     private String color;
@@ -29,7 +29,7 @@ public class Vehiculo extends Objeto implements Serializable {
         setColor(color);
 
         generadorId++;
-        setRef(generadorRef(generadorId, refHerramienta));
+        setRef(generadorRef(generadorId, refVehiculo));
     }
 
     public Vehiculo (String ref, String marca, String modelo, String matricula, String color){
@@ -69,8 +69,8 @@ public class Vehiculo extends Objeto implements Serializable {
         return this.color;
     }
 }
-// Fin Getters
+    // Fin Getters
 
-// Inicio Funciones
+    // Inicio Funciones
 
-// Fin Funciones
+    // Fin Funciones

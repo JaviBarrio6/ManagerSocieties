@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Clientes - Manager Societies</title>
+  <title>Tareas - Manager Societies</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -275,7 +275,7 @@
                       <i class="bi bi-hourglass-split"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1</h6>
+                      <h6 th:text="${numTareas}"></h6>
                     </div>
                   </div>
                 </div>
@@ -291,10 +291,10 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-calendar-plus" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearTarea"><i class="bi bi-calendar-plus" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="crearTarea" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -303,55 +303,307 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirTarea}" method="post">
                         <div class="row mb-3">
-                          <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                          <label for="cliente" class="col-sm-2 col-form-label">Cliente</label>
                           <div class="col-sm-10">
-                            <input id="nombre" type="text" class="form-control">
+                            <select class="form-select" name="cliente" id ="cliente" required>
+                              <option selected="">Selecciona Cliente</option>
+                              <option th:each ="cliente: ${clientes}" th:value="${cliente.ref}" th:text="${cliente.nombre} + ' ' + ${cliente.apellidos}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
+                          <label for="empleados" class="col-sm-2 col-form-label">Empleados</label>
                           <div class="col-sm-10">
-                            <input id="apellidos" type="text" class="form-control">
+                            <select class="form-select" multiple name="empleados" id ="empleados" required>
+                              <option selected="">Selecciona Empleados</option>
+                              <option th:each ="empleado: ${empleados}" th:value="${empleado.nombre} + ' ' + ${empleado.apellidos}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="dni" class="col-sm-2 col-form-label">DNI | CIF</label>
+                          <label for="fechaInicio" class="col-sm-2 col-form-label">Fecha Inicio</label>
                           <div class="col-sm-10">
-                            <input id="dni" type="text" class="form-control">
+                            <input id="fechaInicio" name="fechaInicio" type="date" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
+                          <label for="fechaFin" class="col-sm-2 col-form-label">Fecha Fin</label>
                           <div class="col-sm-10">
-                            <input id="telefono" type="number" class="form-control">
+                            <input id="fechaFin" name="fechaFin" type="date" class="form-control">
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="email" class="col-sm-2 col-form-label">Correo</label>
+                          <label for="hora" class="col-sm-2 col-form-label">Hora</label>
                           <div class="col-sm-10">
-                            <input id="email" type="text" class="form-control">
+                            <input id="hora" name="hora" type="time" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
+                          <label for="gastoExtra" class="col-sm-2 col-form-label">Gasto Extra</label>
                           <div class="col-sm-10">
-                            <input id="direccion" type="text" class="form-control">
+                            <input id="gastoExtra" name="gastoExtra" type="number" class="form-control" required step="0.01" min="0">
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <legend class="col-form-label col-sm-2 pt-0">Premium</legend>
+                          <label for="estado" class="col-sm-2 col-form-label">Estado</label>
                           <div class="col-sm-10">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="premium">
-                              <label class="form-check-label" for="premium"></label>
-                            </div>
+                            <select class="form-select" name="estado" id ="estado" required>
+                              <option selected="">Selecciona Estado</option>
+                              <option value=0>Sin acabar</option>
+                              <option value=1>Acabado</option>
+                              <option value=2>Acabado y Cobrado</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="info" class="col-sm-2 col-form-label">Info</label>
+                          <div class="col-sm-10">
+                            <textarea class="form-control" name="info" id="info" style="height: 100px"></textarea>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inventario" class="col-sm-2 col-form-label">Inventario</label>
+                          <div class="col-sm-10">
+                            <select class="form-select" multiple name="inventario" id ="inventario">
+                              <option selected="">Selecciona Inventario</option>
+                              <option th:each ="herramienta: ${herramientas}" th:value="${herramienta.modelo}" th:text="${herramienta.modelo}"></option>
+                              <option th:each ="maquina: ${maquinas}" th:value="${maquina.modelo}" th:text="${maquina.modelo}"></option>
+                              <option th:each ="material: ${materiales}" th:value="${material.modelo}" th:text="${material.modelo}"></option>
+                              <option th:each ="producto: ${productos}" th:value="${producto.modelo}" th:text="${producto.modelo}"></option>
+                              <option th:each ="vehiculo: ${vehiculos}" th:value="${vehiculo.modelo}" th:text="${vehiculo.modelo}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                          <button type="submit" class="btn btn-primary" onclick="">Crear Cliente</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Crear Tarea</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="tarea: ${tareas}" class="modal fade" th:id="mostrarInfoClienteTarea+${tarea.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Info Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <div class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Ref</span>
+                        <input th:value="${tarea.cliente.ref}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Nombre</span>
+                        <input th:value="${tarea.cliente.nombre} + ' ' + ${tarea.cliente.apellidos}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">DNI | CIF</span>
+                        <input th:value="${tarea.cliente.id}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Teléfono</span>
+                        <input th:value="${tarea.cliente.telefono}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Correo</span>
+                        <input th:value="${tarea.cliente.email}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Dirección</span>
+                        <input th:value="${tarea.cliente.direccion}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="tarea: ${tareas}" class="modal fade" th:id="empleadosTarea+${tarea.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Empleados a realizar la Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <div th:each="empleado: ${tarea.empleados}" class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Nombre</span>
+                        <input th:value="${empleado}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="tarea: ${tareas}" class="modal fade" th:id="inventarioTarea+${tarea.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Inventario para la Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <div th:each="inventario: ${tarea.inventario}" class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Modelo</span>
+                        <input th:value="${inventario}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="tarea: ${tareas}" class="modal fade" th:id="infoTarea+${tarea.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Información para la Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <div th:each="info: ${tarea.info}" class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Info</span>
+                        <textarea th:text="${info}" type="text" class="form-control" readonly></textarea>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="tarea: ${tareas}" class="modal fade" th:id="editarTarea+${tarea.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarTarea}" method="post">
+                        <div class="row mb-3">
+                          <label for="ref" class="col-sm-2 col-form-label">Ref</label>
+                          <div class="col-sm-10">
+                            <input th:value="${tarea.ref}" id = "ref" name="ref" type="text" class="form-control" readonly>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="cliente" class="col-sm-2 col-form-label">Cliente</label>
+                          <div class="col-sm-10">
+                            <select class="form-select" name="cliente" required readonly="">
+                              <option selected th:value="${tarea.cliente.ref}" th:text="${tarea.cliente.nombre} + ' ' + ${tarea.cliente.apellidos}"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="empleados" class="col-sm-2 col-form-label">Empleados</label>
+                          <div class="col-sm-10">
+                            <select class="form-select" multiple name="empleados" required>
+                              <option selected="" th:if="${tarea.contieneEmpleado(empleado.nombre + ' ' + empleado.apellidos, tarea.empleados)}" th:each ="empleado: ${empleados}"
+                                      th:value="${empleado.nombre} + ' ' + ${empleado.apellidos}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
+                              <option th:if="${!tarea.contieneEmpleado(empleado.nombre + ' ' + empleado.apellidos, tarea.empleados)}" th:each ="empleado: ${empleados}"
+                                      th:value="${empleado.nombre} + ' ' + ${empleado.apellidos}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="fechaInicio" class="col-sm-2 col-form-label">Fecha Inicio</label>
+                          <div class="col-sm-10">
+                            <input th:value="${tarea.desformatearFecha(tarea.fechaInicio)}" name="fechaInicio" type="date" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="fechaFin" class="col-sm-2 col-form-label">Fecha Fin</label>
+                          <div class="col-sm-10">
+                            <input th:value="${tarea.desformatearFecha(tarea.fechaFin)}" name="fechaFin" type="date" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="hora" class="col-sm-2 col-form-label">Hora</label>
+                          <div class="col-sm-10">
+                            <input th:value="${tarea.hora}" name="hora" type="time" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="gastoExtra" class="col-sm-2 col-form-label">Gasto Extra</label>
+                          <div class="col-sm-10">
+                            <input th:value="${tarea.gastoExtra}" name="gastoExtra" type="number" class="form-control" required step="0.01" min="0">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="estado" class="col-sm-2 col-form-label">Estado</label>
+                          <div class="col-sm-10">
+                            <select class="form-select" name="estado" required>
+                              <option th:if="${tarea.estado}==0" value=0 selected>Sin acabar</option>
+                              <option th:else="${tarea.estado}==0" value=0>Sin acabar</option>
+                              <option th:if="${tarea.estado}==1" value=1 selected>Acabado</option>
+                              <option th:else="${tarea.estado}==1" value=1>Acabado</option>
+                              <option th:if="${tarea.estado}==2" value=2 selected>Acabado y Cobrado</option>
+                              <option th:else="${tarea.estado}==2" value=2>Acabado y Cobrado</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="info" class="col-sm-2 col-form-label">Info</label>
+                          <div class="col-sm-10">
+                            <textarea class="form-control" name="info" th:text="${tarea.info}" style="height: 100px"></textarea>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inventario" class="col-sm-2 col-form-label">Inventario</label>
+                          <div class="col-sm-10">
+                            <select class="form-select" multiple name="inventario">
+                              <option selected="" th:if = "${tarea.contieneInventario(herramienta.modelo, tarea.inventario)}" th:each ="herramienta: ${herramientas}"
+                                      th:value="${herramienta.modelo}" th:text="${herramienta.modelo}"></option>
+                              <option th:if = "${!tarea.contieneInventario(herramienta.modelo, tarea.inventario)}" th:each ="herramienta: ${herramientas}"
+                                      th:value="${herramienta.modelo}" th:text="${herramienta.modelo}"></option>
+                              <option selected="" th:if = "${tarea.contieneInventario(maquina.modelo, tarea.inventario)}" th:each ="maquina: ${maquinas}"
+                                      th:value="${maquina.modelo}" th:text="${maquina.modelo}"></option>
+                              <option th:if = "${!tarea.contieneInventario(maquina.modelo, tarea.inventario)}" th:each ="maquina: ${maquinas}"
+                                      th:value="${maquina.modelo}" th:text="${maquina.modelo}"></option>
+                              <option selected="" th:if = "${tarea.contieneInventario(material.modelo, tarea.inventario)}" th:each ="material: ${materiales}"
+                                      th:value="${material.modelo}" th:text="${material.modelo}"></option>
+                              <option th:if = "${!tarea.contieneInventario(material.modelo, tarea.inventario)}" th:each ="material: ${materiales}"
+                                      th:value="${material.modelo}" th:text="${material.modelo}"></option>
+                              <option selected="" th:if = "${tarea.contieneInventario(producto.modelo, tarea.inventario)}" th:each ="producto: ${productos}"
+                                      th:value="${producto.modelo}" th:text="${producto.modelo}"></option>
+                              <option th:if = "${!tarea.contieneInventario(producto.modelo, tarea.inventario)}" th:each ="producto: ${productos}"
+                                      th:value="${producto.modelo}" th:text="${producto.modelo}"></option>
+                              <option selected="" th:if = "${tarea.contieneInventario(vehiculo.modelo, tarea.inventario)}" th:each ="vehiculo: ${vehiculos}"
+                                      th:value="${vehiculo.modelo}" th:text="${vehiculo.modelo}"></option>
+                              <option th:if = "${!tarea.contieneInventario(vehiculo.modelo, tarea.inventario)}" th:each ="vehiculo: ${vehiculos}"
+                                      th:value="${vehiculo.modelo}" th:text="${vehiculo.modelo}"></option>
+
+                            </select>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Editar Tarea</button>
                         </div>
                       </form>
                     </div>
@@ -362,77 +614,6 @@
 
             <div class="card-body pb-0">
               <h5 class="card-title">Listado de Tareas</h5>
-
-              <!-- == Editor de Info de Cliente == -->
-              <div class="modal fade" id="info" tabindex="-1" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Información del Cliente</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body card">
-                      <div class="card-body">
-                        <div class="quill-editor-bubble ql-container ql-bubble">
-                          <div class="ql-editor" data-gramm="false" contenteditable="true">
-                            <p>Hello World!</p>
-                            <p>This is Quill editor</p>
-                          </div>
-                          <div class="ql-clipboard" contenteditable="true" tabindex="-1"></div>
-                          <div class="ql-tooltip ql-hidden">
-                            <span class="ql-tooltip-arrow"></span>
-                            <div class="ql-tooltip-editor">
-                              <input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">
-                              <a class="ql-close"></a></div><div class="ql-toolbar"><span class="ql-formats">
-                                <button type="button" class="ql-bold">
-                                  <svg viewBox="0 0 18 18">
-                                    <path class="ql-stroke" d="M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z"></path>
-                                    <path class="ql-stroke" d="M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z"></path>
-                                  </svg>
-                                </button>
-                                <button type="button" class="ql-italic">
-                                  <svg viewBox="0 0 18 18">
-                                    <line class="ql-stroke" x1="7" x2="13" y1="4" y2="4"></line>
-                                    <line class="ql-stroke" x1="5" x2="11" y1="14" y2="14"></line>
-                                    <line class="ql-stroke" x1="8" x2="10" y1="14" y2="4"></line>
-                                  </svg>
-                                </button>
-                                <button type="button" class="ql-link">
-                                  <svg viewBox="0 0 18 18">
-                                    <line class="ql-stroke" x1="7" x2="11" y1="7" y2="11"></line>
-                                    <path class="ql-even ql-stroke" d="M8.9,4.577a3.476,3.476,0,0,1,.36,4.679A3.476,3.476,0,0,1,4.577,8.9C3.185,7.5,2.035,6.4,4.217,4.217S7.5,3.185,8.9,4.577Z"></path>
-                                    <path class="ql-even ql-stroke" d="M13.423,9.1a3.476,3.476,0,0,0-4.679-.36,3.476,3.476,0,0,0,.36,4.679c1.392,1.392,2.5,2.542,4.679.36S14.815,10.5,13.423,9.1Z"></path>
-                                  </svg>
-                                </button>
-                              </span>
-                              <span class="ql-formats">
-                                <button type="button" class="ql-header" value="1">
-                                  <svg viewBox="0 0 18 18">
-                                    <path class="ql-fill" d="M10,4V14a1,1,0,0,1-2,0V10H3v4a1,1,0,0,1-2,0V4A1,1,0,0,1,3,4V8H8V4a1,1,0,0,1,2,0Zm6.06787,9.209H14.98975V7.59863a.54085.54085,0,0,0-.605-.60547h-.62744a1.01119,1.01119,0,0,0-.748.29688L11.645,8.56641a.5435.5435,0,0,0-.022.8584l.28613.30762a.53861.53861,0,0,0,.84717.0332l.09912-.08789a1.2137,1.2137,0,0,0,.2417-.35254h.02246s-.01123.30859-.01123.60547V13.209H12.041a.54085.54085,0,0,0-.605.60547v.43945a.54085.54085,0,0,0,.605.60547h4.02686a.54085.54085,0,0,0,.605-.60547v-.43945A.54085.54085,0,0,0,16.06787,13.209Z"></path>
-                                  </svg>
-                                </button>
-                                <button type="button" class="ql-header" value="2">
-                                  <svg viewBox="0 0 18 18">
-                                    <path class="ql-fill" d="M16.73975,13.81445v.43945a.54085.54085,0,0,1-.605.60547H11.855a.58392.58392,0,0,1-.64893-.60547V14.0127c0-2.90527,3.39941-3.42187,3.39941-4.55469a.77675.77675,0,0,0-.84717-.78125,1.17684,1.17684,0,0,0-.83594.38477c-.2749.26367-.561.374-.85791.13184l-.4292-.34082c-.30811-.24219-.38525-.51758-.1543-.81445a2.97155,2.97155,0,0,1,2.45361-1.17676,2.45393,2.45393,0,0,1,2.68408,2.40918c0,2.45312-3.1792,2.92676-3.27832,3.93848h2.79443A.54085.54085,0,0,1,16.73975,13.81445ZM9,3A.99974.99974,0,0,0,8,4V8H3V4A1,1,0,0,0,1,4V14a1,1,0,0,0,2,0V10H8v4a1,1,0,0,0,2,0V4A.99974.99974,0,0,0,9,3Z"></path>
-                                  </svg>
-                                </button>
-                                <button type="button" class="ql-blockquote">
-                                  <svg viewBox="0 0 18 18">
-                                    <rect class="ql-fill ql-stroke" height="3" width="3" x="4" y="5"></rect>
-                                    <rect class="ql-fill ql-stroke" height="3" width="3" x="11" y="5"></rect>
-                                    <path class="ql-even ql-fill ql-stroke" d="M7,8c0,4.031-3,5-3,5"></path>
-                                    <path class="ql-even ql-fill ql-stroke" d="M14,8c0,4.031-3,5-3,5"></path>
-                                  </svg>
-                                </button>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
               <div class="modal fade" id="facturas" tabindex="-1" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog">
@@ -492,12 +673,10 @@
                   <tr>
                     <th scope="col">Ref</th>
                     <th scope="col">Cliente</th>
-                    <th scope="col">Teléfono</th>
                     <th scope="col">Empleados</th>
                     <th scope="col">Fecha Inicio</th>
                     <th scope="col">Fecha Fin</th>
                     <th scope="col">Hora</th>
-                    <th scope="col">Dirección</th>
                     <th scope="col">Gasto Extra</th>
                     <th scope="col">Inventario</th>
                     <th data-sortable="false" scope="col">Info</th>
@@ -508,56 +687,26 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Juan José Rodríguez</td>
-                    <td>674851283</td>
-                    <td>Pablo Escobar </br> Juan Ávila</td>
-                    <td>10/11/2022</td>
-                    <td>-</td>
-                    <td>19:00</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td>120 €</td>
-                    <td>X-3 Cristalizador Rosa </br> SUPERLUX A 330 S </td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#info"><i class="bi bi-card-text"></i></a></td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><i class="bi bi-check2" ></i></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Paco García</td>
-                    <td>674831283</td>
-                    <td>Miguel Pérez </br></td>
-                    <td>10/11/2022</td>
-                    <td>12/11/2022</td>
-                    <td>19:00</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td>120 €</td>
-                    <td>X-3 Cristalizador Rosa </br> SUPERLUX A 330 S </td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#info"><i class="bi bi-card-text"></i></a></td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><i class="bi bi-clock"></i></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Juan José Rodríguez</td>
-                    <td>674851283</td>
-                    <td>Pablo Escobar </br> Juan Ávila</td>
-                    <td>10/07/2022</td>
-                    <td>-</td>
-                    <td>19:00</td>
-                    <td>Av. Guadarama 21, S.S. de los Reyes</td>
-                    <td>120 €</td>
-                    <td>X-3 Cristalizador Rosa </br> SUPERLUX A 330 S </td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#info"><i class="bi bi-card-text"></i></a></td>
-                    <td><a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><i class="bi bi-check2-all"></i></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
+                  <tr th:each = "tarea: ${tareas}">
+                    <td th:text="${tarea.ref}"></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoClienteTarea+${tarea.ref}"><i class="bi bi-person-circle"></i></a></td>
+                    <td><a class="dropdown-item bi-people" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+empleadosTarea+${tarea.ref}"></a></td>
+                    <td th:text= "${tarea.fechaInicio}"></td>
+                    <td th:text= "${tarea.fechaFin}"></td>
+                    <td th:text= "${tarea.hora}"></td>
+                    <td th:text= "${tarea.gastoExtra} + ' €'"></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+inventarioTarea+${tarea.ref}"><i class="bi bi-archive"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+infoTarea+${tarea.ref}"><i class="bi bi-card-text"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
+                    <td th:if = "${tarea.estado==0}"><i class="bi bi-clock" ></i></td>
+                    <td th:if = "${tarea.estado==1}"><i class="bi bi-check2" ></i></td>
+                    <td th:if = "${tarea.estado==2}"><i class="bi bi-check2-all" ></i></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarTarea+${tarea.ref}"><i class="bi bi-eraser"></i></a></td>
+                    <td>
+                      <form action="#" th:action="@{/borrarTarea}" method="post">
+                        <button class="dropdown-item bi-trash" name = "ref" th:value="${tarea.ref}" type="submit"></button>
+                      </form>
+                    </td>
                   </tr>
                 </tbody>
               </table>

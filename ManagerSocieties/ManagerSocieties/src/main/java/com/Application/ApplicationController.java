@@ -1,14 +1,22 @@
 package com.Application;
 
+import com.Agenda.Cliente;
+import com.Agenda.Empleados;
+import com.Inventario.Objeto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 @Controller
 public class ApplicationController {
     ModelAndView model = new ModelAndView();
     AgendaController agendaController = new AgendaController();
     InventarioController inventarioController = new InventarioController();
+
+    TareasController tareasController = new TareasController();
     @RequestMapping("/")
     public ModelAndView login() {
         model.setViewName("pages-login.html");
@@ -284,15 +292,33 @@ public class ApplicationController {
 
     // Fin Vehículos
 
+    // Inicio Tareas
+
+    @RequestMapping("/tareas")
+    public ModelAndView tareasModel() {
+        return tareasController.tareas();
+    }
+
+    @RequestMapping("/anyadirTarea")
+    public ModelAndView anyadirTareaModel (String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
+        return tareasController.anyadirTarea(cliente, empleados,fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
+    }
+
+    @RequestMapping("/borrarTarea")
+    public ModelAndView borrarTareaModel (String ref){
+        return tareasController.borrarTarea(ref);
+    }
+
+    @RequestMapping("/editarTarea")
+    public ModelAndView editarTareaModel (String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
+        return tareasController.editarTarea(ref, cliente, empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
+    }
+
+    // Fin Tareas
+
     @RequestMapping("/pages-register")
     public ModelAndView register() {
         model.setViewName("pages-register.html");
-        return model;
-    }
-
-    @RequestMapping("/tareas")
-    public ModelAndView tareas() {
-        model.setViewName("tareas.html");
         return model;
     }
 

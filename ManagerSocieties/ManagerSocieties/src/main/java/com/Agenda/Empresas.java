@@ -8,10 +8,10 @@ import java.util.LinkedHashMap;
 public class Empresas {
     public LinkedHashMap <String, Empresa> empresas = new LinkedHashMap<>();
 
-    Empresa empresa01 = new Empresa("BBVA", "SA", "A48265169", "900102801", "bbva@bbva.es", "GV. de Don Diego López de Haro, 12, Bilbao");
-    Empresa empresa02 = new Empresa("SEUR", "SA", "G85804011", "927629063", "seur@seur.com", "C. Gamonal, 6, Madrid");
-    Empresa empresa03 = new Empresa("BERMA", "SL", "B20846838", "900102801", "berma@gmail.eus", "C. Jose Artetxe, 19, Azpeitia");
-    Empresa empresa04 = new Empresa("SEIN", "SL", "B20846838", "943157115", "admin@sein.es", "C. Garmendipe, 1, Azpeitia");
+    Empresa empresa01 = new Empresa("EMP0001","BBVA", "SA", "A48265169", "900102801", "bbva@bbva.es", "GV. de Don Diego López de Haro, 12, Bilbao");
+    Empresa empresa02 = new Empresa("EMP0002","SEUR", "SA", "G85804011", "927629063", "seur@seur.com", "C. Gamonal, 6, Madrid");
+    Empresa empresa03 = new Empresa("EMP0003","BERMA", "SL", "B20846838", "900102801", "berma@gmail.eus", "C. Jose Artetxe, 19, Azpeitia");
+    Empresa empresa04 = new Empresa("EMP0004","SEIN", "SL", "B20846838", "943157115", "admin@sein.es", "C. Garmendipe, 1, Azpeitia");
 
     public Empresas (){
         this.empresas.put(empresa01.getRef(), empresa01);

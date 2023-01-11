@@ -154,4 +154,29 @@ public class InventarioController {
         return inventarioVehiculos();
     }
     // Fin Vehículos
+
+    // Inicio Getters
+
+    public Herramientas getHerramientas() {
+        return this.herramientas;
+    }
+
+    public Maquinas getMaquinas() {
+        return this.maquinas;
+    }
+
+    public Materiales getMateriales() {
+        return this.materiales;
+    }
+
+    public Productos getProductos() {
+        return this.productos;
+    }
+
+    public Vehiculos getVehiculos() {
+        return this.vehiculos;
+    }
+
+
+    // Fin Getters
 }
