@@ -59,21 +59,17 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Crear un usuario</h5>
+                    <h5 class="card-title text-center pb-0 fs-4">Crear un Usuario</h5>
                     <p class="text-center small">Introduzca los datos personales del trabajador</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form class="row g-3 needs-validation" novalidate th:action="@{/register}">
                     <div class="col-12">
-                      <label for="yourName" class="form-label">Nombre</label>
-                      <input type="text" name="name" class="form-control" id="yourName" required>
-                      <div class="invalid-feedback">Por favor, establezca un nombre</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourEmail" class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" id="yourEmail" required>
-                      <div class="invalid-feedback">Por favor, establezca un mail</div>
+                      <label for="empleado" class="form-label">Empleado</label>
+                      <select class="form-select" id="empleado" name="ref" required readonly="">
+                        <option selected="">Selecciona un Empleado</option>
+                        <option th:each="usuario: ${usuarios}" th:value="${usuario.ref}" th:text="${usuario.nombre} + ' ' + ${usuario.apellidos}"></option>
+                      </select>
                     </div>
 
                     <div class="col-12">
@@ -98,7 +94,7 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                      <button class="btn btn-primary w-100" type="submit">Crear Usuario</button>
                     </div>
                   </form>
 

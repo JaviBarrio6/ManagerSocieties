@@ -49,6 +49,14 @@ public class Empleado extends Persona implements Serializable {
         setAntiguedad(antiguedad);
     }
 
+    public Empleado (Empleado empleado){
+        super(empleado.getNombre(), empleado.getApellidos(), empleado.getId(), empleado.getTelefono(), empleado.getEmail(), empleado.getDireccion());
+        setRef(empleado.getRef());
+        setUsuario(empleado.getUsuario());
+        setPuesto(empleado.getPuesto());
+        setAntiguedad(empleado.getAntiguedad());
+    }
+
     // Fin Constructores
 
     // Inicio Setters
@@ -93,9 +101,10 @@ public class Empleado extends Persona implements Serializable {
 
     // Inicio Funciones
 
-    public void editarEmpleado (String nombre, String apellidos, String id, String telefono, String email, String direccion, String puesto, int antiguedad) {
+    public void editarEmpleado (String nombre, String apellidos, String usario, String id, String telefono, String email, String direccion, String puesto, int antiguedad) {
         setNombre(nombre);
         setApellidos(apellidos);
+        setUsuario(usuario);
         setId(id);
         setTelefono(telefono);
         setEmail(email);

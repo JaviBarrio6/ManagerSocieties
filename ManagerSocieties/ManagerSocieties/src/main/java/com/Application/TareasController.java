@@ -7,6 +7,7 @@ import com.Agenda.Empleados;
 import com.Inventario.*;
 import com.Tareas.Tarea;
 import com.Tareas.Tareas;
+import com.Usuario.Usuario;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class TareasController {
     Vehiculos vehiculos = new Vehiculos();
     ModelAndView tareasModel = new ModelAndView();
 
-    public ModelAndView tareas(){
+    public ModelAndView tareas(Usuario user){
         tareasModel.setViewName("tareas.html");
         tareasModel.addObject("tareas", tareas.tareas.values());
         tareasModel.addObject("clientes", clientes.clientes.values());
@@ -35,26 +36,27 @@ public class TareasController {
         tareasModel.addObject("productos", productos.productos.values());
         tareasModel.addObject("vehiculos", vehiculos.vehiculos.values());
         tareasModel.addObject("numTareas", tareas.tareas.values().size());
+        tareasModel.addObject("usuario", user);
         return tareasModel;
     }
 
-    public ModelAndView anyadirTarea (String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
+    public ModelAndView anyadirTarea (Usuario user, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
 
         Tarea tarea = new Tarea(clientes.clientes.get(cliente), empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
         tareas.tareas.put(tarea.getRef(), tarea);
 
-        return tareas();
+        return tareas(user);
     }
 
-    public ModelAndView borrarTarea (String ref){
+    public ModelAndView borrarTarea (Usuario user, String ref){
         tareas.tareas.remove(ref);
 
-        return tareas();
+        return tareas(user);
     }
 
-    public ModelAndView editarTarea (String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
+    public ModelAndView editarTarea (Usuario user, String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
         tareas.editarTarea(ref, clientes.clientes.get(cliente), empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
 
-        return tareas();
+        return tareas(user);
     }
 }

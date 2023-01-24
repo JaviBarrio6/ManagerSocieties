@@ -1,15 +1,8 @@
 package com.Tareas;
 
 import com.Agenda.Cliente;
-import com.Agenda.Clientes;
-import com.Agenda.Empleado;
-import com.Agenda.Empleados;
-import com.Inventario.Objeto;
-
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+
 
 public class Tarea implements Serializable {
 

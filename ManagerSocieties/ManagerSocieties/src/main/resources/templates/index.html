@@ -63,21 +63,21 @@
         <li class="nav-item dropdown pe-3">
           <!-- == Profile Image Icon == -->
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">J. Barrio</span>
+            <img th:src="${usuario.getImagenUrl()}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></span>
           </a>
           <!-- End Profile Image Icon -->
 
           <!-- == Profile Dropdown Items == -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Javier Barrio</h6>
-              <span>Administrador</span>
+              <h6 th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></h6>
+              <span th:if="${usuario.isAdmin()}">Administrador</span>
+              <span th:if="${!usuario.isAdmin()}">Empleado</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile">
                 <i class="bi bi-person"></i>
@@ -87,7 +87,6 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="edit-users-profile">
                 <i class="bi bi-gear"></i>
@@ -97,9 +96,27 @@
             <li>
               <hr class="dropdown-divider">
             </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-password">
+                <i class="bi bi-lock"></i>
+                <span>Cambiar Contraseña</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li th:if="${usuario.isAdmin()}">
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-enterprise">
+                <i class="bi bi-shop"></i>
+                <span>Empresa</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" th:href="@{/cerrar-sesion}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Salir</span>
               </a>
@@ -129,7 +146,7 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
+      <li th:if="${usuario.isAdmin()}" class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#agenda-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Agenda</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -163,7 +180,7 @@
         </a>
       </li><!-- End Calendario Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.isAdmin()}">
         <a class="nav-link collapsed" data-bs-target="#facturacion-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Facturación</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -188,7 +205,7 @@
         </ul>
       </li><!-- End Facturación Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.isAdmin()}">
         <a class="nav-link collapsed" href="finanzas">
           <i class="bi bi-cash-coin"></i>
           <span>Finanzas</span>
@@ -235,9 +252,9 @@
       </li>
       <!-- End Tareas Nav -->
 
-      <li class="nav-heading">Administrador</li>
+      <li th:if="${usuario.isAdmin()}" class="nav-heading">Administrador</li>
 
-      <li class="nav-item">
+      <li th:if="${usuario.isAdmin()}"class="nav-item">
         <a class="nav-link collapsed" href="pages-register">
           <i class="bi bi-card-list"></i>
           <span>Crear Usuario</span>
@@ -268,7 +285,7 @@
           <div class="row">
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-xxl-4 col-md-6" th:if="${usuario.isAdmin()}">
               <div class="card info-card sales-card">
 
                 <div class="filter">
@@ -278,9 +295,9 @@
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Año</a></li>
                   </ul>
                 </div>
 
@@ -303,7 +320,7 @@
             </div><!-- End Sales Card -->
 
             <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-xxl-4 col-md-6" th:if="${usuario.isAdmin()}">
               <div class="card info-card revenue-card">
 
                 <div class="filter">
@@ -313,9 +330,9 @@
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Año</a></li>
                   </ul>
                 </div>
 
@@ -337,7 +354,7 @@
             </div><!-- End Revenue Card -->
 
             <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
+            <div class="col-xxl-4 col-xl-12" th:if="${usuario.isAdmin()}">
 
               <div class="card info-card customers-card">
 
@@ -348,9 +365,9 @@
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Año</a></li>
                   </ul>
                 </div>
 
@@ -373,7 +390,7 @@
             </div><!-- End Customers Card -->
 
             <!-- Reports -->
-            <div class="col-12">
+            <div class="col-12" th:if="${usuario.isAdmin()}">
               <div class="card">
 
                 <div class="filter">
@@ -383,9 +400,9 @@
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Año</a></li>
                   </ul>
                 </div>
 
@@ -456,7 +473,7 @@
             </div><!-- End Reports -->
 
             <!-- Recent Sales -->
-            <div class="col-12">
+            <div class="col-12" th:if="${usuario.isAdmin()}">
               <div class="card recent-sales overflow-auto">
 
                 <div class="filter">
@@ -466,9 +483,9 @@
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Año</a></li>
                   </ul>
                 </div>
 
@@ -524,7 +541,7 @@
             </div><!-- End Recent Sales -->
 
             <!-- Top Selling -->
-            <div class="col-12">
+            <div class="col-12 " th:if="${usuario.isAdmin()}">
               <div class="card top-selling overflow-auto">
 
                 <div class="filter">
@@ -534,9 +551,9 @@
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Hoy</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Mes</a></li>
+                    <li><a class="dropdown-item" style="font-size: medium" href="#">Este Año</a></li>
                   </ul>
                 </div>
 
@@ -713,9 +730,9 @@
                   <h6>Filtrar</h6>
                 </li>
 
-                <li><a class="dropdown-item" href="#">Hoy</a></li>
-                <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                <li><a class="dropdown-item" href="#">Este Año</a></li>
+                <li><a class="dropdown-item" style="font-size: medium" href="#">Hoy</a></li>
+                <li><a class="dropdown-item" style="font-size: medium" href="#">Este Mes</a></li>
+                <li><a class="dropdown-item" style="font-size: medium" href="#">Este Año</a></li>
               </ul>
             </div>
 

@@ -1,11 +1,6 @@
 package com.Tareas;
 
 import com.Agenda.Cliente;
-import com.Agenda.Empleado;
-import com.Inventario.Herramienta;
-import com.Inventario.Producto;
-
-import java.util.Date;
 import java.util.LinkedHashMap;
 
 public class Tareas {

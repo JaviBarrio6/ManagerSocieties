@@ -1,4 +1,4 @@
-# Manager Societies V2.6.0
+# Manager Societies V2.8.0
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Control de Versiones](#control-de-versiones)
@@ -14,6 +14,8 @@
     + [V2.4.0](#V240)
     + [V2.5.0](#V250)
     + [V2.6.0](#V260)
+    + [V2.7.0](#V270)
+    + [V2.8.0](#V280)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -56,24 +58,34 @@ o revisión del código.
 ### V2.0.0
 
 * Con el fin del segundo Sprint se añade la maquetación HTML y CSS casi completa, abierta a mejoras o ciertos cambios, pero plantean la base
-para poder desarrollar la parte backend de la aplicación.
+para poder desarrollar la parte backend de la aplicación. Se añaden los diecisiete primeros templates de la aplicación.
 
 ### V2.1.0
 
 * Se genera el código Java utilizando Maven y Spring Boot para generar la parte Backend de la aplicación, se adaptan los archivos HTML, CSS y
 Javascript para mantener su correcto funcionamiento.
 
+
 * Se desarrolla la aplicación y el primer controlador que permite navegar por las distintas secciones de la aplicación.
+
+
+* Los controladores desarrollados son ApplicationController y CustomErrorController que permiten gestionar los errores y la visualización de los templates.
 
 ### V2.2.0
 
 * Se genera el código Java que permite la funcionalidad de crear clientes, modificarlos y borrarlos dentro de la Agenda, la funcionalidad de las
 facturas de los clientes quedan limitadas hasta la creación del apartado de facturación.
 
+
+* Para ello se crea la clase Persona y la Clase Cliente que hereda de la anterior. Además, creamos la clase Clientes donde se ubican los por defecto.
+
 ### V2.3.0
 
 * Se genera el código Java que permite la funcionalidad de toda la agenda, además, se realiza un refactor para mejorar el código realizado en la
 versión anterior. Y utilizada para el resto de la agenda, Clientes, Empleados, Empresas y Proveedores.
+
+
+* Creamos las clases Empleado, Empresa, Proveedor heredando de Persona, así como las clases plurales donde se registran los datos.
 
 ### V2.3.1
 
@@ -86,11 +98,23 @@ la agenda, de esta forma, nuestro controlador posee una mayor encapsulación y l
 
 ### V2.5.0
 
-* Se genera el código Java que permite la funcionalidad de toda el inventario a excepción de los productos.
+* Generamos la lógica para el inventario, creando la clase Objeto de la que herederan el resto. Nos encontramos con las clases Herramienta, Máquina, Material, Producto y Vehículo.
+Así como sus plurales de igual manera que en la agenda. Además, se crea el controlador InventarioController y se enlaza con el controlador de la aplicación.
 
 ### V2.6.0
 
-* Se genera el código Java que permite la funcionalidad de los productos del inventario.
+* Se genera el código Java y la lógica que permite la funcionalidad de los productos del inventario que no se implemento en la versión anterior.
+
+### V2.7.0
+
+* De igual manera que en las versiones anteriores se hace lo correspondiente para la sección de Tareas.
+
+### V2.8.0
+
+* Se genera la clase Usuario, Usuarios y Empresa. Que nos permite el Login en la aplicación a través del UsuarioController, así como cambiar la información de cada usuario y la edición y visualización de la información de la empresa para los administradores.
+
+
+* Además, se regula los campos visualizados por los administradores y por los empleados sin poderes de admin. Además, se plantea un refactor para el template del Index en el que se haga distinción para perfiles administradores y para los que no.
 
 
 ## Instalación:
@@ -99,13 +123,13 @@ la agenda, de esta forma, nuestro controlador posee una mayor encapsulación y l
 
 ## Herramientas Utilizadas:
 
-  + Visual Studio Code
-  + Trello
-  + Microsoft Word
   + Adobe Creator Reader
-  + Intel J Idea
-  + Git-Hub
   + Git-Bash
+  + Git-Hub
+  + Intel J Idea
+  + Microsoft Word
+  + Trello
+  + Visual Studio Code
 
 ## Autores
 * **Javier Barrio Martín** - *Programmer* - [Git Account](https://github.com/JaviBarrio6) - Mail: j.barrio.2016@alumnos.urjc.es

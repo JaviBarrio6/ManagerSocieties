@@ -1,50 +1,101 @@
 package com.Application;
 
-import com.Agenda.Cliente;
-import com.Agenda.Empleados;
-import com.Inventario.Objeto;
+import com.Usuario.Empresa;
+import com.Usuario.Usuario;
+import com.Application.CustomErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Optional;
 
 @Controller
 public class ApplicationController {
     ModelAndView model = new ModelAndView();
     AgendaController agendaController = new AgendaController();
     InventarioController inventarioController = new InventarioController();
-
     TareasController tareasController = new TareasController();
+    UsuarioController usuarioController = new UsuarioController();
+
+    Empresa empresa = new Empresa("empresa.png", "Superlux S.A.", "A58456484", "934212797", "superlux@superlux.com",
+            "Rambla Badal, 32, Barcelona, 08014", "ES0001822222110123456789");
+
+    Usuario usuario = new Usuario();
+
+    boolean log = false;
+
+    // Inicio Login
+
+    public boolean comprobarLog (Optional<Boolean> log){
+        return log.orElse(true);
+    }
+
     @RequestMapping("/")
-    public ModelAndView login() {
-        model.setViewName("pages-login.html");
-        return model;
+    public ModelAndView loginPageModel(Optional<Boolean> credencialesCorrectas) {
+        return usuarioController.loginPage(comprobarLog(credencialesCorrectas));
+    }
+
+    @RequestMapping("/login")
+    public ModelAndView loginModel(String username, String password) {
+       if (usuarioController.login(username, password)){
+           this.log = true;
+           this.usuario = usuarioController.dameUsuario(username, password);
+           return index();
+       } else {
+           return loginPageModel(Optional.of(false));
+       }
+    }
+
+    @RequestMapping("/cerrar-sesion")
+    public ModelAndView cerrarSesion (){
+        this.log = false;
+        return loginPageModel(Optional.of(true));
+    }
+
+    @RequestMapping("/pages-register")
+    public ModelAndView registerPagesModel() {
+        if (this.log){
+            return usuarioController.registerPage();
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/register")
+    public ModelAndView registerModel(String ref, String username, String password, boolean admin) {
+        if (this.log){
+            usuarioController.register(ref, username, password, admin);
+            return index();
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
     }
 
     // Inicio Agenda
 
-        // Inicio Clientes
+    // Inicio Clientes
 
     @RequestMapping("/agenda-clientes")
     public ModelAndView agendaClientesModel() {
-        return agendaController.agendaClientes();
+        if (this.usuario.isAdmin()){
+            return agendaController.agendaClientes(this.usuario);
+        } else {
+            return index();
+        }
     }
 
     @PostMapping("/anyadirCliente")
     public ModelAndView anyadirClienteModel(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
-        return agendaController.anyadirCliente(nombre, apellidos, id, telefono, correo, dir, premium);
+        return agendaController.anyadirCliente(this.usuario, nombre, apellidos, id, telefono, correo, dir, premium);
     }
 
     @PostMapping("/borrarCliente")
     public ModelAndView borrarClienteModel(String ref) {
-        return agendaController.borrarCliente(ref);
+        return agendaController.borrarCliente(this.usuario, ref);
     }
 
     @PostMapping("/editarCliente")
     public ModelAndView editarClienteModel(String ref, String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
-        return agendaController.editarCliente(ref, nombre, apellidos, id, telefono, correo, dir, premium);
+        return agendaController.editarCliente(this.usuario, ref, nombre, apellidos, id, telefono, correo, dir, premium);
     }
 
         // Fin Clientes
@@ -53,22 +104,26 @@ public class ApplicationController {
 
     @RequestMapping("/agenda-empleados")
     public ModelAndView agendaEmpleadosModel() {
-        return agendaController.agendaEmpleados();
+        if (this.usuario.isAdmin()){
+            return agendaController.agendaEmpleados(this.usuario);
+        } else {
+            return index();
+        }
     }
 
     @PostMapping("/anyadirEmpleado")
     public ModelAndView anyadirEmpleadoModel(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
-        return agendaController.anyadirEmpleado(nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, puesto);
+        return agendaController.anyadirEmpleado(this.usuario, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, puesto);
     }
 
     @PostMapping("/borrarEmpleado")
     public ModelAndView borrarEmpleadoModel(String ref) {
-        return agendaController.borrarEmpleado(ref);
+        return agendaController.borrarEmpleado(this.usuario, ref);
     }
 
     @PostMapping("/editarEmpleado")
     public ModelAndView editarEmpleadoModel(String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
-        return agendaController.editarEmpleado(ref, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, puesto);
+        return agendaController.editarEmpleado(this.usuario, ref, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, puesto);
     }
 
     // Fin Empleados
@@ -77,22 +132,26 @@ public class ApplicationController {
 
     @RequestMapping("/agenda-empresassubcontratadas")
     public ModelAndView agendaEmpresasSubcontratadasModel() {
-        return agendaController.agendaEmpresasSubcontratadas();
+        if (this.usuario.isAdmin()){
+            return agendaController.agendaEmpresasSubcontratadas(this.usuario);
+        } else {
+            return index();
+        }
     }
 
     @PostMapping("/anyadirEmpresa")
     public ModelAndView anyadirEmpresaModel(String nombre, String tipo, String id, String telefono, String email, String direccion) {
-        return agendaController.anyadirEmpresa(nombre, tipo, id, telefono, email, direccion);
+        return agendaController.anyadirEmpresa(this.usuario, nombre, tipo, id, telefono, email, direccion);
     }
 
     @PostMapping("/borrarEmpresa")
     public ModelAndView borrarEmpresaModel(String ref) {
-        return agendaController.borrarEmpresa(ref);
+        return agendaController.borrarEmpresa(this.usuario, ref);
     }
 
     @PostMapping("/editarEmpresa")
     public ModelAndView editarEmpresaModel(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
-        return agendaController.editarEmpresa(ref, nombre, tipo, id, telefono, email, direccion);
+        return agendaController.editarEmpresa(this.usuario, ref, nombre, tipo, id, telefono, email, direccion);
     }
 
     // Fin Empresas Subcontratadas
@@ -101,22 +160,26 @@ public class ApplicationController {
 
     @RequestMapping("/agenda-proveedores")
     public ModelAndView agendaProveedoresModel() {
-        return agendaController.agendaProveedores();
+        if (this.usuario.isAdmin()){
+            return agendaController.agendaProveedores(this.usuario);
+        } else {
+            return index();
+        }
     }
 
     @PostMapping("/anyadirProveedor")
     public ModelAndView anyadirProveedorModel(String nombre, String tipo, String id, String telefono, String email, String direccion) {
-        return agendaController.anyadirProveedor(nombre, tipo, id, telefono, email, direccion);
+        return agendaController.anyadirProveedor(this.usuario, nombre, tipo, id, telefono, email, direccion);
     }
 
     @PostMapping("/borrarProveedor")
     public ModelAndView borrarProveedorModel(String ref) {
-        return agendaController.borrarProveedor(ref);
+        return agendaController.borrarProveedor(this.usuario, ref);
     }
 
     @PostMapping("/editarProveedor")
     public ModelAndView editarProveedorModel(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
-        return agendaController.editarProveedor(ref, nombre, tipo, id, telefono, email, direccion);
+        return agendaController.editarProveedor(this.usuario, ref, nombre, tipo, id, telefono, email, direccion);
     }
 
     // Fin Proveedores
@@ -126,12 +189,7 @@ public class ApplicationController {
     @RequestMapping("/calendario")
     public ModelAndView calendario() {
         model.setViewName("calendario.html");
-        return model;
-    }
-
-    @RequestMapping("/edit-users-profile")
-    public ModelAndView editUsersProfile() {
-        model.setViewName("edit-users-profile.html");
+        model.addObject("usuario", this.usuario);
         return model;
     }
 
@@ -167,8 +225,13 @@ public class ApplicationController {
 
     @RequestMapping("/index")
     public ModelAndView index() {
-        model.setViewName("index.html");
-        return model;
+        if (this.log){
+            model.setViewName("index.html");
+            model.addObject("usuario", this.usuario);
+            return model;
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
     }
 
     // Inicio Inventario
@@ -177,22 +240,22 @@ public class ApplicationController {
 
     @RequestMapping("/inventario-herramientas")
     public ModelAndView inventarioHerramientasModel() {
-        return inventarioController.inventarioHerramientas();
+        return inventarioController.inventarioHerramientas(this.usuario);
     }
 
     @RequestMapping("/anyadirHerramienta")
     public ModelAndView anyadirHerramientaModel(String marca, String modelo, double precio, int cantidad) {
-        return inventarioController.anyadirHerramienta(marca, modelo, precio, cantidad);
+        return inventarioController.anyadirHerramienta(this.usuario, marca, modelo, precio, cantidad);
     }
 
     @RequestMapping("/borrarHerramienta")
     public ModelAndView borrarHerramientaModel(String ref) {
-        return inventarioController.borrarHerramienta(ref);
+        return inventarioController.borrarHerramienta(this.usuario, ref);
     }
 
     @RequestMapping("/editarHerramienta")
     public ModelAndView editarHerramientaModel(String ref, String marca, String modelo, double precio, int cantidad) {
-        return inventarioController.editarHerramienta(ref, marca, modelo, precio, cantidad);
+        return inventarioController.editarHerramienta(this.usuario, ref, marca, modelo, precio, cantidad);
     }
 
     // Fin Herramientas
@@ -201,22 +264,22 @@ public class ApplicationController {
 
     @RequestMapping("/inventario-maquinas")
     public ModelAndView inventarioMaquinasModel() {
-        return inventarioController.inventarioMaquinas();
+        return inventarioController.inventarioMaquinas(this.usuario);
     }
 
     @RequestMapping("/anyadirMaquina")
     public ModelAndView anyadirMaquinaModel(String marca, String modelo, double precio, int cantidad) {
-        return inventarioController.anyadirMaquina(marca, modelo, precio, cantidad);
+        return inventarioController.anyadirMaquina(this.usuario, marca, modelo, precio, cantidad);
     }
 
     @RequestMapping("/borrarMaquina")
     public ModelAndView borrarMaquinaModel(String ref) {
-        return inventarioController.borrarMaquina(ref);
+        return inventarioController.borrarMaquina(this.usuario, ref);
     }
 
     @RequestMapping("/editarMaquina")
     public ModelAndView editarMaquinaModel(String ref, String marca, String modelo, double precio, int cantidad) {
-        return inventarioController.editarMaquina(ref, marca, modelo, precio, cantidad);
+        return inventarioController.editarMaquina(this.usuario, ref, marca, modelo, precio, cantidad);
     }
 
     // Fin Máquinas
@@ -225,22 +288,22 @@ public class ApplicationController {
 
     @RequestMapping("/inventario-materiales")
     public ModelAndView inventarioMaterialesModel() {
-        return inventarioController.inventarioMateriales();
+        return inventarioController.inventarioMateriales(this.usuario);
     }
 
     @RequestMapping("/anyadirMaterial")
     public ModelAndView anyadirMaterialModel(String marca, String modelo, double precio, int cantidad, int unidades) {
-        return inventarioController.anyadirMaterial(marca, modelo, precio, cantidad, unidades);
+        return inventarioController.anyadirMaterial(this.usuario, marca, modelo, precio, cantidad, unidades);
     }
 
     @RequestMapping("/borrarMaterial")
     public ModelAndView borrarMaterialModel(String ref) {
-        return inventarioController.borrarMaterial(ref);
+        return inventarioController.borrarMaterial(this.usuario, ref);
     }
 
     @RequestMapping("/editarMaterial")
     public ModelAndView editarMaterialModel(String ref, String marca, String modelo, double precio, int cantidad, int unidades) {
-        return inventarioController.editarMaterial(ref, marca, modelo, precio, cantidad, unidades);
+        return inventarioController.editarMaterial(this.usuario, ref, marca, modelo, precio, cantidad, unidades);
     }
 
     // Fin Materiales
@@ -248,22 +311,22 @@ public class ApplicationController {
     // Inicio Productos
     @RequestMapping("/inventario-productos")
     public ModelAndView inventarioProductosModel() {
-        return inventarioController.inventarioProductos();
+        return inventarioController.inventarioProductos(this.usuario);
     }
 
     @RequestMapping("/anyadirProducto")
     public ModelAndView anyadirProductoModel (String modelo, double precio, int stock, String urlFoto){
-        return inventarioController.anyadirProducto(modelo, precio, stock, urlFoto);
+        return inventarioController.anyadirProducto(this.usuario, modelo, precio, stock, urlFoto);
     }
 
     @RequestMapping("/borrarProducto")
     public ModelAndView borrarProductoModel (String ref){
-        return inventarioController.borrarProducto(ref);
+        return inventarioController.borrarProducto(this.usuario, ref);
     }
 
     @RequestMapping("/editarProducto")
     public ModelAndView editarProductoModel (String ref, String modelo, double precio, int stock, String urlFoto){
-        return inventarioController.editarProducto(ref, modelo, precio, stock, urlFoto);
+        return inventarioController.editarProducto(this.usuario, ref, modelo, precio, stock, urlFoto);
     }
 
     // Fin Productos
@@ -272,22 +335,22 @@ public class ApplicationController {
 
     @RequestMapping("/inventario-vehiculos")
     public ModelAndView inventarioVehiculosModel() {
-        return inventarioController.inventarioVehiculos();
+        return inventarioController.inventarioVehiculos(this.usuario);
     }
 
     @RequestMapping("/anyadirVehiculo")
     public ModelAndView anyadirVehiculoModel(String marca, String modelo, String matricula, String color) {
-        return inventarioController.anyadirVehiculo(marca, modelo, matricula, color);
+        return inventarioController.anyadirVehiculo(this.usuario, marca, modelo, matricula, color);
     }
 
     @RequestMapping("/borrarVehiculo")
     public ModelAndView borrarVehiculoModel(String ref) {
-        return inventarioController.borrarVehiculo(ref);
+        return inventarioController.borrarVehiculo(this.usuario, ref);
     }
 
     @RequestMapping("/editarVehiculo")
     public ModelAndView editarVehiculoModel(String ref, String marca, String modelo, String matricula, String color) {
-        return inventarioController.editarVehiculo(ref, marca, modelo, matricula, color);
+        return inventarioController.editarVehiculo(this.usuario, ref, marca, modelo, matricula, color);
     }
 
     // Fin Vehículos
@@ -296,35 +359,88 @@ public class ApplicationController {
 
     @RequestMapping("/tareas")
     public ModelAndView tareasModel() {
-        return tareasController.tareas();
+        return tareasController.tareas(this.usuario);
     }
 
     @RequestMapping("/anyadirTarea")
     public ModelAndView anyadirTareaModel (String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
-        return tareasController.anyadirTarea(cliente, empleados,fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
+        return tareasController.anyadirTarea(this.usuario, cliente, empleados,fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
     }
 
     @RequestMapping("/borrarTarea")
     public ModelAndView borrarTareaModel (String ref){
-        return tareasController.borrarTarea(ref);
+        return tareasController.borrarTarea(this.usuario, ref);
     }
 
     @RequestMapping("/editarTarea")
     public ModelAndView editarTareaModel (String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
-        return tareasController.editarTarea(ref, cliente, empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
+        return tareasController.editarTarea(this.usuario, ref, cliente, empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
     }
 
     // Fin Tareas
 
-    @RequestMapping("/pages-register")
-    public ModelAndView register() {
-        model.setViewName("pages-register.html");
+    // Inicio Perfil del Usuario
+        @RequestMapping("/users-profile")
+    public ModelAndView usersProfileModel() {
+        model.setViewName("users-profile.html");
+        model.addObject("usuario", this.usuario);
+        model.addObject("empresa", this.empresa);
         return model;
     }
 
-    @RequestMapping("/users-profile")
-    public ModelAndView usersProfile() {
-        model.setViewName("users-profile.html");
+    @RequestMapping("/edit-users-profile")
+    public ModelAndView editUsersProfileModel() {
+        model.setViewName("edit-users-profile.html");
+        model.addObject("usuario", this.usuario);
+        model.addObject("empresa", this.empresa);
         return model;
     }
+
+    @RequestMapping("/edit-users-password")
+    public ModelAndView editUsersPasswordModel() {
+        model.setViewName("edit-users-password.html");
+        model.addObject("usuario", this.usuario);
+        model.addObject("empresa", this.empresa);
+        return model;
+    }
+
+    @RequestMapping("/edit-users-enterprise")
+    public ModelAndView editUsersEnterpriseModel() {
+        model.setViewName("edit-users-enterprise.html");
+        model.addObject("usuario", this.usuario);
+        model.addObject("empresa", this.empresa);
+        return model;
+    }
+
+    @RequestMapping("/editarUsuario")
+    public ModelAndView editarUsuarioModel(String imagen, String nombre, String apellidos, String dni, String telefono, String email,
+                                           String direccion, String antiguedad, String puesto){
+        usuarioController.editarUsuario(this.usuario, nombre, apellidos, dni, telefono, email, direccion, antiguedad, puesto, imagen);
+        agendaController.editarEmpleado(this.usuario, this.usuario.getEmpleado().getRef(), nombre, apellidos, this.usuario.getEmpleado().getUsuario(), dni, telefono, email, direccion, antiguedad, puesto);
+        this.usuario = usuarioController.dameUsuario(this.usuario.getEmpleado().getUsuario(), this.usuario.getContrasenya());
+        return usersProfileModel();
+    }
+
+    @RequestMapping("/editarContrasenya")
+    public ModelAndView editarContrasenyaModel(String password, String newPassword, String renewPassword){
+        if (!newPassword.equals(renewPassword)){
+            return usersProfileModel();
+        } else {
+            usuarioController.editarContrasenya(this.usuario, password, newPassword);
+            this.usuario = usuarioController.dameUsuario(this.usuario.getEmpleado().getUsuario(), this.usuario.getContrasenya());
+            return usersProfileModel();
+        }
+    }
+
+    @RequestMapping("/editarEmpresaPropia")
+    public ModelAndView editarPropiaEmpresaModel(String logo, String nombre, String cif, String telefono, String email, String direccion, String iban){
+        if (logo != null){
+            this.empresa = new Empresa(logo, nombre, cif, telefono, email, direccion, iban);
+        } else {
+            this.empresa.editarEmpresa(nombre, cif, telefono, email, direccion, iban);
+        }
+        return usersProfileModel();
+    }
+
+    // Fin Perfil del Usuario
 }

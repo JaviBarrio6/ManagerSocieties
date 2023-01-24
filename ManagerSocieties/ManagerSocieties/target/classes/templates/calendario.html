@@ -30,74 +30,41 @@
   <link href="/css/style.css" rel="stylesheet">
 
   <!-- CSS & JS File of Calendar Page -->
-  <link href='/vendor/calendar/lib/main.css' rel='stylesheet' />
-    <script src='/vendor/calendar/lib/main.js'></script>
-    <script>
-
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    
-    const date = new Date();
-    currYear = date.getFullYear(),
-    month = date.getMonth() + 1;
-    currMonth = month.toString();
-    day = date.getDate();
-    currDay = day.toString();
-    if (currMonth < 10)
-      currMonth = '0'.concat(currMonth)
-
-    if (currDay < 10)
-      currDay = '0'.concat(currDay),
-      console.log(currDay);
-
-    today = currYear + '-' + currMonth + '-' + currDay;
-
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      
-      height: 800,
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+  <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
+  <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
+  <script src="/js/tuiCalendar.js"></script>
+  <script>
+    const container = document.getElementById('calendar');
+    const options = {
+      defaultView: 'week',
+      timezone: {
+        zones: [
+          {
+            timezoneName: 'Asia/Seoul',
+            displayLabel: 'Seoul',
+          },
+          {
+            timezoneName: 'Europe/London',
+            displayLabel: 'London',
+          },
+        ],
       },
-      businessHours: {
-        daysOfWeek : [1,2,3,4,5],
-        startTime: '07:00',
-        endTime:  '20:00'
-      },
+      calendars: [
+        {
+          id: 'cal1',
+          name: 'Personal',
+          backgroundColor: '#03bd9e',
+        },
+        {
+          id: 'cal2',
+          name: 'Work',
+          backgroundColor: '#00a9ff',
+        },
+      ],
+    };
 
-      initialDate: today,
-      fixedWeekCount: false,
-      navLinks: true, // can click day/week names to navigate views
-      selectable: true,
-      selectMirror: true,
-      firstDay: 1,
-      select: function(arg) {
-        var title = prompt('Descripción del Evento:');
-        if (title) {
-          calendar.addEvent({
-            title: title,
-            start: arg.start,
-            end: arg.end,
-            allDay: arg.allDay
-          })
-        }
-        calendar.unselect()
-      },
-      eventClick: function(arg) {
-        if (confirm('¿Desea eliminar el evento?')) {
-          arg.event.remove()
-        }
-      },
-      editable: true,
-      dayMaxEvents: true, // allow "more" link when too many events
-      events: []
-    });
-    calendar.render();
-  });
-
-    </script>
+    const calendar = new Calendar(container, options);
+  </script>
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.4.0
@@ -132,19 +99,20 @@ document.addEventListener('DOMContentLoaded', function() {
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">J. Barrio</span>
+            <img th:src="${usuario.getImagenUrl()}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></span>
           </a><!-- End Profile Iamge Icon -->
 
+          <!-- == Profile Dropdown Items == -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Javier Barrio</h6>
-              <span>Administrador</span>
+              <h6 th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></h6>
+              <span th:if="${usuario.isAdmin()}">Administrador</span>
+              <span th:if="${!usuario.isAdmin()}">Empleado</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile">
                 <i class="bi bi-person"></i>
@@ -154,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="edit-users-profile">
                 <i class="bi bi-gear"></i>
@@ -164,9 +131,27 @@ document.addEventListener('DOMContentLoaded', function() {
             <li>
               <hr class="dropdown-divider">
             </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-password">
+                <i class="bi bi-lock"></i>
+                <span>Cambiar Contraseña</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li th:if="${usuario.isAdmin()}">
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-enterprise">
+                <i class="bi bi-shop"></i>
+                <span>Empresa</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" th:href="@{/cerrar-sesion}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Salir</span>
               </a>
@@ -192,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" data-bs-target="#agenda-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Agenda</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -226,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </li><!-- End Calendario Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" data-bs-target="#facturacion-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Facturación</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -251,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </ul>
       </li><!-- End Facturación Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="finanzas">
           <i class="bi bi-cash-coin"></i>
           <span>Finanzas</span>
@@ -298,9 +283,9 @@ document.addEventListener('DOMContentLoaded', function() {
       </li>
       <!-- End Tareas Nav -->
 
-      <li class="nav-heading">Administrador</li>
+      <li class="nav-heading" th:if="${usuario.admin}">Administrador</li>
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="pages-register">
           <i class="bi bi-card-list"></i>
           <span>Crear Usuario</span>
@@ -332,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <div id = "calendar"></div>
+                  <div id = "calendar" style="height: 600px;"></div>
                 </div>
               </div>
             </div>

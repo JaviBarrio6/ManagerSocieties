@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Editar Perfil de Usuario - Manager Societies</title>
+  <title>Perfil de Usuario - Manager Societies</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -59,21 +59,21 @@
         <li class="nav-item dropdown pe-3">
           <!-- == Profile Image Icon == -->
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">J. Barrio</span>
+            <img th:src="${usuario.getImagenUrl()}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></span>
           </a>
           <!-- End Profile Image Icon -->
 
           <!-- == Profile Dropdown Items == -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Javier Barrio</h6>
-              <span>Administrador</span>
+              <h6 th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></h6>
+              <span th:if="${usuario.isAdmin()}">Administrador</span>
+              <span th:if="${!usuario.isAdmin()}">Empleado</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile">
                 <i class="bi bi-person"></i>
@@ -83,7 +83,6 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="edit-users-profile">
                 <i class="bi bi-gear"></i>
@@ -93,9 +92,27 @@
             <li>
               <hr class="dropdown-divider">
             </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-password">
+                <i class="bi bi-lock"></i>
+                <span>Cambiar Contraseña</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li th:if="${usuario.isAdmin()}">
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-enterprise">
+                <i class="bi bi-shop"></i>
+                <span>Empresa</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" th:href="@{/cerrar-sesion}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Salir</span>
               </a>
@@ -125,7 +142,7 @@
         </a>
       </li><!-- End Dashoard Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" data-bs-target="#agenda-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Agenda</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -159,7 +176,7 @@
         </a>
       </li><!-- End Calendario Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" data-bs-target="#facturacion-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Facturación</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -184,7 +201,7 @@
         </ul>
       </li><!-- End Facturación Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="finanzas">
           <i class="bi bi-cash-coin"></i>
           <span>Finanzas</span>
@@ -231,9 +248,9 @@
       </li>
       <!-- End Tareas Nav -->
 
-      <li class="nav-heading">Administrador</li>
+      <li class="nav-heading" th:if="${usuario.admin}">Administrador</li>
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="pages-register">
           <i class="bi bi-card-list"></i>
           <span>Crear Usuario</span>
@@ -263,10 +280,16 @@
 
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-              <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2>Javier Barrio</h2>
-              <h3>CEO</h3>
+              <img th:src="${usuario.getImagenUrl()}" alt="Profile" class="rounded-circle">
+              <h2 th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></h2>
+              <h3 th:text="${usuario.getEmpleado().getPuesto()}"></h3>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+              <img src="/img/empresa.png" alt="Profile">
+              <h2 th:text="${empresa.getNombre()}"></h2>
+              <h3 th:text="${empresa.getCif()}"></h3>
             </div>
           </div>
 
@@ -291,6 +314,10 @@
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Cambiar Contraseña</button>
                 </li>
 
+                <li class="nav-item" th:if="${usuario.admin}">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-enterprise">Empresa</button>
+                </li>
+
               </ul>
               <div class="tab-content pt-2">
 
@@ -299,102 +326,87 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Nombre Completo</div>
-                    <div class="col-lg-9 col-md-8">Javier Barrio</div>
+                    <div class="col-lg-9 col-md-8" th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Usuario</div>
-                    <div class="col-lg-9 col-md-8">jbarrio</div>
+                    <div class="col-lg-9 col-md-8" th:text="${usuario.getEmpleado().getUsuario()}"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">DNI</div>
-                    <div class="col-lg-9 col-md-8">53852636E</div>
+                    <div class="col-lg-9 col-md-8" th:text="${usuario.getEmpleado().getId()}"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Teléfono</div>
-                    <div class="col-lg-9 col-md-8">608844077</div>
+                    <div class="col-lg-9 col-md-8" th:text="${usuario.getEmpleado().getTelefono()}"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Correo</div>
-                    <div class="col-lg-9 col-md-8">jbarrio@example.com</div>
+                    <div class="col-lg-9 col-md-8" th:text="${usuario.getEmpleado().getEmail()}"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Dirección</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                    <div class="col-lg-9 col-md-8" th:text="${usuario.getEmpleado().getDireccion()}"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Puesto</div>
-                    <div class="col-lg-9 col-md-8">CEO</div>
+                    <div class="col-lg-9 col-md-8" th:text="${usuario.getEmpleado().getPuesto()}"></div>
                   </div>
                 </div>
 
                 <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagen de Perfil</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="/img/profile-img.jpg" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
-                      </div>
+                  <form action = "#" th:action="@{/editarUsuario}" method="post">
+                    <div class="row mb-3 input-group">
+                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label input-group-text">Imagen</label>
+                      <input name="profileImage" type="file" class="form-control" id="profileImage">
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nombre Completo</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Javier Barrio">
-                      </div>
+                    <div class="row mb-3 input-group">
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label input-group-text">Nombre</label>
+                      <input name="nombre" type="text" class="form-control" id="fullName" th:value="${usuario.getEmpleado().getNombre()}">
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">Usuario</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="about" type="text" class="form-control" id="user" value = "jbarrio">
-                      </div>
+                    <div class="row mb-3 input-group">
+                      <label for="apellidos" class="col-md-4 col-lg-3 col-form-label input-group-text">Apellidos</label>
+                      <input name="apellidos" type="text" class="form-control" id="apellidos" th:value="${usuario.getEmpleado().getApellidos()}">
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">DNI</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="dni" value="53852636E">
-                      </div>
+                    <div class="row mb-3 input-group">
+                      <label for="dni" class="col-md-4 col-lg-3 col-form-label input-group-text">DNI</label>
+                      <input name="dni" type="text" class="form-control" id="dni" th:value="${usuario.getEmpleado().getId()}">
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Teléfono</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="608844077">
-                      </div>
+                    <div class="row mb-3 input-group">
+                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label input-group-text">Teléfono</label>
+                        <input name="telefono" type="text" class="form-control" id="Phone" th:value="${usuario.getEmpleado().getTelefono()}">
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Correo</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="jbarrio@example.com">
-                      </div>
+                    <div class="row mb-3 input-group">
+                      <label for="Email" class="col-md-4 col-lg-3 col-form-label input-group-text">Correo</label>
+                      <input name="email" type="email" class="form-control" id="Email" th:value="${usuario.getEmpleado().getEmail()}">
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Dirección</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
-                      </div>
+                    <div class="row mb-3 input-group">
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label input-group-text">Dirección</label>
+                      <input name="direccion" type="text" class="form-control" id="Address" th:value="${usuario.getEmpleado().getDireccion()}">
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Puesto</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="CEO">
-                      </div>
+                    <div class="row mb-3 input-group">
+                      <label for="antiguedad" class="col-md-4 col-lg-3 col-form-label input-group-text">Antigüedad</label>
+                      <input name="antiguedad" type="text" class="form-control" id="antiguedad" th:value="${usuario.getEmpleado().getAntiguedad()}" readonly>
+                    </div>
+
+                    <div class="row mb-3 input-group">
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label input-group-text">Puesto</label>
+                      <input name="puesto" type="text" class="form-control" id="Job" th:value="${usuario.getEmpleado().getPuesto()}">
                     </div>
 
                     <div class="text-center">
@@ -406,31 +418,76 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
+                  <form action = "#" th:action="@{/editarContrasenya}" method="post">
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Contraseña Actual</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
+                        <input name="password" type="password" class="form-control" id="currentPassword" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Contraseña Nueva</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        <input name="newPassword" type="password" class="form-control" id="newPassword" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Confirmar Contraseña Nueva</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                        <input name="renewPassword" type="password" class="form-control" id="renewPassword" required>
                       </div>
                     </div>
 
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                    </div>
+                  </form><!-- End Change Password Form -->
+
+                </div>
+
+                <div class="tab-pane fade pt-3" id="profile-enterprise">
+                  <!-- Change Password Form -->
+                  <form action = "#" th:action="@{/editarEmpresaPropia}" method="post">
+                    <div class="row mb-3 input-group">
+                      <label for="logo" class="col-md-4 col-lg-3 col-form-label input-group-text">Logo</label>
+                      <input name="logo" type="file" class="form-control" id="logo">
+                    </div>
+
+                    <div class="row mb-3 input-group">
+                      <label for="nombre" class="col-md-4 col-lg-3 col-form-label input-group-text">Nombre</label>
+                      <input name="nombre" type="text" class="form-control" id="nombre" th:value="${empresa.getNombre()}">
+                    </div>
+
+                    <div class="row mb-3 input-group">
+                      <label for="cif" class="col-md-4 col-lg-3 col-form-label input-group-text">CIF</label>
+                      <input name="cif" type="text" class="form-control" id="cif" th:value="${empresa.getCif()}">
+                    </div>
+
+                    <div class="row mb-3 input-group">
+                      <label for="telefono" class="col-md-4 col-lg-3 col-form-label input-group-text">Teléfono</label>
+                      <input name="telefono" type="text" class="form-control" id="telefono" th:value="${empresa.getTelefono()}">
+                    </div>
+
+                    <div class="row mb-3 input-group">
+                      <label for="Email" class="col-md-4 col-lg-3 col-form-label input-group-text">Correo</label>
+                      <input name="email" type="email" class="form-control" th:value="${empresa.getEmail()}">
+                    </div>
+
+                    <div class="row mb-3 input-group">
+                      <label for="direccion" class="col-md-4 col-lg-3 col-form-label input-group-text">Dirección</label>
+                      <input name="direccion" type="text" class="form-control" id="direccion" th:value="${empresa.getDireccion()}">
+                    </div>
+
+                    <div class="row mb-3 input-group">
+                      <label for="iban" class="col-md-4 col-lg-3 col-form-label input-group-text">IBAN</label>
+                      <input name="iban" type="text" class="form-control" id="iban" th:value="${empresa.getIban()}">
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
