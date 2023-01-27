@@ -30,42 +30,7 @@
   <link href="/css/style.css" rel="stylesheet">
 
   <!-- CSS & JS File of Calendar Page -->
-  <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
-  <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
-  <script src="/js/tuiCalendar.js"></script>
-  <script>
-    const container = document.getElementById('calendar');
-    const options = {
-      defaultView: 'week',
-      timezone: {
-        zones: [
-          {
-            timezoneName: 'Asia/Seoul',
-            displayLabel: 'Seoul',
-          },
-          {
-            timezoneName: 'Europe/London',
-            displayLabel: 'London',
-          },
-        ],
-      },
-      calendars: [
-        {
-          id: 'cal1',
-          name: 'Personal',
-          backgroundColor: '#03bd9e',
-        },
-        {
-          id: 'cal2',
-          name: 'Work',
-          backgroundColor: '#00a9ff',
-        },
-      ],
-    };
-
-    const calendar = new Calendar(container, options);
-  </script>
-
+  <link href='/vendor/calendar/calendar.css' rel='stylesheet'/>
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.4.0
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -308,6 +273,7 @@
       </nav>
     </div><!-- End Page Title -->
 
+    <!-- Calendario -->
     <section class="section dashboard">
       <div class="row">
         <!-- Top Clientes -->
@@ -316,8 +282,66 @@
             <!-- Clientes Card -->
             <div class="col-12">
               <div class="card">
-                <div class="card-body">
-                  <div id = "calendar" style="height: 600px;"></div>
+                <div>
+                  <div class="card-body text-center">
+                    <div class="text-center">
+                      <h2 class="card-title" th:text="${mesEscrito + ' de ' + anyo}"></h2>
+                    </div>
+                    <div class="row d-inline">
+                      <div class="d-inline">
+                        <form class="d-inline" action="#" th:action="@{/antMes}" method="post">
+                          <button type="submit" class="btn btn-sm calendar-btn" name="fecha" th:value="${mes} + ' ' + ${anyo}">
+                            <i class="bi bi-arrow-left"></i>
+                          </button>
+                        </form>
+
+                      </div>
+                      <div class="d-inline">
+                        <form class="d-inline" action="#" th:action="@{/calendario}" method="post">
+                          <button type="submit" class="d-inline btn btn-sm calendar-btn">Hoy</button>
+                        </form>
+                        <form class="d-inline" action="#" th:action="@{/anyadirEvento}" method="post">
+                          <button type="submit" class="d-inline btn btn-sm calendar-btn">Añadir Evento</button>
+                        </form>
+                      </div>
+                      <div class="d-inline">
+                        <form class="d-inline" action="#" th:action="@{/sigMes}" method="post">
+                          <button type="submit" class="btn btn-sm calendar-btn" name="fecha" th:value="${mes} + ' ' + ${anyo}">
+                            <i class="bi bi-arrow-right"></i>
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-2 px-4">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="calendar-col text-center" scope="col">Lun</th>
+                        <th class="calendar-col text-center" scope="col">Mar</th>
+                        <th class="calendar-col text-center" scope="col">Mie</th>
+                        <th class="calendar-col text-center" scope="col">Jue</th>
+                        <th class="calendar-col text-center" scope="col">Vie</th>
+                        <th class="calendar-col text-center" scope="col">Sab</th>
+                        <th class="calendar-col text-center" scope="col">Dom</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="semana: ${semanas}">
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} == ${fechaActual[1]}) and (${dias[2] < fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} > ${fechaActual[1]}) and (${dias[2] < fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} < ${fechaActual[1]}) and (${dias[2] == fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[0]} < ${fechaActual[0]}) and (${dias[1] == fechaActual[1]}) and (${dias[2]} == ${fechaActual[2]})" class="text-end border border-2 calendar-day-cell"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[0]} == ${fechaActual[0]}) and (${dias[1] == fechaActual[1]}) and (${dias[2]} == ${fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-day"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[0]} > ${fechaActual[0]}) and (${dias[1] == fechaActual[1]}) and (${dias[2]} == ${fechaActual[2]})" class="text-end border border-2 calendar-day-cell"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} > ${fechaActual[1]}) and (${dias[2] == fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} < ${fechaActual[1]}) and (${dias[2] > fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} == ${fechaActual[1]}) and (${dias[2] > fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
+                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} > ${fechaActual[1]}) and (${dias[2] > fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

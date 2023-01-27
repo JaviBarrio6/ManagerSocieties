@@ -684,7 +684,7 @@ progress {
   margin-top: var(--bs-gutter-y);
 }
 
-.col {
+.calendar-col {
   flex: 1 0 0%;
 }
 

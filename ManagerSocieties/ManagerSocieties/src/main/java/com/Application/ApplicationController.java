@@ -2,7 +2,6 @@ package com.Application;
 
 import com.Usuario.Empresa;
 import com.Usuario.Usuario;
-import com.Application.CustomErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +14,7 @@ public class ApplicationController {
     InventarioController inventarioController = new InventarioController();
     TareasController tareasController = new TareasController();
     UsuarioController usuarioController = new UsuarioController();
+    CalendarioController calendarioController = new CalendarioController();
 
     Empresa empresa = new Empresa("empresa.png", "Superlux S.A.", "A58456484", "934212797", "superlux@superlux.com",
             "Rambla Badal, 32, Barcelona, 08014", "ES0001822222110123456789");
@@ -187,10 +187,36 @@ public class ApplicationController {
     // Fin Agenda
 
     @RequestMapping("/calendario")
-    public ModelAndView calendario() {
-        model.setViewName("calendario.html");
-        model.addObject("usuario", this.usuario);
-        return model;
+    public ModelAndView calendarioModel() {
+        if (this.log){
+            return calendarioController.renderCalendar(this.usuario);
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping ("/sigMes")
+    public ModelAndView sigMesModel (String fecha){
+        if (this.log){
+            String[] fechaAux = fecha.split(" ");
+            int mes = Integer.parseInt(fechaAux[0]);
+            int anyo = Integer.parseInt(fechaAux[1]);
+            return calendarioController.renderCalendar(this.usuario, mes + 1, anyo);
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping ("/antMes")
+    public ModelAndView antMesModel (String fecha){
+        if (this.log){
+            String[] fechaAux = fecha.split(" ");
+            int mes = Integer.parseInt(fechaAux[0]);
+            int anyo = Integer.parseInt(fechaAux[1]);
+            return calendarioController.renderCalendar(this.usuario, mes - 1, anyo);
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
     }
 
     @RequestMapping("/facturacion-albaranes")

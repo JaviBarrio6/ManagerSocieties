@@ -16,6 +16,7 @@
     + [V2.6.0](#V260)
     + [V2.7.0](#V270)
     + [V2.8.0](#V280)
+    + [V2.9.0](#V290)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -77,7 +78,7 @@ Javascript para mantener su correcto funcionamiento.
 facturas de los clientes quedan limitadas hasta la creación del apartado de facturación.
 
 
-* Para ello se crea la clase Persona y la Clase Cliente que hereda de la anterior. Además, creamos la clase Clientes donde se ubican los por defecto.
+* Para ello se crea la clase Persona y la Clase Cliente que hereda de la anterior. Además, generamos la clase Clientes donde se ubican los por defecto.
 
 ### V2.3.0
 
@@ -98,12 +99,12 @@ la agenda, de esta forma, nuestro controlador posee una mayor encapsulación y l
 
 ### V2.5.0
 
-* Generamos la lógica para el inventario, creando la clase Objeto de la que herederan el resto. Nos encontramos con las clases Herramienta, Máquina, Material, Producto y Vehículo.
-Así como sus plurales de igual manera que en la agenda. Además, se crea el controlador InventarioController y se enlaza con el controlador de la aplicación.
+* Generamos la lógica para el inventario, creando la clase Objeto de la que herederán el resto. Nos encontramos con las clases Herramienta, Máquina, Material, Producto y Vehículo.
+Así como sus plurales de igual manera que en la agenda. Además, se genera el controlador InventarioController y se enlaza con el controlador de la aplicación.
 
 ### V2.6.0
 
-* Se genera el código Java y la lógica que permite la funcionalidad de los productos del inventario que no se implemento en la versión anterior.
+* Se genera el código Java y la lógica que permite la funcionalidad de los productos del inventario que no se implementó en la versión anterior.
 
 ### V2.7.0
 
@@ -114,8 +115,14 @@ Así como sus plurales de igual manera que en la agenda. Además, se crea el con
 * Se genera la clase Usuario, Usuarios y Empresa. Que nos permite el Login en la aplicación a través del UsuarioController, así como cambiar la información de cada usuario y la edición y visualización de la información de la empresa para los administradores.
 
 
-* Además, se regula los campos visualizados por los administradores y por los empleados sin poderes de admin. Además, se plantea un refactor para el template del Index en el que se haga distinción para perfiles administradores y para los que no.
+* Además, se regula los campos visualizados por los administradores y por los empleados sin poderes de admin. Adicionalmente, se plantea un refactor para la plantilla del Index en el que se haga distinción para perfiles administradores y para los que no.
 
+### V2.9.0
+
+* Se ha eliminado el calendario diseñado anteriormente mediante JavaScript, para diseñar uno nuevo mediante HTML & CSS. A su vez, se ha elaborado un controlador para el Calendario que nos permite desplazarnos por los diferentes meses y años.
+
+
+* Para el correcto funcionamiento del controlador hemos diseñado la clase Mes, donde cada mes tiene un número de días y un nombre asociado. Además, la clase Calendario con todos los métodos e información necesarios.
 
 ## Instalación:
 
