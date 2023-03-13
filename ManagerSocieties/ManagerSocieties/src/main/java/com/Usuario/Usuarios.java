@@ -13,7 +13,7 @@ public class Usuarios {
 
     Usuario usuario02 = new Usuario(new Empleado("EMP0002","Paco", "López", "53852030Z", "674851283", "plopez@gmail.com",
             "Av. Guadarama 21, S.S. de los Reyes", "plopez", "Repartidor", 0), "1234",
-            false, "profile-img.jpg");
+            false, null);
 
     Usuario usuario03 = new Usuario(new Empleado("EMP0005","María del Mar", "Martín", "53852636E", "607849292", "superlux@superlux.com",
             "C. Enriq Prat de la Riba", "mmar", "CEO", 30), "1234",

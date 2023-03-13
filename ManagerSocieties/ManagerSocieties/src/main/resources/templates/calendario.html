@@ -282,6 +282,104 @@
             <!-- Clientes Card -->
             <div class="col-12">
               <div class="card">
+
+                <!-- Crear Evento -->
+                <div class="modal fade" id="crearEvento" tabindex="-1" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Crear Evento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body card">
+                        <div class="card-body">
+                          <form action = "#" th:action="@{/anyadirEvento}" method="post">
+                            <div class="row mb-3 input-group">
+                              <label class="col-3 col-form-label input-group-text">Tarea Asociada</label>
+                              <input id="tareaAsociada" name="tareaAsociada" type="text" class="form-control">
+                            </div>
+                            <div class="row mb-3 input-group">
+                              <label class="col-3 col-form-label input-group-text">Título</label>
+                              <input id="titulo" name="titulo" type="text" class="form-control" required>
+                            </div>
+                            <div class="row mb-3 input-group">
+                              <label class="col-3 col-form-label input-group-text">Fecha Inicio</label>
+                              <input id="fechaInicio" name="fechaInicio" type="date" class="form-control" required>
+                            </div>
+                            <div class="row mb-3 input-group">
+                              <label for="fechaFin" class="col-3 col-form-label input-group-text">Fecha Fin</label>
+                              <input id="fechaFin" name="fechaFin" type="date" class="form-control">
+                            </div>
+                            <div class="row mb-3 input-group">
+                              <label for="horaInicio" class="col-3 col-form-label input-group-text">Hora Inicio</label>
+                              <input id="horaInicio" name="horaInicio" type="time" class="form-control" required>
+                            </div>
+                            <div class="row mb-3 input-group">
+                              <label for="horaFin" class="col-3 col-form-label input-group-text">Hora Fin</label>
+                              <input id="horaFin" name="horaFin" type="time" class="form-control" required>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                              <button type="submit" class="btn btn-primary" onclick="">Crear Evento</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Información de Evento -->
+                <div th:each="evento: ${eventos}" class="modal fade" th:id="mostrarInfoEvento+${evento.getRef()}" tabindex="-1" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Info Evento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body card">
+                        <div class="card-body">
+                          <div class="row mb-3 input-group">
+                            <span class="col-3 col-form-label input-group-text">Ref</span>
+                            <input th:value="${evento.getRef()}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-3 input-group">
+                            <span class="col-3 col-form-label input-group-text">Tarea Asociada</span>
+                            <input th:value="${evento.getRefTarea()}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-3 input-group">
+                            <span class="col-3 col-form-label input-group-text">Titulo</span>
+                            <input th:value="${evento.getTitulo()}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-3 input-group">
+                            <span class="col-3 col-form-label input-group-text">Fecha Inicio</span>
+                            <input th:value="${evento.getFechaInicio()}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-3 input-group">
+                            <span class="col-3 col-form-label input-group-text">Fecha Fin</span>
+                            <input th:value="${evento.getFechaFin()}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-3 input-group">
+                            <span class="col-3 col-form-label input-group-text">Hora Inicio</span>
+                            <input th:value="${evento.getHoraInicio()}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-3 input-group">
+                            <span class="col-3 col-form-label input-group-text">Hora Fin</span>
+                            <input th:value="${evento.getHoraFin()}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="modal-footer">
+                            <form class="d-inline" action="#" th:action="@{/borrarEvento}" method="post" th:if="${usuario.isAdmin()}">
+                              <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" name="ref" th:value="${evento.getRef()}">Borrar</button>
+                            </form>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Calendario -->
                 <div>
                   <div class="card-body text-center">
                     <div class="text-center">
@@ -300,9 +398,7 @@
                         <form class="d-inline" action="#" th:action="@{/calendario}" method="post">
                           <button type="submit" class="d-inline btn btn-sm calendar-btn">Hoy</button>
                         </form>
-                        <form class="d-inline" action="#" th:action="@{/anyadirEvento}" method="post">
-                          <button type="submit" class="d-inline btn btn-sm calendar-btn">Añadir Evento</button>
-                        </form>
+                        <button data-bs-toggle="modal" data-bs-target="#crearEvento" class="d-inline btn btn-sm calendar-btn">Añadir Evento</button>
                       </div>
                       <div class="d-inline">
                         <form class="d-inline" action="#" th:action="@{/sigMes}" method="post">
@@ -329,16 +425,15 @@
                     </thead>
                     <tbody>
                       <tr th:each="semana: ${semanas}">
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} == ${fechaActual[1]}) and (${dias[2] < fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} > ${fechaActual[1]}) and (${dias[2] < fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} < ${fechaActual[1]}) and (${dias[2] == fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[0]} < ${fechaActual[0]}) and (${dias[1] == fechaActual[1]}) and (${dias[2]} == ${fechaActual[2]})" class="text-end border border-2 calendar-day-cell"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[0]} == ${fechaActual[0]}) and (${dias[1] == fechaActual[1]}) and (${dias[2]} == ${fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-day"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[0]} > ${fechaActual[0]}) and (${dias[1] == fechaActual[1]}) and (${dias[2]} == ${fechaActual[2]})" class="text-end border border-2 calendar-day-cell"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} > ${fechaActual[1]}) and (${dias[2] == fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} < ${fechaActual[1]}) and (${dias[2] > fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} == ${fechaActual[1]}) and (${dias[2] > fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
-                        <td th:each="dias: ${semana}" th:text="${dias[0]}" th:if="(${dias[1]} > ${fechaActual[1]}) and (${dias[2] > fechaActual[2]})" class="text-end border border-2 calendar-day-cell calendar-inactive"></td>
+                        <td th:each="fecha: ${semana}" th:inline="text" th:classappend="(${fecha[0]} == ${fechaActual[0]}) and (${fecha[1] == fechaActual[1]}) and (${fecha[2]} == ${fechaActual[2]}) ? 'calendar-day' :
+                          ((${fecha[0]} < ${fechaActual[0]}) and (${fecha[1] == fechaActual[1]}) and (${fecha[2]} == ${fechaActual[2]}) ? '' :
+                            ((${fecha[0]} > ${fechaActual[0]}) and (${fecha[1] == fechaActual[1]}) and (${fecha[2]} == ${fechaActual[2]}) ? '' : 'calendar-inactive'))" class="text-end border border-2 calendar-day-cell">
+                            [[${fecha[0]}]]
+                            <div th:each="evento:${eventos}" th:if="${evento.getFechaInicio().equals(evento.darFormatoFecha(fecha[0], fecha[1], fecha[2]))}" class="calendar-event" role="alert">
+                              <a style="color: white" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoEvento+${evento.getRef()}"><i class="bi bi-info-circle me-1 ms-1"></i></a>
+                              <span th:text="${evento.getHoraInicio() + ' / ' + evento.getHoraFin() + ' - ' + evento.getTitulo()}"></span>
+                            </div>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

@@ -1,4 +1,4 @@
-package com.Application;
+package com.Controllers;
 
 import com.Agenda.Empleado;
 import com.Agenda.Empleados;
@@ -18,7 +18,6 @@ public class UsuarioController {
 
     public ModelAndView loginPage(boolean credenciales){
         usuariosModel.setViewName("pages-login.html");
-        usuariosModel.addObject("model", usuariosModel);
         usuariosModel.addObject("credenciales", credenciales);
         return usuariosModel;
     }

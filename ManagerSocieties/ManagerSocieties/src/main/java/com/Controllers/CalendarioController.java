@@ -1,17 +1,19 @@
-package com.Application;
+package com.Controllers;
 
 import com.Calendario.Calendario;
+import com.Calendario.Evento.Evento;
+import com.Calendario.Evento.Eventos;
 import com.Usuario.Usuario;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Calendar;
 
 @Controller
 public class CalendarioController {
     ModelAndView calendariomodel = new ModelAndView();
 
     Calendario calendario = new Calendario();
+
+    Eventos eventos = new Eventos();
 
     public ModelAndView renderCalendar(Usuario user){
         calendariomodel.setViewName("calendario.html");
@@ -22,6 +24,7 @@ public class CalendarioController {
         calendariomodel.addObject("anyo", calendario.getAnyo());
         calendariomodel.addObject("semanas", calendario.getSemanasMes());
         calendariomodel.addObject("usuario", user);
+        calendariomodel.addObject("eventos", eventos.eventos.values());
         return calendariomodel;
     }
 
@@ -43,8 +46,18 @@ public class CalendarioController {
         calendariomodel.addObject("anyo", calendar.getAnyo());
         calendariomodel.addObject("semanas", calendar.getSemanasMes());
         calendariomodel.addObject("usuario", user);
+        calendariomodel.addObject("eventos", eventos.eventos.values());
         return calendariomodel;
     }
 
+    public ModelAndView anyadirEvento (Usuario usuario, String tareaAsociada, String titulo, String fechaInicio, String fechaFin, String horaInicio, String horaFin){
+        Evento evento = new Evento(tareaAsociada, titulo, fechaInicio, fechaFin, horaInicio, horaFin);
+        this.eventos.eventos.put(evento.getRef(), evento);
+        return renderCalendar(usuario);
+    }
 
+    public ModelAndView borrarEvento (Usuario usuario, String ref){
+        this.eventos.eventos.remove(ref);
+        return renderCalendar(usuario);
+    }
 }

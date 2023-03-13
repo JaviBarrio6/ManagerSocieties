@@ -78,7 +78,14 @@ public class Tarea implements Serializable {
     }
 
     public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio.equals("") ? "-" : darFormatoFecha(fechaInicio);
+        if (fechaInicio == null){
+            this.fechaInicio = "-";
+        } else if (fechaInicio.equals("")){
+            this.fechaInicio = "-";
+        } else {
+            this.fechaInicio = (darFormatoFecha(fechaInicio));
+
+        }
     }
 
     public void setFechaFin(String fechaFin) {
@@ -183,7 +190,11 @@ public class Tarea implements Serializable {
 
     public String darFormatoFecha (String fecha){
         String[] campos = fecha.split("-");
-        return campos[2].concat("/".concat(campos[1]).concat("/").concat(campos[0]));
+        if (campos.length != 3){
+            return fecha;
+        } else {
+            return campos[2].concat("/".concat(campos[1]).concat("/").concat(campos[0]));
+        }
     }
 
     public String desformatearFecha (String fecha){

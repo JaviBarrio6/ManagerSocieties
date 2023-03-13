@@ -1,4 +1,4 @@
-package com.Application;
+package com.Controllers;
 
 import com.Inventario.*;
 import com.Usuario.Usuario;

@@ -1,4 +1,4 @@
-package com.Application;
+package com.Controllers;
 
 import com.Agenda.*;
 import com.Usuario.Usuario;
@@ -38,6 +38,10 @@ public class AgendaController {
         clientes.editarCliente(ref, nombre, apellidos, id, telefono, correo, dir, premium);
 
         return agendaClientes(user);
+    }
+
+    public Cliente dameCliente (String ref){
+        return clientes.clientes.get(ref);
     }
 
     public ModelAndView agendaEmpleados(Usuario user) {

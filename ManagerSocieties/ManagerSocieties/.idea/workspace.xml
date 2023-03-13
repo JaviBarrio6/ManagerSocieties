@@ -5,210 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38014811-25bb-4747-960b-9f5e827b4579" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Application/CalendarioController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Calendario/Calendario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Calendario/Mes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/calendar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Calendario/Evento/Evento.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Calendario/Evento/Eventos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/ApplicationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/archivos/Diagrama de Componentes.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/archivos/TFG - Javier Barrio.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application/ApplicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/tuiCalendar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap-grid.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap-grid.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap-grid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap-grid.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap-grid.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap-grid.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap-grid.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap-grid.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/bootstrap/css/bootstrap.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales-all.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales-all.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/af.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ar-dz.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ar-kw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ar-ly.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ar-ma.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ar-sa.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ar-tn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/az.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/bg.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/bn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/bs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ca.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/cs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/cy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/da.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/de-at.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/de.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/el.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/en-au.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/en-gb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/en-nz.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/eo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/es-us.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/es.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/et.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/eu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/fa.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/fi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/fr-ca.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/fr-ch.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/fr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/gl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/he.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/hi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/hr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/hu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/hy-am.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/id.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/is.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/it.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ja.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ka.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/kk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/km.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ko.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ku.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/lb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/lt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/lv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/mk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ms.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/nb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ne.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/nl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/nn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/pl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/pt-br.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/pt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ro.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ru.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/si-lk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/sk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/sl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/sm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/sq.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/sr-cyrl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/sr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/sv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ta-in.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/th.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/tr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/ug.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/uk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/uz.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/vi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/zh-cn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/locales/zh-tw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/main.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/lib/main.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/AgendaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/ApplicationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/CalendarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/CalendarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/CustomErrorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/CustomErrorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/InventarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/InventarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/TareasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/TareasController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/UsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Tareas/Tarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Tareas/Tarea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Usuario/Usuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Usuario/Usuarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/memoria/TFG - Javier Barrio.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/calendar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/calendar.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/calendario.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/calendario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application/ApplicationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/tuiCalendar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap-grid.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap-grid.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap-grid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap-grid.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap-grid.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap-grid.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap-grid.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap-grid.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/bootstrap/css/bootstrap.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales-all.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales-all.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/af.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ar-dz.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ar-kw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ar-ly.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ar-ma.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ar-sa.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ar-tn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/az.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/bg.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/bn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/bs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ca.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/cs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/cy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/da.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/de-at.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/de.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/el.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/en-au.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/en-gb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/en-nz.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/eo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/es-us.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/es.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/et.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/eu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/fa.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/fi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/fr-ca.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/fr-ch.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/fr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/gl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/he.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/hi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/hr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/hu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/hy-am.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/id.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/is.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/it.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ja.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ka.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/kk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/km.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ko.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ku.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/lb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/lt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/lv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/mk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ms.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/nb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ne.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/nl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/nn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/pl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/pt-br.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/pt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ro.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ru.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/si-lk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/sk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/sl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/sm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/sq.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/sr-cyrl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/sr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/sv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ta-in.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/th.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/tr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/ug.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/uk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/uz.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/vi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/zh-cn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/locales/zh-tw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/main.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/lib/main.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/ManagerSocieties.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/AgendaController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/Application.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/ApplicationController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/CalendarioController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/CustomErrorController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/InventarioController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/TareasController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/UsuarioController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Tareas/Tarea.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Tareas/Tarea.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Usuario/Usuarios.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Usuario/Usuarios.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/memoria/TFG - Javier Barrio.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/calendar.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/calendar/calendar.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/calendario.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/calendario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/tareas.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -251,31 +82,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Javic/Desktop/GitHub/ManagerSocieties/Readme.md",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings",
-    "spring.configuration.checksum": "2915ffa6bd1348b12d75cf10349c4126",
-    "ts.external.directory.path": "D:\\Programas\\IntelliJ IDEA 2022.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Javic/Desktop/GitHub/ManagerSocieties/Readme.md&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;2915ffa6bd1348b12d75cf10349c4126&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Programas\\IntelliJ IDEA 2022.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Javic\Desktop\GitHub\ManagerSocieties\ManagerSocieties\ManagerSocieties\src\main\resources\static\css" />
@@ -301,7 +133,7 @@
   <component name="RunManager">
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="ManagerSocieties" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.Application.Application" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.Application" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -345,7 +177,10 @@
       <workItem from="1673601896624" duration="16742000" />
       <workItem from="1674407048668" duration="9741000" />
       <workItem from="1674471057436" duration="18494000" />
-      <workItem from="1674560991206" duration="51819000" />
+      <workItem from="1674560991206" duration="60844000" />
+      <workItem from="1674840229060" duration="7008000" />
+      <workItem from="1675153562924" duration="28685000" />
+      <workItem from="1675965204213" duration="1571000" />
     </task>
     <servers />
   </component>
@@ -363,26 +198,10 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/Tareas/Tarea.java</url>
-          <line>210</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/Application/AgendaController.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/Usuario/Usuarios.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="model.model" />

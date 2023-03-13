@@ -1,17 +1,12 @@
-package com.Application;
+package com.Controllers;
 
-import com.Agenda.Cliente;
 import com.Agenda.Clientes;
-import com.Agenda.Empleado;
 import com.Agenda.Empleados;
 import com.Inventario.*;
 import com.Tareas.Tarea;
 import com.Tareas.Tareas;
 import com.Usuario.Usuario;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 public class TareasController {
 
@@ -40,9 +35,7 @@ public class TareasController {
         return tareasModel;
     }
 
-    public ModelAndView anyadirTarea (Usuario user, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
-
-        Tarea tarea = new Tarea(clientes.clientes.get(cliente), empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
+    public ModelAndView anyadirTarea (Usuario user, Tarea tarea){
         tareas.tareas.put(tarea.getRef(), tarea);
 
         return tareas(user);
@@ -59,4 +52,5 @@ public class TareasController {
 
         return tareas(user);
     }
+
 }

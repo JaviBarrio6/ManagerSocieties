@@ -1,4 +1,4 @@
-# Manager Societies V2.8.0
+# Manager Societies V2.10.0
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Control de Versiones](#control-de-versiones)
@@ -17,6 +17,7 @@
     + [V2.7.0](#V270)
     + [V2.8.0](#V280)
     + [V2.9.0](#V290)
+    + [V2.10.0](#V2100)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -123,6 +124,13 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 
 
 * Para el correcto funcionamiento del controlador hemos diseñado la clase Mes, donde cada mes tiene un número de días y un nombre asociado. Además, la clase Calendario con todos los métodos e información necesarios.
+
+### V2.10.0
+
+* Se genera el código necesario para la creación, gestión y borrado de eventos en el calendario.
+
+
+* Se genera el código para que las tareas creadas y existentes aparezcan en el calendario.
 
 ## Instalación:
 
