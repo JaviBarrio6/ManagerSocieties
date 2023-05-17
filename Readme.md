@@ -132,6 +132,10 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 
 * Se genera el código para que las tareas creadas y existentes aparezcan en el calendario.
 
+### V3.0.0
+
+* Se Actualiza la memoria hasta la fecha.
+
 ## Instalación:
 
 ## Testing:

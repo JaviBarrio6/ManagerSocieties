@@ -5,41 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38014811-25bb-4747-960b-9f5e827b4579" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Calendario/Evento/Evento.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Calendario/Evento/Eventos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/ApplicationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/archivos/Diagrama de Componentes.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/archivos/TFG - Javier Barrio.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/AgendaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/ApplicationController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/CalendarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/CalendarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/CustomErrorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/CustomErrorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/InventarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/InventarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/TareasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/TareasController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/UsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Tareas/Tarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Tareas/Tarea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Usuario/Usuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Usuario/Usuarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/memoria/TFG - Javier Barrio.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/calendar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/vendor/calendar/calendar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/calendario.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/calendario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/ManagerSocieties.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/AgendaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/Application.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/ApplicationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/CalendarioController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/CustomErrorController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/InventarioController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/TareasController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Application/UsuarioController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Tareas/Tarea.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Tareas/Tarea.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Usuario/Usuarios.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Usuario/Usuarios.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/memoria/TFG - Javier Barrio.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/vendor/calendar/calendar.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/vendor/calendar/calendar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/calendario.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/calendario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/tareas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Calendario/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Calendario/Calendario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Calendario/Calendario.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Calendario/Calendario.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -181,6 +149,11 @@
       <workItem from="1674840229060" duration="7008000" />
       <workItem from="1675153562924" duration="28685000" />
       <workItem from="1675965204213" duration="1571000" />
+      <workItem from="1683189061818" duration="2687000" />
+      <workItem from="1683307190591" duration="3440000" />
+      <workItem from="1683644355642" duration="4039000" />
+      <workItem from="1684141091230" duration="8325000" />
+      <workItem from="1684317004103" duration="404000" />
     </task>
     <servers />
   </component>
@@ -207,6 +180,7 @@
         <watch expression="model.model" />
         <watch expression="this.clientes" language="JAVA" />
         <watch expression="((LinkedHashMap)((Empleados)((TareasController)this).empleadosAux).empleados).entrySet().toArray()[0]" custom="java.util.LinkedHashMap,com.Application.TareasController,com.Agenda.Empleados" />
+        <watch expression="semanasMes[3]" />
       </configuration>
     </watches-manager>
   </component>

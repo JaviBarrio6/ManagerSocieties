@@ -8,7 +8,6 @@ public class Calendario {
     private int dia;
     private int[] fechaActual = new int[3];
     private int mes;
-    private int mesActual;
     private int anyo;
     private Mes[] meses;
 
