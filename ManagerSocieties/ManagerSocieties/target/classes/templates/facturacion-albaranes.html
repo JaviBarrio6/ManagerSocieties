@@ -62,14 +62,15 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">J. Barrio</span>
+            <img th:src="${usuario.getImagenUrl()}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Javier Barrio</h6>
-              <span>Administrador</span>
+              <h6 th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></h6>
+              <span th:if="${usuario.isAdmin()}">Administrador</span>
+              <span th:if="${!usuario.isAdmin()}">Empleado</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -89,6 +90,25 @@
               <a class="dropdown-item d-flex align-items-center" href="edit-users-profile">
                 <i class="bi bi-gear"></i>
                 <span>Ajustes de Cuenta</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-password">
+                <i class="bi bi-lock"></i>
+                <span>Cambiar Contraseña</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li th:if="${usuario.isAdmin()}">
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-enterprise">
+                <i class="bi bi-shop"></i>
+                <span>Empresa</span>
               </a>
             </li>
             <li>
@@ -122,7 +142,7 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" data-bs-target="#agenda-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Agenda</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -156,7 +176,7 @@
         </a>
       </li><!-- End Calendario Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapse" data-bs-target="#facturacion-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Facturación</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -174,14 +194,11 @@
             <a href="facturacion-nominas">
               <i class="bi bi-circle"></i><span>Nóminas</span>
             </a>
-            <a href="facturacion-presupuestos">
-              <i class="bi bi-circle"></i><span>Presupuestos</span>
-            </a>
           </li>
         </ul>
       </li><!-- End Facturación Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="finanzas">
           <i class="bi bi-cash-coin"></i>
           <span>Finanzas</span>
@@ -228,9 +245,9 @@
       </li>
       <!-- End Tareas Nav -->
 
-      <li class="nav-heading">Administrador</li>
+      <li class="nav-heading" th:if="${usuario.admin}">Administrador</li>
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="pages-register">
           <i class="bi bi-card-list"></i>
           <span>Crear Usuario</span>
@@ -263,13 +280,13 @@
             <div class="col-12">
               <div class="card info-card sales-card d-flex align-items-center">
                 <div class="card-body">
-                  <h5 class="card-title">Albaranes</h5>
+                  <h5 class="card-title ps-3">Albaranes</h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-file-earmark-binary"></i>
                     </div>
-                    <div class="ps-3">
-                      <h6>5</h6>
+                    <div class="ps-3 d-flex align-items-center justify-content-center">
+                      <h6 th:text="${numAlbaranes}"></h6>
                     </div>
                   </div>
                 </div>
@@ -359,24 +376,32 @@
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
                     <th scope="col">Ref</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Precio</th>
+                    <th data-sortable="false" scope="col">Facturar</th>
                     <th data-sortable="false" scope="col">Descargar</th>
+                    <th data-sortable="false" scope="col">Desglose</th>
                     <th data-sortable="false" scope="col">Editar</th>
                     <th data-sortable="false" scope="col">Borrar</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>Alb001</td>
-                    <td>Juan José Rodríguez</td>
-                    <td>01/01/2023</td>
-                    <td><a class="dropdown-item bi bi-download" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
+                  <tr th:each = "albaran: ${albaranes}">
+                    <td th:text = "${albaran.ref}"></td>
+                    <td th:text = "${albaran.cliente.getApellidos()} + ', ' + ${albaran.cliente.getNombre()}"></td>
+                    <td th:text = "${albaran.fecha}"></td>
+                    <td th:text = "${albaran.darFormatoPrecio(albaran.precio)}"></td>
+                    <td><a class="dropdown-item bi-file" href="#"></a></td>
+                    <td><a class="dropdown-item bi-download" href="#"></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoAlbaran+${albaran.ref}"><i class="bi-file-earmark-richtext"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarAlbaran+${albaran.ref}"><i class="bi-eraser"></i></a></td>
+                    <td>
+                      <form action="#" th:action="@{/borrarNomina}" method="post">
+                        <button class="dropdown-item bi-file-earmark-x" name = "ref" th:value="${albaran.ref}" type="submit"></button>
+                      </form>
+                    </td>
                   </tr>
                 </tbody>
               </table>

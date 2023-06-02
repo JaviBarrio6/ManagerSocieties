@@ -1,4 +1,4 @@
-# Manager Societies V2.10.0
+# Manager Societies V3.1.0
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Control de Versiones](#control-de-versiones)
@@ -18,6 +18,8 @@
     + [V2.8.0](#V280)
     + [V2.9.0](#V290)
     + [V2.10.0](#V2100)
+    + [V3.0.0](#V300)
+    + [V3.1.0](#V310)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -135,6 +137,10 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 ### V3.0.0
 
 * Se Actualiza la memoria hasta la fecha.
+
+### V3.1.0
+
+* Se modifica el tipo de variable de antigüedad del empleado para guardar la fecha de dada de alta.
 
 ## Instalación:
 

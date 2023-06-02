@@ -1,26 +1,34 @@
 package com.Controllers;
 
 import com.Agenda.Cliente;
+import com.Agenda.Empleado;
+import com.Facturacion.Gasto;
+import com.Inventario.Producto;
 import com.Tareas.Tarea;
+import com.Tareas.Tareas;
 import com.Usuario.Empresa;
 import com.Usuario.Usuario;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
 public class ApplicationController {
     ModelAndView model = new ModelAndView();
     AgendaController agendaController = new AgendaController();
+
+    CalendarioController calendarioController = new CalendarioController();
+
+    FacturacionController facturacionController = new FacturacionController();
     InventarioController inventarioController = new InventarioController();
     TareasController tareasController = new TareasController();
     UsuarioController usuarioController = new UsuarioController();
-    CalendarioController calendarioController = new CalendarioController();
 
     Empresa empresa = new Empresa("empresa.png", "Superlux S.A.", "A58456484", "934212797", "superlux@superlux.com",
-            "Rambla Badal, 32, Barcelona, 08014", "ES0001822222110123456789");
+            "Rambla Badal, 32, Barcelona, 08014", "ES0001822222110123456789", "28/17754764/41");
 
     Usuario usuario = new Usuario();
 
@@ -152,10 +160,10 @@ public class ApplicationController {
     }
 
     @PostMapping("/anyadirEmpleado")
-    public ModelAndView anyadirEmpleadoModel(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
+    public ModelAndView anyadirEmpleadoModel(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.anyadirEmpleado(this.usuario, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, puesto);
+                return agendaController.anyadirEmpleado(this.usuario, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, numSS, puesto);
             } else {
                 return index();
             }
@@ -178,10 +186,10 @@ public class ApplicationController {
     }
 
     @PostMapping("/editarEmpleado")
-    public ModelAndView editarEmpleadoModel(String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
+    public ModelAndView editarEmpleadoModel(String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.editarEmpleado(this.usuario, ref, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, puesto);
+                return agendaController.editarEmpleado(this.usuario, ref, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, numSS, puesto);
             } else {
                 return index();
             }
@@ -357,12 +365,44 @@ public class ApplicationController {
         }
     }
 
+    // Inicio Facturación
+
     @RequestMapping("/facturacion-albaranes")
-    public ModelAndView facturacionAlbaranes() {
+    public ModelAndView facturacionAlbaranesModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                model.setViewName("facturacion-albaranes.html");
-                return model;
+                return facturacionController.facturacionAlbaranes(this.usuario);
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/anyadirAlbaran")
+    public ModelAndView anyadirAlbaranModel (String cliente, String fecha, String[] productos, String[] tareas, double IVA) {
+
+        Cliente clienteAux = agendaController.dameCliente(cliente);
+        ArrayList<Producto> productosAux = inventarioController.dameProductos(productos);
+        ArrayList<Tarea> tareasAux = tareasController.dameTareas(tareas);
+
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                return facturacionController.anyadirAlbaran(this.usuario, clienteAux, fecha, productosAux, tareasAux, IVA);
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/borrarAlbaran")
+    public ModelAndView borrarAlbaranModel(String ref) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                return facturacionController.borrarAlbaran(this.usuario, ref);
             } else {
                 return index();
             }
@@ -386,11 +426,39 @@ public class ApplicationController {
     }
 
     @RequestMapping("/facturacion-gastos")
-    public ModelAndView facturacionGastos() {
+    public ModelAndView facturacionGastosModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                model.setViewName("facturacion-gastos.html");
-                return model;
+                return facturacionController.facturacionGastos(this.usuario);
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/anyadirGasto")
+    public ModelAndView anyadirGastoModel (String empleado, String motivo, String fecha, double gasto) {
+
+        Empleado empleadoAux = agendaController.dameEmpleado(empleado);
+
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                return facturacionController.anyadirGasto(this.usuario, empleadoAux, motivo, fecha, gasto);
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/borrarGasto")
+    public ModelAndView borrarGastoModel(String ref) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                return facturacionController.borrarGasto(this.usuario, ref);
             } else {
                 return index();
             }
@@ -400,11 +468,42 @@ public class ApplicationController {
     }
 
     @RequestMapping("/facturacion-nominas")
-    public ModelAndView facturacionNominas() {
+    public ModelAndView facturacionNominasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                model.setViewName("facturacion-nominas.html");
-                return model;
+                return facturacionController.facturacionNominas(this.usuario);
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/anyadirNomina")
+    public ModelAndView anyadirNominaModel(String empleado, String fecha, int dias, double salarioConvenio, double prestacionAccidente,
+                                           double complementoSalarial, double teletrabajo, double productividad, double pagasExtra,
+                                           double contingencias, double formacionP, double desempleo) {
+
+        Empleado empleadoAux = agendaController.dameEmpleado(empleado);
+
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                return facturacionController.anyadirNomina(this.usuario, empleadoAux, fecha, dias, salarioConvenio, prestacionAccidente, complementoSalarial,
+                        teletrabajo, productividad, pagasExtra, contingencias, formacionP, desempleo);
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/borrarNomina")
+    public ModelAndView borrarNominaModel(String ref) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                return facturacionController.borrarNomina(this.usuario, ref);
             } else {
                 return index();
             }
@@ -723,15 +822,29 @@ public class ApplicationController {
 
     @RequestMapping("/tareas")
     public ModelAndView tareasModel() {
-        return tareasController.tareas(this.usuario);
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                return tareasController.tareas(this.usuario);
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
     }
 
     @RequestMapping("/anyadirTarea")
-    public ModelAndView anyadirTareaModel (String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
+    public ModelAndView anyadirTareaModel (String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
         Cliente clienteAux = agendaController.dameCliente(cliente);
-        Tarea tarea = new Tarea(clienteAux, empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
+        Empleado empleado = agendaController.dameEmpleado(empleados[0]);
+        String[] nombresEmpleado = new String[empleados.length];
+        for (int i = 0; i < empleados.length; i++){
+            nombresEmpleado[i] = agendaController.dameEmpleado(empleados[i]).getNombre() + ' ' + agendaController.dameEmpleado(empleados[i]).getApellidos();
+        }
+        Tarea tarea = new Tarea(clienteAux, nombresEmpleado, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
         calendarioController.anyadirEvento(this.usuario, tarea.getRef(), "Tarea - ".concat(clienteAux.getNombre()), fechaFin, "¿?",
                 hora, hora);
+        facturacionController.anyadirGasto(this.usuario, empleado, tarea.getRef(), fechaInicio, gastoExtra);
         return tareasController.anyadirTarea(this.usuario, tarea);
 
     }
@@ -742,8 +855,8 @@ public class ApplicationController {
     }
 
     @RequestMapping("/editarTarea")
-    public ModelAndView editarTareaModel (String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
-        return tareasController.editarTarea(this.usuario, ref, cliente, empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
+    public ModelAndView editarTareaModel (String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
+        return tareasController.editarTarea(this.usuario, ref, cliente, empleados, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
     }
 
     // Fin Tareas
@@ -783,9 +896,9 @@ public class ApplicationController {
 
     @RequestMapping("/editarUsuario")
     public ModelAndView editarUsuarioModel(String imagen, String nombre, String apellidos, String dni, String telefono, String email,
-                                           String direccion, String antiguedad, String puesto){
+                                           String direccion, String antiguedad, String numSS, String puesto){
         usuarioController.editarUsuario(this.usuario, nombre, apellidos, dni, telefono, email, direccion, antiguedad, puesto, imagen);
-        agendaController.editarEmpleado(this.usuario, this.usuario.getEmpleado().getRef(), nombre, apellidos, this.usuario.getEmpleado().getUsuario(), dni, telefono, email, direccion, antiguedad, puesto);
+        agendaController.editarEmpleado(this.usuario, this.usuario.getEmpleado().getRef(), nombre, apellidos, this.usuario.getEmpleado().getUsuario(), dni, telefono, email, direccion, antiguedad, numSS, puesto);
         this.usuario = usuarioController.dameUsuario(this.usuario.getEmpleado().getUsuario(), this.usuario.getContrasenya());
         return usersProfileModel();
     }
@@ -802,11 +915,11 @@ public class ApplicationController {
     }
 
     @RequestMapping("/editarEmpresaPropia")
-    public ModelAndView editarPropiaEmpresaModel(String logo, String nombre, String cif, String telefono, String email, String direccion, String iban){
+    public ModelAndView editarPropiaEmpresaModel(String logo, String nombre, String cif, String telefono, String email, String direccion, String iban, String numSS){
         if (this.log){
             if (this.usuario.isAdmin()){
                 if (logo != null){
-                    this.empresa = new Empresa(logo, nombre, cif, telefono, email, direccion, iban);
+                    this.empresa = new Empresa(logo, nombre, cif, telefono, email, direccion, iban, numSS);
                 } else {
                     this.empresa.editarEmpresa(nombre, cif, telefono, email, direccion, iban);
                 }

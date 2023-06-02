@@ -13,11 +13,13 @@ public class Empresa {
     private String direccion;
     private String iban;
 
+    private String numSS;
+
     // Fin Variables
 
     // Inicio Constructores
 
-    public Empresa (String logo, String nombre, String cif, String telefono, String email, String direccion, String iban){
+    public Empresa (String logo, String nombre, String cif, String telefono, String email, String direccion, String iban, String numSS){
         setLogo(logo);
         setNombre(nombre);
         setCif(cif);
@@ -25,6 +27,7 @@ public class Empresa {
         setEmail(email);
         setDireccion(direccion);
         setIban(iban);
+        setNumSS(numSS);
     }
 
     // Fin Constructores
@@ -79,6 +82,10 @@ public class Empresa {
         }
     }
 
+    public void setNumSS (String numSS){
+        this.numSS = numSS;
+    }
+
     // Fin Setters
 
     // Inicio Getters
@@ -108,6 +115,10 @@ public class Empresa {
 
     public String getIban(){
         return this.iban;
+    }
+
+    public String getNumSS(){
+        return this.numSS;
     }
 
     // Fin Getters

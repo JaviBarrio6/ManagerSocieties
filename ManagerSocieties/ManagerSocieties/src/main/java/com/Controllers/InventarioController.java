@@ -4,6 +4,8 @@ import com.Inventario.*;
 import com.Usuario.Usuario;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 public class InventarioController {
 
     Herramientas herramientas = new Herramientas();
@@ -185,4 +187,20 @@ public class InventarioController {
 
 
     // Fin Getters
+
+    // Funciones
+
+    public ArrayList<Producto> dameProductos (String[] refs){
+        ArrayList<Producto> productosAux = new ArrayList<>();
+
+        for (int i = 0; i < refs.length; i++) {
+            for (Producto producto : productosAux) {
+                if (refs[i].equals(producto.getRef())){
+                    productosAux.add(producto);
+                }
+            }
+        }
+
+        return productosAux;
+    }
 }

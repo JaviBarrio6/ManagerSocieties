@@ -54,7 +54,7 @@ public class Usuario implements Serializable {
 
     public void setEmpleado (Empleado empleado){
         this.empleado = new Empleado(empleado.getRef(), empleado.getNombre(), empleado.getApellidos(), empleado.getId(), empleado.getTelefono(), empleado.getEmail(), empleado.getDireccion(),
-                empleado.getUsuario(), empleado.getPuesto(), empleado.getAntiguedad());
+                empleado.getUsuario(), empleado.getPuesto(), empleado.getAntiguedad(), empleado.getNumSS());
     }
 
     // Fin Setters

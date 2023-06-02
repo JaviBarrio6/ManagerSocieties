@@ -278,14 +278,14 @@
           <div class="row">
             <!-- Clientes Card -->
             <div class="col-12">
-              <div class="card info-card sales-card d-flex align-items-center">
-                <div class="card-body">
-                  <h5 class="card-title">Tareas Hoy</h5>
-                  <div class="d-flex align-items-center">
+              <div class="card info-card sales-card d-flex align-items-center justify-content-center">
+                <div class="card-body d-flex flex-column justify-content-center">
+                  <h5 class="card-title d-flex justify-content-center">Tareas</h5>
+                  <div class="d-flex align-items-center justify-content-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-hourglass-split"></i>
                     </div>
-                    <div class="ps-3">
+                    <div class="ps-3 d-flex align-items-center justify-content-center">
                       <h6 th:text="${numTareas}"></h6>
                     </div>
                   </div>
@@ -329,7 +329,7 @@
                           <div class="col-sm-10">
                             <select class="form-select" multiple name="empleados" id ="empleados" required>
                               <option selected="">Selecciona Empleados</option>
-                              <option th:each ="empleado: ${empleados}" th:value="${empleado.nombre} + ' ' + ${empleado.apellidos}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
+                              <option th:each ="empleado: ${empleados}" th:value="${empleado.ref}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
                             </select>
                           </div>
                         </div>
@@ -349,6 +349,12 @@
                           <label for="hora" class="col-sm-2 col-form-label">Hora</label>
                           <div class="col-sm-10">
                             <input id="hora" name="hora" type="time" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="precio" class="col-sm-2 col-form-label">Precio</label>
+                          <div class="col-sm-10">
+                            <input id="precio" name="precio" type="number" class="form-control" required step="0.01" min="0">
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -560,6 +566,12 @@
                           </div>
                         </div>
                         <div class="row mb-3">
+                          <label for="precio" class="col-sm-2 col-form-label">Precio</label>
+                          <div class="col-sm-10">
+                            <input th:value="${tarea.precio}" name="precio" type="number" class="form-control" required step="0.01" min="0">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
                           <label for="gastoExtra" class="col-sm-2 col-form-label">Gasto Extra</label>
                           <div class="col-sm-10">
                             <input th:value="${tarea.gastoExtra}" name="gastoExtra" type="number" class="form-control" required step="0.01" min="0">
@@ -688,6 +700,7 @@
                     <th scope="col">Fecha Inicio</th>
                     <th scope="col">Fecha Fin</th>
                     <th scope="col">Hora</th>
+                    <th scope="col">Precio</th>
                     <th scope="col">Gasto Extra</th>
                     <th scope="col">Inventario</th>
                     <th data-sortable="false" scope="col">Info</th>
@@ -705,6 +718,7 @@
                     <td th:text= "${tarea.fechaInicio}"></td>
                     <td th:text= "${tarea.fechaFin}"></td>
                     <td th:text= "${tarea.hora}"></td>
+                    <td th:text= "${tarea.precio} + ' €'"></td>
                     <td th:text= "${tarea.gastoExtra} + ' €'"></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+inventarioTarea+${tarea.ref}"><i class="bi bi-archive"></i></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+infoTarea+${tarea.ref}"><i class="bi bi-card-text"></i></a></td>

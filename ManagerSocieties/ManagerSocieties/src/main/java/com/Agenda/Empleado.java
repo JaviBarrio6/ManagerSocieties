@@ -1,17 +1,20 @@
 package com.Agenda;
 
+import com.Usuario.Usuarios;
+
 import java.io.Serializable;
 
 public class Empleado extends Persona implements Serializable {
 
-    public static int generadorId = 0;
+    public static int generadorId = 4;
     private static final String refEmpleado = "EMP";
 
     private String usuario;
-
     private String puesto;
-    private int antiguedad;
+    private String antiguedad;
     private String ref;
+
+    private String numSS;
 
     // Fin Variables
 
@@ -21,10 +24,10 @@ public class Empleado extends Persona implements Serializable {
         setRef("");
         setUsuario("");
         setPuesto("");
-        setAntiguedad(0);
+        setAntiguedad("");
     }
 
-    public Empleado (String nombre, String apellidos, String id, String telefono, String email, String direccion, String usuario, String puesto, int antiguedad) {
+    public Empleado (String nombre, String apellidos, String id, String telefono, String email, String direccion, String usuario, String puesto, String antiguedad, String numSS) {
         super(nombre, apellidos, id, telefono, email, direccion);
         if (!esDNICorrecto(id)){
             throw new RuntimeException("El valor del DNI o del CIF no es correcto");
@@ -35,9 +38,10 @@ public class Empleado extends Persona implements Serializable {
         setUsuario(usuario);
         setPuesto(puesto);
         setAntiguedad(antiguedad);
+        setNumSS(numSS);
     }
 
-    public Empleado (String ref, String nombre, String apellidos, String id, String telefono, String email, String direccion, String usuario, String puesto, int antiguedad) {
+    public Empleado (String ref, String nombre, String apellidos, String id, String telefono, String email, String direccion, String usuario, String puesto, String antiguedad, String numSS) {
         super(nombre, apellidos, id, telefono, email, direccion);
         if (!esDNICorrecto(id)){
             throw new RuntimeException("El valor del DNI o del CIF no es correcto");
@@ -47,6 +51,7 @@ public class Empleado extends Persona implements Serializable {
         setUsuario(usuario);
         setPuesto(puesto);
         setAntiguedad(antiguedad);
+        setNumSS(numSS);
     }
 
     public Empleado (Empleado empleado){
@@ -55,6 +60,7 @@ public class Empleado extends Persona implements Serializable {
         setUsuario(empleado.getUsuario());
         setPuesto(empleado.getPuesto());
         setAntiguedad(empleado.getAntiguedad());
+        setNumSS(empleado.getNumSS());
     }
 
     // Fin Constructores
@@ -73,8 +79,12 @@ public class Empleado extends Persona implements Serializable {
         this.puesto = puesto;
     }
 
-    public void setAntiguedad(int antiguedad) {
+    public void setAntiguedad(String antiguedad) {
         this.antiguedad = antiguedad;
+    }
+
+    public void setNumSS (String numSS) {
+        this.numSS = numSS;
     }
 
     // Fin Setters
@@ -85,7 +95,7 @@ public class Empleado extends Persona implements Serializable {
         return this.puesto;
     }
 
-    public int getAntiguedad() {
+    public String getAntiguedad() {
         return this.antiguedad;
     }
 
@@ -97,11 +107,15 @@ public class Empleado extends Persona implements Serializable {
         return this.ref;
     }
 
+    public String getNumSS(){
+        return this.numSS;
+    }
+
     // Fin Getters
 
     // Inicio Funciones
 
-    public void editarEmpleado (String nombre, String apellidos, String usario, String id, String telefono, String email, String direccion, String puesto, int antiguedad) {
+    public void editarEmpleado (String nombre, String apellidos, String usario, String id, String telefono, String email, String direccion, String puesto, String antiguedad) {
         setNombre(nombre);
         setApellidos(apellidos);
         setUsuario(usuario);

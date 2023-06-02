@@ -17,6 +17,7 @@ public class Tarea implements Serializable {
 
     private String hora;
     private String[] empleados;
+    private double precio;
     private double gastoExtra;
 
     private String[] inventario;
@@ -32,6 +33,7 @@ public class Tarea implements Serializable {
        setCliente(null);
        setFechaInicio("-");
        setFechaFin("-");
+       setPrecio(0);
        setGastoExtra(0);
        setInfo("");
        setEstado(0);
@@ -40,10 +42,11 @@ public class Tarea implements Serializable {
        setInventario(null);
     }
 
-    public Tarea (Cliente cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
+    public Tarea (Cliente cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
         setCliente(cliente);
         setFechaInicio(fechaInicio);
         setFechaFin(fechaFin);
+        setPrecio(precio);
         setGastoExtra(gastoExtra);
         setInfo(info);
         setEstado(estado);
@@ -55,10 +58,12 @@ public class Tarea implements Serializable {
         setRef(generadorRef(generadorId, refTareas));
     }
 
-    public Tarea (String ref, Cliente cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
+    public Tarea (String ref, Cliente cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado,
+                  String[] inventario){
         setCliente(cliente);
         setFechaInicio(fechaInicio);
         setFechaFin(fechaFin);
+        setPrecio(precio);
         setGastoExtra(gastoExtra);
         setInfo(info);
         setEstado(estado);
@@ -101,6 +106,9 @@ public class Tarea implements Serializable {
 
     public void setHora (String hora){
         this.hora = hora;
+    }
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public void setGastoExtra(double gastoExtra) {
@@ -157,6 +165,9 @@ public class Tarea implements Serializable {
 
     public String[] getEmpleados() {
         return this.empleados;
+    }
+    public double getPrecio(){
+        return this.precio;
     }
 
     public double getGastoExtra() {

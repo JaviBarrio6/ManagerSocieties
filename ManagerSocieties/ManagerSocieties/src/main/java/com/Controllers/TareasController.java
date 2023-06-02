@@ -8,6 +8,8 @@ import com.Tareas.Tareas;
 import com.Usuario.Usuario;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 public class TareasController {
 
     Tareas tareas = new Tareas();
@@ -47,10 +49,26 @@ public class TareasController {
         return tareas(user);
     }
 
-    public ModelAndView editarTarea (Usuario user, String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double gastoExtra, String info, int estado, String[] inventario){
-        tareas.editarTarea(ref, clientes.clientes.get(cliente), empleados, fechaInicio, fechaFin, hora, gastoExtra, info, estado, inventario);
+    public ModelAndView editarTarea (Usuario user, String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
+        tareas.editarTarea(ref, clientes.clientes.get(cliente), empleados, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
 
         return tareas(user);
+    }
+
+    // Funciones
+
+    public ArrayList<Tarea> dameTareas (String[] refs){
+        ArrayList<Tarea> tareasAux = new ArrayList<>();
+
+        for (int i = 0; i < refs.length; i++) {
+            for (Tarea tarea : tareasAux) {
+                if (refs[i].equals(tarea.getRef())){
+                    tareasAux.add(tarea);
+                }
+            }
+        }
+
+        return tareasAux;
     }
 
 }

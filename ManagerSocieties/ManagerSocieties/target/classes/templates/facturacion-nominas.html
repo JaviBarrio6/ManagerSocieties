@@ -62,14 +62,15 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">J. Barrio</span>
+            <img th:src="${usuario.getImagenUrl()}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Javier Barrio</h6>
-              <span>Administrador</span>
+              <h6 th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></h6>
+              <span th:if="${usuario.isAdmin()}">Administrador</span>
+              <span th:if="${!usuario.isAdmin()}">Empleado</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -96,7 +97,26 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" th:href ="@{/cerrar-sesion}">
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-password">
+                <i class="bi bi-lock"></i>
+                <span>Cambiar Contraseña</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li th:if="${usuario.isAdmin()}">
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-enterprise">
+                <i class="bi bi-shop"></i>
+                <span>Empresa</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" th:href="@{/cerrar-sesion}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Salir</span>
               </a>
@@ -122,7 +142,7 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" data-bs-target="#agenda-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Agenda</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -156,7 +176,7 @@
         </a>
       </li><!-- End Calendario Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapse" data-bs-target="#facturacion-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Facturación</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -174,14 +194,11 @@
             <a class = "nav-link" href="facturacion-nominas">
               <i class="bi bi-circle"></i><span>Nóminas</span>
             </a>
-            <a href="facturacion-presupuestos">
-              <i class="bi bi-circle"></i><span>Presupuestos</span>
-            </a>
           </li>
         </ul>
       </li><!-- End Facturación Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="finanzas">
           <i class="bi bi-cash-coin"></i>
           <span>Finanzas</span>
@@ -228,9 +245,9 @@
       </li>
       <!-- End Tareas Nav -->
 
-      <li class="nav-heading">Administrador</li>
+      <li class="nav-heading" th:if="${usuario.admin}">Administrador</li>
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="pages-register">
           <i class="bi bi-card-list"></i>
           <span>Crear Usuario</span>
@@ -263,13 +280,13 @@
             <div class="col-12">
               <div class="card info-card sales-card d-flex align-items-center">
                 <div class="card-body">
-                  <h5 class="card-title">Nóminas</h5>
+                  <h5 class="card-title ps-3">Nóminas</h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-file-earmark-post"></i>
                     </div>
-                    <div class="ps-3">
-                      <h6>5</h6>
+                    <div class="ps-3 d-flex align-items-center justify-content-center">
+                      <h6 th:text="${numNominas}"></h6>
                     </div>
                   </div>
                 </div>
@@ -285,69 +302,192 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-file-plus" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearNomina"><i class="bi bi-file-earmark-plus" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="crearNomina" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">Crear Factura</h5>
+                    <h5 class="modal-title">Crear Nómina</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action="#" th:action="@{/anyadirNomina}" method="post">
                         <div class="row mb-3">
-                          <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
-                          <div class="col-sm-10">
-                            <input id="nombre" type="text" class="form-control">
+                          <label for="empleado" class="col-sm-4 col-form-label">Empleado</label>
+                          <div class="col-sm-8">
+                            <select class="form-select" name="empleado" id ="empleado" required>
+                              <option selected="">Selecciona Empleado</option>
+                              <option th:each ="empleado: ${empleados}" th:value="${empleado.ref}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
-                          <div class="col-sm-10">
-                            <input id="apellidos" type="text" class="form-control">
+                          <label for="fecha" class="col-sm-4 col-form-label">Fecha Creación</label>
+                          <div class="col-sm-8">
+                            <input id="fecha" name="fecha" type="date" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="dni" class="col-sm-2 col-form-label">DNI | CIF</label>
-                          <div class="col-sm-10">
-                            <input id="dni" type="text" class="form-control">
+                          <label for="dias" class="col-sm-4 col-form-label">Días Trabajados</label>
+                          <div class="col-sm-8">
+                            <input id="dias" name="dias" type="number" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
-                          <div class="col-sm-10">
-                            <input id="telefono" type="number" class="form-control">
+                          <label for="salarioConvenio" class="col-sm-4 col-form-label">Salario Convenio / dia</label>
+                          <div class="col-sm-8">
+                            <input id="salarioConvenio" name="salarioConvenio" type="number" class="form-control" required step="0.01" min="0">
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="email" class="col-sm-2 col-form-label">Correo</label>
-                          <div class="col-sm-10">
-                            <input id="email" type="text" class="form-control">
+                          <label for="prestacionAccidente" class="col-sm-4 col-form-label">Prestación Accidente / dia</label>
+                          <div class="col-sm-8">
+                            <input id="prestacionAccidente" name="prestacionAccidente" type="number" class="form-control" required step="0.01" min="0">
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
-                          <div class="col-sm-10">
-                            <input id="direccion" type="text" class="form-control">
+                          <label for="complementoSalarial" class="col-sm-4 col-form-label">Complemento Salarial/ dia</label>
+                          <div class="col-sm-8">
+                            <input id="complementoSalarial" name="complementoSalarial" type="number" class="form-control" required step="0.01" min="0">
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <legend class="col-form-label col-sm-2 pt-0">Premium</legend>
-                          <div class="col-sm-10">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="premium">
-                              <label class="form-check-label" for="premium"></label>
-                            </div>
+                          <label for="teletrabajo" class="col-sm-4 col-form-label">Teletrabajo / dia</label>
+                          <div class="col-sm-8">
+                            <input id="teletrabajo" name="teletrabajo" type="number" class="form-control" required step="0.01" min="0">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="productividad" class="col-sm-4 col-form-label">Comp. Productividad / dia</label>
+                          <div class="col-sm-8">
+                            <input id="productividad" name="productividad" type="number" class="form-control" required step="0.01" min="0">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="pagasExtra" class="col-sm-4 col-form-label">Paga Extra / paga</label>
+                          <div class="col-sm-8">
+                            <input id="pagasExtra" name="pagasExtra" type="number" class="form-control" required step="0.01" min="0">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="contingencias" class="col-sm-4 col-form-label">Contingencias / dia</label>
+                          <div class="col-sm-8">
+                            <input id="contingencias" name="contingencias" type="number" class="form-control" required step="0.01" min="0">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="formacionP" class="col-sm-4 col-form-label">Gasto Formación / dia</label>
+                          <div class="col-sm-8">
+                            <input id="formacionP" name="formacionP" type="number" class="form-control" required step="0.01" min="0">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="desempleo" class="col-sm-4 col-form-label">Desempleo / dia</label>
+                          <div class="col-sm-8">
+                            <input id="desempleo" name="desempleo" type="number" class="form-control" required step="0.01" min="0">
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                          <button type="submit" class="btn btn-primary" onclick="">Crear Cliente</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Crear Nómina</button>
                         </div>
                       </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="nomina: ${nominas}" class="modal fade" th:id="mostrarInfoNomina+${nomina.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Desglose Nómina</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Ref</span>
+                        <input th:value="${nomina.empleado.ref}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Nombre</span>
+                        <input th:value="${nomina.empleado.nombre} + ' ' + ${nomina.empleado.apellidos}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">DNI</span>
+                        <input th:value="${nomina.empleado.id}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Fecha</span>
+                        <input th:value="${nomina.fecha}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Días Trabajados</span>
+                        <input th:value="${nomina.dias}" type="number" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Sueldo Bruto</span>
+                        <input th:value="${nomina.darFormatoSueldo(nomina.sueldoBruto)}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Salario Convenio</span>
+                        <input th:value="${nomina.darFormatoSueldo(nomina.salarioConvenio[1])}" type="text" class="form-control text-secondary" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Prestación Accidente</span>
+                        <input th:value="${nomina.darFormatoSueldo(nomina.prestacionAccidente[1])}" type="text" class="form-control text-secondary" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Complemento Salarial</span>
+                        <input th:value="${nomina.darFormatoSueldo(nomina.complementoSalarial[1])}" type="text" class="form-control text-secondary" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Teletrabajo</span>
+                        <input th:value="${nomina.darFormatoSueldo(nomina.teletrabajo[1])}" type="text" class="form-control text-secondary" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Comp. Productividad</span>
+                        <input th:value="${nomina.darFormatoSueldo(nomina.productividad[1])}" type="text" class="form-control text-secondary" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Paga Extra / mes</span>
+                        <input th:value="${nomina.darFormatoSueldo(nomina.pagasExtra[1])}" type="text" class="form-control text-secondary" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Contingencias</span>
+                        <input th:value="'- ' + ${nomina.darFormatoSueldo(nomina.contingencias[1])}" type="text" class="form-control text-danger" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Gasto Formación</span>
+                        <input th:value="'- ' + ${nomina.darFormatoSueldo(nomina.formacionP[1])}" type="text" class="form-control text-danger" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Desempleo</span>
+                        <input th:value="'- ' + ${nomina.darFormatoSueldo(nomina.desempleo[1])}" type="text" class="form-control text-danger" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">% IRPF</span>
+                        <input th:value="${nomina.tIRPF[0]} + ' %'" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Retención IRPF</span>
+                        <input th:value="'- ' + ${nomina.darFormatoSueldo(nomina.tIRPF[1])}" type="text" class="form-control text-danger" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Sueldo Neto</span>
+                        <input th:value="${nomina.darFormatoSueldo(nomina.sueldoNeto)}" type="text" class="form-control text-success" readonly>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -359,28 +499,30 @@
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
                     <th scope="col">Ref</th>
                     <th scope="col">Empleado</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Bruto</th>
                     <th scope="col">Neto</th>
                     <th data-sortable="false" scope="col">Descargar</th>
-                    <th data-sortable="false" scope="col">Editar</th>
+                    <th data-sortable="false" scope="col">Desglose</th>
                     <th data-sortable="false" scope="col">Borrar</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>NOM001</td>
-                    <td>Juan José Rodríguez</td>
-                    <td>01/01/2023</td>
-                    <td>3300 €</td>
-                    <td>2600 €</td>
-                    <td><a class="dropdown-item bi bi-download" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
+                  <tr th:each = "nomina: ${nominas}">
+                    <td th:text = "${nomina.ref}"></td>
+                    <td th:text = "${nomina.empleado.getApellidos()} + ', ' + ${nomina.empleado.getNombre()}"></td>
+                    <td th:text = "${nomina.fecha}"></td>
+                    <td th:text = "${nomina.darFormatoSueldo(nomina.sueldoBruto)}"></td>
+                    <td th:text = "${nomina.darFormatoSueldo(nomina.sueldoNeto)}"></td>
+                    <td><a class="dropdown-item bi-download" href="#"></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoNomina+${nomina.ref}"><i class="bi-file-earmark-richtext"></i></a></td>
+                    <td>
+                      <form action="#" th:action="@{/borrarNomina}" method="post">
+                        <button class="dropdown-item bi-file-earmark-x" name = "ref" th:value="${nomina.ref}" type="submit"></button>
+                      </form>
+                    </td>
                   </tr>
                 </tbody>
               </table>

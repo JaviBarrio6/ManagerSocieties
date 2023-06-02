@@ -52,8 +52,8 @@ public class AgendaController {
         return agendaModel;
     }
 
-    public ModelAndView anyadirEmpleado(Usuario user, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
-        Empleado empleado = new Empleado(nombre, apellidos, id, telefono, email, direccion, usuario, puesto, Integer.parseInt(antiguedad));
+    public ModelAndView anyadirEmpleado(Usuario user, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
+        Empleado empleado = new Empleado(nombre, apellidos, id, telefono, email, direccion, usuario, puesto, antiguedad, numSS);
         empleados.empleados.put(empleado.getRef(), empleado);
 
         return agendaEmpleados(user);
@@ -65,10 +65,14 @@ public class AgendaController {
         return agendaEmpleados(user);
     }
 
-    public ModelAndView editarEmpleado(Usuario user, String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String puesto) {
-        empleados.editarEmpleado(ref, nombre, apellidos, id, telefono, email, direccion, usuario, puesto, Integer.parseInt(antiguedad));
+    public ModelAndView editarEmpleado(Usuario user, String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
+        empleados.editarEmpleado(ref, nombre, apellidos, id, telefono, email, direccion, usuario, puesto, antiguedad, numSS);
 
         return agendaEmpleados(user);
+    }
+
+    public Empleado dameEmpleado (String ref){
+        return empleados.empleados.get(ref);
     }
 
     // Fin Empleados
