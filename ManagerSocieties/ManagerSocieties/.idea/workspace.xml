@@ -5,65 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38014811-25bb-4747-960b-9f5e827b4579" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/FacturacionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaran.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaranes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Gasto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Gastos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Nomina.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Nominas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Empleado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Empleado.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Empleados.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Empleados.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/ApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/FacturacionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/FacturacionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/InventarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/InventarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/TareasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/TareasController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Tareas/Tarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Tareas/Tarea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Tareas/Tareas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Tareas/Tareas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Usuario/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Usuario/Empresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Usuario/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Usuario/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Usuario/Usuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Usuario/Usuarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/agenda-clientes.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/agenda-clientes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/agenda-empleados.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/agenda-empleados.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/agenda-empresassubcontratadas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/agenda-empresassubcontratadas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/agenda-proveedores.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/agenda-proveedores.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/edit-users-enterprise.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/edit-users-enterprise.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaran.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaran.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaranes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaranes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Inventario/Productos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Productos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/facturacion-albaranes.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/facturacion-albaranes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/facturacion-gastos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/facturacion-gastos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/facturacion-nominas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/facturacion-nominas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-herramientas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-herramientas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-maquinas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-maquinas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-materiales.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-materiales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-productos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-productos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/inventario-vehiculos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/inventario-vehiculos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/tareas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Empleado.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Empleado.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Empleados.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Empleados.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/AgendaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/AgendaController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/ApplicationController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/InventarioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/InventarioController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/TareasController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/TareasController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Tareas/Tarea.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Tareas/Tarea.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Tareas/Tareas.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Tareas/Tareas.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Usuario/Empresa.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Usuario/Empresa.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Usuario/Usuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Usuario/Usuario.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Usuario/Usuarios.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Usuario/Usuarios.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/agenda-clientes.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/agenda-clientes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/agenda-empleados.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/agenda-empleados.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/agenda-empresassubcontratadas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/agenda-empresassubcontratadas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/agenda-proveedores.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/agenda-proveedores.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/edit-users-enterprise.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/edit-users-enterprise.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/facturacion-albaranes.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/facturacion-albaranes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/facturacion-gastos.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/facturacion-gastos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/facturacion-nominas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/facturacion-nominas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-herramientas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-herramientas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-maquinas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-maquinas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-materiales.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-materiales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-productos.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-productos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/inventario-vehiculos.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/inventario-vehiculos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/tareas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/tareas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,6 +180,7 @@
       <workItem from="1684434996430" duration="606000" />
       <workItem from="1684854608780" duration="11337000" />
       <workItem from="1684922882020" duration="1586000" />
+      <workItem from="1685959723548" duration="11549000" />
     </task>
     <servers />
   </component>
@@ -256,6 +209,11 @@
           <line>35</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/Controllers/InventarioController.java</url>
+          <line>196</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -264,6 +222,7 @@
         <watch expression="this.clientes" language="JAVA" />
         <watch expression="((LinkedHashMap)((Empleados)((TareasController)this).empleadosAux).empleados).entrySet().toArray()[0]" custom="java.util.LinkedHashMap,com.Application.TareasController,com.Agenda.Empleados" />
         <watch expression="semanasMes[3]" />
+        <watch expression="fecha" />
       </configuration>
     </watches-manager>
   </component>

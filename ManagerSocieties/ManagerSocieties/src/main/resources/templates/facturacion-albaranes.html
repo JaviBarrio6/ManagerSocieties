@@ -302,67 +302,58 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-file-plus" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearAlbaran"><i class="bi bi-file-plus" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal fade" id="crearAlbaran" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">Crear Albaran</h5>
+                    <h5 class="modal-title">Crear Albarán</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirAlbaran}" method="post">
                         <div class="row mb-3">
-                          <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
-                          <div class="col-sm-10">
-                            <input id="nombre" type="text" class="form-control">
+                          <label for="cliente" class="col-sm-5 col-form-label">Cliente</label>
+                          <div class="col-sm-7">
+                            <select class="form-select" name="cliente" id ="cliente" required>
+                              <option selected="">Selecciona Cliente</option>
+                              <option th:each ="cliente: ${clientes}" th:value="${cliente.ref}" th:text="${cliente.nombre} + ' ' + ${cliente.apellidos}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
-                          <div class="col-sm-10">
-                            <input id="apellidos" type="text" class="form-control">
+                          <label for="fecha" class="col-sm-5 col-form-label">Fecha</label>
+                          <div class="col-sm-7">
+                            <input id="fecha" name="fecha" type="date" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3" th:each ="producto: ${productos}">
+                          <input class="col-sm-5 col-form-label" type="text" th:value="${producto.ref}" name="productos" readonly>
+                          <div class="col-sm-7">
+                            <input id="productos" type="number" name="cantidades" class="form-control" required th:value="${producto.ref}" min="0" th:max="${producto.stock}">
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="dni" class="col-sm-2 col-form-label">DNI | CIF</label>
-                          <div class="col-sm-10">
-                            <input id="dni" type="text" class="form-control">
+                          <label for="tareas" class="col-sm-5 col-form-label">Tareas</label>
+                          <div class="col-sm-7">
+                            <select class="form-select" multiple name="tareas" id ="tareas" required>
+                              <option selected="">Selecciona Tareas</option>
+                              <option th:each ="tarea: ${tareas}" th:value="${tarea.ref}" th:text="${tarea.ref}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
-                          <div class="col-sm-10">
-                            <input id="telefono" type="number" class="form-control">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label for="email" class="col-sm-2 col-form-label">Correo</label>
-                          <div class="col-sm-10">
-                            <input id="email" type="text" class="form-control">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
-                          <div class="col-sm-10">
-                            <input id="direccion" type="text" class="form-control">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <legend class="col-form-label col-sm-2 pt-0">Premium</legend>
-                          <div class="col-sm-10">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="premium">
-                              <label class="form-check-label" for="premium"></label>
-                            </div>
+                          <label for="iva" class="col-sm-5 col-form-label">IVA</label>
+                          <div class="col-sm-7">
+                            <input id="iva" type="number" name="iva" class="form-control" required value="21">
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                          <button type="submit" class="btn btn-primary" onclick="">Crear Cliente</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Crear Albarán</button>
                         </div>
                       </form>
                     </div>
@@ -393,12 +384,12 @@
                     <td th:text = "${albaran.cliente.getApellidos()} + ', ' + ${albaran.cliente.getNombre()}"></td>
                     <td th:text = "${albaran.fecha}"></td>
                     <td th:text = "${albaran.darFormatoPrecio(albaran.precio)}"></td>
-                    <td><a class="dropdown-item bi-file" href="#"></a></td>
+                    <td><a class="dropdown-item bi-hand-thumbs-up" href="#"></a></td>
                     <td><a class="dropdown-item bi-download" href="#"></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoAlbaran+${albaran.ref}"><i class="bi-file-earmark-richtext"></i></a></td>
-                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarAlbaran+${albaran.ref}"><i class="bi-eraser"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarAlbaran+${albaran.ref}"><i class="bi-pencil-square"></i></a></td>
                     <td>
-                      <form action="#" th:action="@{/borrarNomina}" method="post">
+                      <form action="#" th:action="@{/borrarAlbaran}" method="post">
                         <button class="dropdown-item bi-file-earmark-x" name = "ref" th:value="${albaran.ref}" type="submit"></button>
                       </form>
                     </td>

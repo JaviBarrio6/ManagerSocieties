@@ -7,6 +7,7 @@ import com.Tareas.Tarea;
 import com.Tareas.Tareas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Albaran {
 
@@ -19,7 +20,7 @@ public class Albaran {
 
     private String fecha;
 
-    private ArrayList<Producto> productos;
+    private HashMap<Producto, Integer> productos;
     private ArrayList<Tarea> tareas;
     private double IVA;
 
@@ -42,7 +43,7 @@ public class Albaran {
         setPrecio();
     }
 
-    public Albaran (Cliente cliente, String fecha, ArrayList<Producto> productos, ArrayList<Tarea> tareas, double IVA){
+    public Albaran (Cliente cliente, String fecha, HashMap<Producto, Integer> productos, ArrayList<Tarea> tareas, double IVA){
 
         generadorId++;
         setRef (generadorRef(generadorId, refAlbaran));
@@ -55,7 +56,7 @@ public class Albaran {
         setPrecio();
     }
 
-    public Albaran (String ref, Cliente cliente, String fecha, ArrayList<Producto> productos, ArrayList<Tarea> tareas, double IVA){
+    public Albaran (String ref, Cliente cliente, String fecha, HashMap<Producto, Integer> productos, ArrayList<Tarea> tareas, double IVA){
 
         setRef (ref);
         setCliente(cliente);
@@ -82,8 +83,8 @@ public class Albaran {
         this.fecha = darFormatoFecha(fecha);
     }
 
-    public void setProductos(ArrayList<Producto> productos) {
-        this.productos = (productos != null)?productos: new ArrayList<>();
+    public void setProductos(HashMap<Producto, Integer> productos) {
+        this.productos = (productos != null)?productos: new HashMap<>();
     }
 
     public void setTareas(ArrayList<Tarea> tareas) {
@@ -96,8 +97,8 @@ public class Albaran {
 
     public void setPrecioSinIva() {
         double precio = 0;
-        for (Producto producto: this.productos){
-            precio += producto.getPrecio();
+        for (Producto producto: this.productos.keySet()){
+            precio += producto.getPrecio() * this.productos.get(producto);
         }
         for (Tarea tarea: this.tareas){
             precio += tarea.getPrecio();
@@ -126,7 +127,7 @@ public class Albaran {
         return this.fecha;
     }
 
-    public ArrayList<Producto> getProductos() {
+    public HashMap<Producto, Integer> getProductos() {
         return this.productos;
     }
 

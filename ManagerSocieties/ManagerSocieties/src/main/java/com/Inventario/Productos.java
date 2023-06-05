@@ -23,4 +23,12 @@ public class Productos {
     public void editarProducto (String ref, String modelo, double precio, int stock, String urlFoto){
         this.productos.put(ref, new Producto(ref, modelo, precio, stock, urlFoto));
     }
+
+    public Producto dameProducto (String ref){
+        return this.productos.get(ref);
+    }
+
+    public LinkedHashMap<String, Producto> getTheProductos(){
+        return this.productos;
+    }
 }

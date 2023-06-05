@@ -194,7 +194,7 @@ public class InventarioController {
         ArrayList<Producto> productosAux = new ArrayList<>();
 
         for (int i = 0; i < refs.length; i++) {
-            for (Producto producto : productosAux) {
+            for (Producto producto : this.productos.productos.values()) {
                 if (refs[i].equals(producto.getRef())){
                     productosAux.add(producto);
                 }

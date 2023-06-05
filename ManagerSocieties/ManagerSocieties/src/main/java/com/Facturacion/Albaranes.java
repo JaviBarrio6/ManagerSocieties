@@ -5,6 +5,7 @@ import com.Inventario.Producto;
 import com.Tareas.Tarea;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Albaranes {
@@ -23,7 +24,7 @@ public class Albaranes {
         this.albaranes.put(albaran.getRef(), albaran);
     }
 
-    public void editarAlbaran (String ref, Cliente cliente, String fecha, ArrayList<Producto> productos, ArrayList<Tarea> tareas, double IVA) {
+    public void editarAlbaran (String ref, Cliente cliente, String fecha, HashMap<Producto, Integer> productos, ArrayList<Tarea> tareas, double IVA) {
         this.albaranes.put(ref, new Albaran(ref, cliente, fecha, productos, tareas, IVA));
     }
 

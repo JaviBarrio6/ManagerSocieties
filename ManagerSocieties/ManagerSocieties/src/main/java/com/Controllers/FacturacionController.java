@@ -1,6 +1,7 @@
 package com.Controllers;
 
 import com.Agenda.Cliente;
+import com.Agenda.Clientes;
 import com.Agenda.Empleado;
 import com.Agenda.Empleados;
 import com.Facturacion.*;
@@ -12,6 +13,7 @@ import com.Usuario.Usuario;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FacturacionController {
 
@@ -21,6 +23,7 @@ public class FacturacionController {
     Productos productos = new Productos();
     Tareas tareas = new Tareas();
     Empleados empleados = new Empleados();
+    Clientes clientes = new Clientes();
     ModelAndView facturacionModel = new ModelAndView();
 
     // Inicio Albaranes
@@ -30,18 +33,19 @@ public class FacturacionController {
         facturacionModel.addObject("numAlbaranes", albaranes.albaranes.values().size());
         facturacionModel.addObject("productos", productos.productos.values());
         facturacionModel.addObject("tareas", tareas.tareas.values());
+        facturacionModel.addObject("clientes", clientes.clientes.values());
         facturacionModel.addObject("usuario", user);
         return facturacionModel;
     }
 
-    public ModelAndView anyadirAlbaran (Usuario user, Cliente cliente, String fecha, ArrayList<Producto> productos, ArrayList<Tarea> tareas, double IVA) {
+    public ModelAndView anyadirAlbaran (Usuario user, Cliente cliente, String fecha, HashMap<Producto, Integer> productos, ArrayList<Tarea> tareas, double IVA) {
         Albaran albaran = new Albaran(cliente, fecha, productos, tareas, IVA);
 
         albaranes.albaranes.put(albaran.getRef(), albaran);
-        return facturacionGastos(user);
+        return facturacionAlbaranes(user);
     }
 
-    public ModelAndView editarAlbaran (Usuario user, String ref, Cliente cliente, String fecha, ArrayList<Producto> productos, ArrayList<Tarea> tareas, double IVA) {
+    public ModelAndView editarAlbaran (Usuario user, String ref, Cliente cliente, String fecha, HashMap<Producto, Integer> productos, ArrayList<Tarea> tareas, double IVA) {
         albaranes.editarAlbaran(ref, cliente, fecha, productos, tareas, IVA);
 
         return facturacionAlbaranes(user);

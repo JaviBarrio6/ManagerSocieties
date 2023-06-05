@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 @Controller
@@ -381,15 +382,19 @@ public class ApplicationController {
     }
 
     @RequestMapping("/anyadirAlbaran")
-    public ModelAndView anyadirAlbaranModel (String cliente, String fecha, String[] productos, String[] tareas, double IVA) {
+    public ModelAndView anyadirAlbaranModel (String cliente, String fecha, String[] productos, int[] cantidades, String[] tareas, double iva) {
 
         Cliente clienteAux = agendaController.dameCliente(cliente);
         ArrayList<Producto> productosAux = inventarioController.dameProductos(productos);
         ArrayList<Tarea> tareasAux = tareasController.dameTareas(tareas);
+        HashMap<Producto, Integer> productosAuxAux = new HashMap<>();
+        for (int i = 0; i < productosAux.size(); i++){
+            productosAuxAux.put(productosAux.get(i), cantidades[i]);
+        }
 
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.anyadirAlbaran(this.usuario, clienteAux, fecha, productosAux, tareasAux, IVA);
+                return facturacionController.anyadirAlbaran(this.usuario, clienteAux, fecha, productosAuxAux, tareasAux, iva);
             } else {
                 return index();
             }
