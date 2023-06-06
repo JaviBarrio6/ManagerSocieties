@@ -140,6 +140,8 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 
 ### V3.1.0
 
+* Se genera la tabla de la base de datos de la clase Cliente, borrando la clase Clientes, migrando el controlador AgendaController a AgendaService y generando la clase ClientesRepository.
+
 * Se modifica el tipo de variable de antigüedad del empleado para guardar la fecha de dada de alta.
 
 ## Instalación:

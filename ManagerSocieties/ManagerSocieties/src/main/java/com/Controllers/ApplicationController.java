@@ -2,24 +2,29 @@ package com.Controllers;
 
 import com.Agenda.Cliente;
 import com.Agenda.Empleado;
-import com.Facturacion.Gasto;
 import com.Inventario.Producto;
+import com.Repositories.ClientesRepository;
+import com.Services.AgendaService;
 import com.Tareas.Tarea;
-import com.Tareas.Tareas;
 import com.Usuario.Empresa;
 import com.Usuario.Usuario;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class ApplicationController {
     ModelAndView model = new ModelAndView();
-    AgendaController agendaController = new AgendaController();
+
+    @Autowired
+    private ClientesRepository clientesRepository;
+
+    AgendaService agendaService = new AgendaService();
 
     CalendarioController calendarioController = new CalendarioController();
 
@@ -94,7 +99,7 @@ public class ApplicationController {
     public ModelAndView agendaClientesModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.agendaClientes(this.usuario);
+                return agendaService.agendaClientes(this.usuario, clientesRepository.findAll(), clientesRepository.countPeople());
             } else {
                 return index();
             }
@@ -107,7 +112,9 @@ public class ApplicationController {
     public ModelAndView anyadirClienteModel(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.anyadirCliente(this.usuario, nombre, apellidos, id, telefono, correo, dir, premium);
+                Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium, clientesRepository.findAll().size());
+                clientesRepository.save(cliente);
+                return agendaClientesModel();
             } else {
                 return index();
             }
@@ -120,7 +127,8 @@ public class ApplicationController {
     public ModelAndView borrarClienteModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.borrarCliente(this.usuario, ref);
+                clientesRepository.delete(clientesRepository.findClienteByRef(ref));
+                return agendaClientesModel();
             } else {
                 return index();
             }
@@ -134,7 +142,8 @@ public class ApplicationController {
     public ModelAndView editarClienteModel(String ref, String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.editarCliente(this.usuario, ref, nombre, apellidos, id, telefono, correo, dir, premium);
+                Cliente cliente = new Cliente(ref, nombre, apellidos, id, telefono, correo, dir, premium);
+                return agendaService.editarCliente(this.usuario, clientesRepository.findClienteByRef(ref), cliente, clientesRepository.findAll(), clientesRepository.countPeople());
             } else {
                 return index();
             }
@@ -151,7 +160,7 @@ public class ApplicationController {
     public ModelAndView agendaEmpleadosModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.agendaEmpleados(this.usuario);
+                return agendaService.agendaEmpleados(this.usuario);
             } else {
                 return index();
             }
@@ -164,7 +173,7 @@ public class ApplicationController {
     public ModelAndView anyadirEmpleadoModel(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.anyadirEmpleado(this.usuario, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, numSS, puesto);
+                return agendaService.anyadirEmpleado(this.usuario, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, numSS, puesto);
             } else {
                 return index();
             }
@@ -177,7 +186,7 @@ public class ApplicationController {
     public ModelAndView borrarEmpleadoModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.borrarEmpleado(this.usuario, ref);
+                return agendaService.borrarEmpleado(this.usuario, ref);
             } else {
                 return index();
             }
@@ -190,7 +199,7 @@ public class ApplicationController {
     public ModelAndView editarEmpleadoModel(String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.editarEmpleado(this.usuario, ref, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, numSS, puesto);
+                return agendaService.editarEmpleado(this.usuario, ref, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, numSS, puesto);
             } else {
                 return index();
             }
@@ -207,7 +216,7 @@ public class ApplicationController {
     public ModelAndView agendaEmpresasSubcontratadasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.agendaEmpresasSubcontratadas(this.usuario);
+                return agendaService.agendaEmpresasSubcontratadas(this.usuario);
             } else {
                 return index();
             }
@@ -220,7 +229,7 @@ public class ApplicationController {
     public ModelAndView anyadirEmpresaModel(String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.anyadirEmpresa(this.usuario, nombre, tipo, id, telefono, email, direccion);
+                return agendaService.anyadirEmpresa(this.usuario, nombre, tipo, id, telefono, email, direccion);
             } else {
                 return index();
             }
@@ -233,7 +242,7 @@ public class ApplicationController {
     public ModelAndView borrarEmpresaModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.borrarEmpresa(this.usuario, ref);
+                return agendaService.borrarEmpresa(this.usuario, ref);
             } else {
                 return index();
             }
@@ -246,7 +255,7 @@ public class ApplicationController {
     public ModelAndView editarEmpresaModel(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.editarEmpresa(this.usuario, ref, nombre, tipo, id, telefono, email, direccion);
+                return agendaService.editarEmpresa(this.usuario, ref, nombre, tipo, id, telefono, email, direccion);
             } else {
                 return index();
             }
@@ -263,7 +272,7 @@ public class ApplicationController {
     public ModelAndView agendaProveedoresModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.agendaProveedores(this.usuario);
+                return agendaService.agendaProveedores(this.usuario);
             } else {
                 return index();
             }
@@ -276,7 +285,7 @@ public class ApplicationController {
     public ModelAndView anyadirProveedorModel(String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.anyadirProveedor(this.usuario, nombre, tipo, id, telefono, email, direccion);
+                return agendaService.anyadirProveedor(this.usuario, nombre, tipo, id, telefono, email, direccion);
             } else {
                 return index();
             }
@@ -289,7 +298,7 @@ public class ApplicationController {
     public ModelAndView borrarProveedorModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.borrarProveedor(this.usuario, ref);
+                return agendaService.borrarProveedor(this.usuario, ref);
             } else {
                 return index();
             }
@@ -302,7 +311,7 @@ public class ApplicationController {
     public ModelAndView editarProveedorModel(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaController.editarProveedor(this.usuario, ref, nombre, tipo, id, telefono, email, direccion);
+                return agendaService.editarProveedor(this.usuario, ref, nombre, tipo, id, telefono, email, direccion);
             } else {
                 return index();
             }
@@ -384,7 +393,7 @@ public class ApplicationController {
     @RequestMapping("/anyadirAlbaran")
     public ModelAndView anyadirAlbaranModel (String cliente, String fecha, String[] productos, int[] cantidades, String[] tareas, double iva) {
 
-        Cliente clienteAux = agendaController.dameCliente(cliente);
+        Cliente clienteAux = agendaService.dameCliente(cliente);
         ArrayList<Producto> productosAux = inventarioController.dameProductos(productos);
         ArrayList<Tarea> tareasAux = tareasController.dameTareas(tareas);
         HashMap<Producto, Integer> productosAuxAux = new HashMap<>();
@@ -446,7 +455,7 @@ public class ApplicationController {
     @RequestMapping("/anyadirGasto")
     public ModelAndView anyadirGastoModel (String empleado, String motivo, String fecha, double gasto) {
 
-        Empleado empleadoAux = agendaController.dameEmpleado(empleado);
+        Empleado empleadoAux = agendaService.dameEmpleado(empleado);
 
         if (this.log){
             if (this.usuario.isAdmin()){
@@ -490,7 +499,7 @@ public class ApplicationController {
                                            double complementoSalarial, double teletrabajo, double productividad, double pagasExtra,
                                            double contingencias, double formacionP, double desempleo) {
 
-        Empleado empleadoAux = agendaController.dameEmpleado(empleado);
+        Empleado empleadoAux = agendaService.dameEmpleado(empleado);
 
         if (this.log){
             if (this.usuario.isAdmin()){
@@ -840,11 +849,11 @@ public class ApplicationController {
 
     @RequestMapping("/anyadirTarea")
     public ModelAndView anyadirTareaModel (String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
-        Cliente clienteAux = agendaController.dameCliente(cliente);
-        Empleado empleado = agendaController.dameEmpleado(empleados[0]);
+        Cliente clienteAux = agendaService.dameCliente(cliente);
+        Empleado empleado = agendaService.dameEmpleado(empleados[0]);
         String[] nombresEmpleado = new String[empleados.length];
         for (int i = 0; i < empleados.length; i++){
-            nombresEmpleado[i] = agendaController.dameEmpleado(empleados[i]).getNombre() + ' ' + agendaController.dameEmpleado(empleados[i]).getApellidos();
+            nombresEmpleado[i] = agendaService.dameEmpleado(empleados[i]).getNombre() + ' ' + agendaService.dameEmpleado(empleados[i]).getApellidos();
         }
         Tarea tarea = new Tarea(clienteAux, nombresEmpleado, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
         calendarioController.anyadirEvento(this.usuario, tarea.getRef(), "Tarea - ".concat(clienteAux.getNombre()), fechaFin, "¿?",
@@ -903,7 +912,7 @@ public class ApplicationController {
     public ModelAndView editarUsuarioModel(String imagen, String nombre, String apellidos, String dni, String telefono, String email,
                                            String direccion, String antiguedad, String numSS, String puesto){
         usuarioController.editarUsuario(this.usuario, nombre, apellidos, dni, telefono, email, direccion, antiguedad, puesto, imagen);
-        agendaController.editarEmpleado(this.usuario, this.usuario.getEmpleado().getRef(), nombre, apellidos, this.usuario.getEmpleado().getUsuario(), dni, telefono, email, direccion, antiguedad, numSS, puesto);
+        agendaService.editarEmpleado(this.usuario, this.usuario.getEmpleado().getRef(), nombre, apellidos, this.usuario.getEmpleado().getUsuario(), dni, telefono, email, direccion, antiguedad, numSS, puesto);
         this.usuario = usuarioController.dameUsuario(this.usuario.getEmpleado().getUsuario(), this.usuario.getContrasenya());
         return usersProfileModel();
     }

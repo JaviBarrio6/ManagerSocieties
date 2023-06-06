@@ -13,7 +13,7 @@ public class Albaranes {
     public LinkedHashMap<String, Albaran> albaranes = new LinkedHashMap<>();
 
     Cliente cliente01 = new Cliente("Juan José", "Rodríguez", "53852030Z", "674851283",
-            "juan@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", true);
+            "juan@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", true, 2);
     Tarea tarea01 = new Tarea(cliente01, new String[]{"Paco López", "Manuela Gracia"}, "2023-02-01", null, "11:00", 1200, 120, "", 0, new String[]{});
 
     ArrayList<Tarea> tareas = new ArrayList<>();

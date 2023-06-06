@@ -5,29 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38014811-25bb-4747-960b-9f5e827b4579" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/DataBaseUsage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/Repositories/ClientesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/mysql/jdbc/Driver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Clientes.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/FacturacionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/FacturacionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/TareasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/TareasController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Services/AgendaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/ApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DataBaseUsage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DataBaseUsage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaranes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaranes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Repositories/ClientesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Repositories/ClientesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Tareas/Tareas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Tareas/Tareas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mysql/jdbc/Driver.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Cliente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Clientes.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Persona.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Persona.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/AgendaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/AgendaController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/FacturacionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/FacturacionController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/InventarioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/InventarioController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/TareasController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/TareasController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Inventario/Productos.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Inventario/Productos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/AgendaController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/ApplicationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/DataBaseUsage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/DataBaseUsage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Facturacion/Albaranes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Facturacion/Albaranes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Repositories/ClientesRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Repositories/ClientesRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Tareas/Tareas.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Tareas/Tareas.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,34 +73,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelOrder2&quot;: &quot;2&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth2&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Javic/Desktop/GitHub/ManagerSocieties/Readme.md&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;2915ffa6bd1348b12d75cf10349c4126&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Programas\\IntelliJ IDEA 2022.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelOrder2": "2",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RequestMappingsPanelWidth2": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Javic/Desktop/GitHub/ManagerSocieties/Readme.md",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "spring.boot",
+    "spring.configuration.checksum": "2915ffa6bd1348b12d75cf10349c4126",
+    "ts.external.directory.path": "D:\\Programas\\IntelliJ IDEA 2022.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Javic\Desktop\GitHub\ManagerSocieties\ManagerSocieties\ManagerSocieties\src\main\resources\static\css" />
@@ -200,7 +209,10 @@
       <workItem from="1685959723548" duration="15903000" />
       <workItem from="1685990810185" duration="1142000" />
       <workItem from="1686000132102" duration="89000" />
-      <workItem from="1686043911348" duration="1228000" />
+      <workItem from="1686043911348" duration="2703000" />
+      <workItem from="1686046627973" duration="760000" />
+      <workItem from="1686047399265" duration="4368000" />
+      <workItem from="1686052317812" duration="8872000" />
     </task>
     <servers />
   </component>
@@ -234,6 +246,16 @@
           <line>196</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java</url>
+          <line>179</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -245,5 +267,9 @@
         <watch expression="fecha" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

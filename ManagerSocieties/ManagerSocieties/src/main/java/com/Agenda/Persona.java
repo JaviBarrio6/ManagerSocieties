@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+
 public class Persona implements Serializable {
 
     // Inicio Variables
