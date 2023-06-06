@@ -1,20 +1,25 @@
 package com.Controllers;
 
-import com.Agenda.Clientes;
 import com.Agenda.Empleados;
+import com.Repositories.ClientesRepository;
 import com.Inventario.*;
 import com.Tareas.Tarea;
 import com.Tareas.Tareas;
 import com.Usuario.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 
+@RestController
 public class TareasController {
 
     Tareas tareas = new Tareas();
     Empleados empleadosAux = new Empleados();
-    Clientes clientes = new Clientes();
+
+    private ClientesRepository clientesRepository;
     Herramientas herramientas = new Herramientas();
     Maquinas maquinas = new Maquinas();
     Materiales materiales = new Materiales();
@@ -25,7 +30,7 @@ public class TareasController {
     public ModelAndView tareas(Usuario user){
         tareasModel.setViewName("tareas.html");
         tareasModel.addObject("tareas", tareas.tareas.values());
-        tareasModel.addObject("clientes", clientes.clientes.values());
+        tareasModel.addObject("clientes", clientesRepository.findAll());
         tareasModel.addObject("empleados", empleadosAux.empleados.values());
         tareasModel.addObject("herramientas", herramientas.herramientas.values());
         tareasModel.addObject("maquinas", maquinas.maquinas.values());
@@ -50,7 +55,7 @@ public class TareasController {
     }
 
     public ModelAndView editarTarea (Usuario user, String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
-        tareas.editarTarea(ref, clientes.clientes.get(cliente), empleados, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
+        tareas.editarTarea(ref, clientesRepository.findClienteByRef(ref), empleados, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
 
         return tareas(user);
     }

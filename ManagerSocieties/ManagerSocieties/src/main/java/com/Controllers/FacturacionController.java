@@ -1,7 +1,6 @@
 package com.Controllers;
 
 import com.Agenda.Cliente;
-import com.Agenda.Clientes;
 import com.Agenda.Empleado;
 import com.Agenda.Empleados;
 import com.Facturacion.*;
@@ -23,7 +22,6 @@ public class FacturacionController {
     Productos productos = new Productos();
     Tareas tareas = new Tareas();
     Empleados empleados = new Empleados();
-    Clientes clientes = new Clientes();
     ModelAndView facturacionModel = new ModelAndView();
 
     // Inicio Albaranes
@@ -33,7 +31,7 @@ public class FacturacionController {
         facturacionModel.addObject("numAlbaranes", albaranes.albaranes.values().size());
         facturacionModel.addObject("productos", productos.productos.values());
         facturacionModel.addObject("tareas", tareas.tareas.values());
-        facturacionModel.addObject("clientes", clientes.clientes.values());
+        //facturacionModel.addObject("clientes", clientes.clientes.values());
         facturacionModel.addObject("usuario", user);
         return facturacionModel;
     }

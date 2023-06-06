@@ -5,17 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38014811-25bb-4747-960b-9f5e827b4579" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/DataBaseUsage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Repositories/ClientesRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/mysql/jdbc/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/ApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Clientes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Agenda/Persona.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/AgendaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/FacturacionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/FacturacionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/InventarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/InventarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaran.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaran.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaranes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Facturacion/Albaranes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Inventario/Productos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Inventario/Productos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/facturacion-albaranes.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/facturacion-albaranes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/ApplicationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Controllers/TareasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Controllers/TareasController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Cliente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Clientes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Agenda/Persona.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Agenda/Persona.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/AgendaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/AgendaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/FacturacionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/FacturacionController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/InventarioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/InventarioController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/facturacion-albaranes.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/facturacion-albaranes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Controllers/TareasController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Controllers/TareasController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Inventario/Productos.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Inventario/Productos.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,8 +74,10 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelOrder2&quot;: &quot;2&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth2&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -134,6 +148,9 @@
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpringBeansView">
+    <option name="beanDetailsProportion" value="0.3" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="38014811-25bb-4747-960b-9f5e827b4579" name="Changes" comment="" />
@@ -180,7 +197,10 @@
       <workItem from="1684434996430" duration="606000" />
       <workItem from="1684854608780" duration="11337000" />
       <workItem from="1684922882020" duration="1586000" />
-      <workItem from="1685959723548" duration="11549000" />
+      <workItem from="1685959723548" duration="15903000" />
+      <workItem from="1685990810185" duration="1142000" />
+      <workItem from="1686000132102" duration="89000" />
+      <workItem from="1686043911348" duration="1228000" />
     </task>
     <servers />
   </component>

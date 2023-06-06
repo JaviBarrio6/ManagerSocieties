@@ -1,13 +1,21 @@
 package com.Agenda;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 
+@Entity
+@Table(name = "CLIENTES")
 public class Cliente extends Persona implements Serializable {
 
     // Inicio Variables
-    public static int generadorId = 0;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public static int generadorId;
     private static final String refCliente = "CLI";
     private boolean premium;
+
     private String ref;
 
     // Fin Variables

@@ -1,12 +1,22 @@
 package com.Controllers;
 
 import com.Agenda.*;
+import com.Repositories.ClientesRepository;
 import com.Usuario.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
+@RestController
 public class AgendaController {
 
-    Clientes clientes = new Clientes();
+    @Autowired
+    public ClientesRepository clientesRepository;
+
+
     Empleados empleados = new Empleados();
     Empresas empresas = new Empresas();
     Proveedores proveedores = new Proveedores();
@@ -14,34 +24,38 @@ public class AgendaController {
 
     public ModelAndView agendaClientes(Usuario user) {
         agendaModel.setViewName("agenda-clientes.html");
-        agendaModel.addObject("clientes", clientes.clientes.values());
-        agendaModel.addObject("numClientes", clientes.getClientesEmpresas()[0]);
-        agendaModel.addObject("numEmpresas", clientes.getClientesEmpresas()[1]);
+        agendaModel.addObject("clientes", clientesRepository.findAll());
+        agendaModel.addObject("numClientes", clientesRepository.findAll().size());
         agendaModel.addObject("usuario", user);
         return agendaModel;
     }
 
     public ModelAndView anyadirCliente(Usuario user, String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
-        Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium);
-        clientes.clientes.put(cliente.getRef(), cliente);
-
+        clientesRepository.save(new Cliente(nombre, apellidos, id, telefono, correo, dir, premium));
         return agendaClientes(user);
     }
 
     public ModelAndView borrarCliente(Usuario user, String ref) {
-        clientes.clientes.remove(ref);
+        clientesRepository.delete(clientesRepository.findClienteByRef(ref));
 
         return agendaClientes(user);
     }
 
     public ModelAndView editarCliente(Usuario user, String ref, String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
-        clientes.editarCliente(ref, nombre, apellidos, id, telefono, correo, dir, premium);
+        Cliente cliente = clientesRepository.findClienteByRef(ref);
+        cliente.setNombre(nombre);
+        cliente.setApellidos(apellidos);
+        cliente.setId(id);
+        cliente.setTelefono(telefono);
+        cliente.setEmail(correo);
+        cliente.setDireccion(dir);
+        cliente.setPremium(premium);
 
         return agendaClientes(user);
     }
 
     public Cliente dameCliente (String ref){
-        return clientes.clientes.get(ref);
+        return clientesRepository.findClienteByRef(ref);
     }
 
     public ModelAndView agendaEmpleados(Usuario user) {
@@ -134,8 +148,8 @@ public class AgendaController {
 
     // Inicio Getters
 
-    public Clientes getClientes() {
-        return this.clientes;
+    public ArrayList<Cliente> getClientes() {
+        return (ArrayList<Cliente>) clientesRepository.findAll();
     }
 
     public Empleados getEmpleados() {

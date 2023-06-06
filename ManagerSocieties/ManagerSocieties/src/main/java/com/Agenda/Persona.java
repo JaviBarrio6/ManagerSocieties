@@ -1,25 +1,34 @@
 package com.Agenda;
 
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 public class Persona implements Serializable {
 
     // Inicio Variables
     private String nombre;
     private String apellidos;
+    @Id
     private String id;
     private String telefono;
     private String email;
     private String direccion;
-    private ArrayList <File> documentos;
+    @ElementCollection
+    private ArrayList<File> documentos;
 
     public final char[] letrasDNI = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
 
     // Fin Variables
 
     // Inicio Constructores
+
 
     public Persona (String nombre, String apellidos, String id, String telefono, String email, String direccion){
         setNombre(nombre);
@@ -28,6 +37,16 @@ public class Persona implements Serializable {
         setTelefono(telefono);
         setEmail(email);
         setDireccion(direccion);
+        this.documentos = new ArrayList<>();
+    }
+
+    public Persona() {
+        setNombre("");
+        setApellidos("");
+        setId("");
+        setTelefono("");
+        setEmail("");
+        setDireccion("");
         this.documentos = new ArrayList<>();
     }
 
