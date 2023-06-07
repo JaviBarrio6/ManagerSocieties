@@ -33,8 +33,6 @@ public class Cliente implements Serializable {
     @Column (name = "ref")
     private String ref;
 
-    public final char[] letrasDNI = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
-
     // Fin Variables
 
     // Inicio Constructores
@@ -83,7 +81,19 @@ public class Cliente implements Serializable {
         this.apellidos = apellidos;
     }
     public void setId(String id) {
-        this.id = id;
+        if (id.equals("")){
+            this.id = id;
+        } else if (esDni(id)){
+            if (!esDNICorrecto(id)){
+                throw new RuntimeException("El valor del DNI no es correcto");
+            } else {
+                this.id = id;
+            }
+        } else if (!esCIFCorrecto(id)){
+            throw new RuntimeException("El valor del CIF no es correcto");
+        } else {
+            this.id = id;
+        }
     }
 
     public void setTelefono(String telefono) {
@@ -109,10 +119,6 @@ public class Cliente implements Serializable {
     // Fin Setters
 
     // Inicio Getters
-
-    public int getGeneradorId(){
-        return this.generadorId;
-    }
 
     public String getNombre() {
         return this.nombre;
@@ -153,6 +159,7 @@ public class Cliente implements Serializable {
     }
 
     public boolean esDNICorrecto (String dni){
+        final char[] letrasDNI = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
         if (dni.length() != 9){
             return false;
         } else {

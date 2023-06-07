@@ -2,7 +2,6 @@ package com.Controllers;
 
 import com.Agenda.Cliente;
 import com.Agenda.Empleado;
-import com.Agenda.Empleados;
 import com.Facturacion.*;
 import com.Inventario.Producto;
 import com.Inventario.Productos;
@@ -13,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class FacturacionController {
 
@@ -21,7 +21,6 @@ public class FacturacionController {
     Nominas nominas = new Nominas();
     Productos productos = new Productos();
     Tareas tareas = new Tareas();
-    Empleados empleados = new Empleados();
     ModelAndView facturacionModel = new ModelAndView();
 
     // Inicio Albaranes
@@ -52,18 +51,18 @@ public class FacturacionController {
     public ModelAndView borrarAlbaran (Usuario user, String ref){
         albaranes.albaranes.remove(ref);
 
-        return facturacionGastos(user);
+        return facturacionGastos(user, null);
     }
 
     // Fin Gastos Externos
 
 
     // Inicio Gastos Externos
-    public ModelAndView facturacionGastos (Usuario user){
+    public ModelAndView facturacionGastos (Usuario user, List<Empleado> empleados){
         facturacionModel.setViewName("facturacion-gastos.html");
         facturacionModel.addObject("gastos", gastos.gastos.values());
         facturacionModel.addObject("numGastos", gastos.gastos.values().size());
-        facturacionModel.addObject("empleados", empleados.empleados.values());
+        facturacionModel.addObject("empleados", empleados);
         facturacionModel.addObject("usuario", user);
         return facturacionModel;
     }
@@ -72,24 +71,24 @@ public class FacturacionController {
         Gasto gastoAux = new Gasto(empleado, motivo, fecha, gasto);
 
         gastos.gastos.put(gastoAux.getRef(), gastoAux);
-        return facturacionGastos(user);
+        return facturacionGastos(user, null);
     }
 
     public ModelAndView borrarGasto (Usuario user, String ref){
         gastos.gastos.remove(ref);
 
-        return facturacionGastos(user);
+        return facturacionGastos(user, null);
     }
 
     // Fin Gastos Externos
 
     // Inicio Nominas
 
-    public ModelAndView facturacionNominas (Usuario user){
+    public ModelAndView facturacionNominas (Usuario user, List<Empleado> empleados){
         facturacionModel.setViewName("facturacion-nominas.html");
         facturacionModel.addObject("nominas", nominas.nominas.values());
         facturacionModel.addObject("numNominas", nominas.nominas.values().size());
-        facturacionModel.addObject("empleados", empleados.empleados.values());
+        facturacionModel.addObject("empleados", empleados);
         facturacionModel.addObject("usuario", user);
         return facturacionModel;
     }
@@ -102,13 +101,13 @@ public class FacturacionController {
                                     teletrabajo, productividad, pagasExtra, contingencias, formacionP, desempleo);
         nominas.nominas.put(nomina.getRef(), nomina);
 
-        return facturacionNominas(user);
+        return facturacionNominas(user, null);
     }
 
     public ModelAndView borrarNomina (Usuario user, String ref){
         nominas.nominas.remove(ref);
 
-        return facturacionNominas(user);
+        return facturacionNominas(user, null);
     }
     // Fin Nominas
 }

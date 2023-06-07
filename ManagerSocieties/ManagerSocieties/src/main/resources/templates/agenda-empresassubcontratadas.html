@@ -192,9 +192,6 @@
             <a href="facturacion-nominas">
               <i class="bi bi-circle"></i><span>Nóminas</span>
             </a>
-            <a href="facturacion-presupuestos">
-              <i class="bi bi-circle"></i><span>Presupuestos</span>
-            </a>
           </li>
         </ul>
       </li><!-- End Facturación Nav -->
@@ -388,7 +385,7 @@
                         <div class="row mb-3">
                           <label for="tipo" class="col-sm-2 col-form-label">Tipo</label>
                           <div class="col-sm-10">
-                            <input name="tipo" th:value="${empresa.apellidos}" type="text" class="form-control" required>
+                            <input name="tipo" th:value="${empresa.tipo}" type="text" class="form-control" required>
                           </div>
                         </div>
                         <div class="row mb-3">

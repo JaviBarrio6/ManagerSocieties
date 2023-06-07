@@ -12,4 +12,7 @@ public interface ClientesRepository extends JpaRepository<Cliente, Integer> {
     @Query (value = "SELECT count(id) FROM Clientes WHERE SUBSTRING(id, 1, 1)", nativeQuery = true)
     int countPeople ();
 
+    @Query (value = "SELECT generador_id FROM Clientes order by generador_id desc limit 1", nativeQuery = true)
+    int giveLastId();
+
 }

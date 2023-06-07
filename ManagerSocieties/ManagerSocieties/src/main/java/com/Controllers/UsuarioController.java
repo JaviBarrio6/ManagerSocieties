@@ -1,18 +1,16 @@
 package com.Controllers;
 
 import com.Agenda.Empleado;
-import com.Agenda.Empleados;
 import com.Usuario.Usuario;
 import com.Usuario.Usuarios;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioController {
 
     Usuarios usuarios = new Usuarios();
-
-    Empleados empleados = new Empleados();
 
     ModelAndView usuariosModel = new ModelAndView();
 
@@ -30,10 +28,10 @@ public class UsuarioController {
         }
     }
 
-    public ModelAndView registerPage(){
+    public ModelAndView registerPage(List<Empleado> empleados){
         ArrayList<Empleado> empleadosSinUsuario = new ArrayList<>();
-        for (Empleado empleado: empleados.empleados.values()){
-            if (!usuarios.usuarios.containsKey(empleado.getUsuario())){
+        for (Empleado empleado: empleados){
+            if (empleado.getUsuario() != null){
                 empleadosSinUsuario.add(empleado);
             }
         }
@@ -42,8 +40,7 @@ public class UsuarioController {
         return usuariosModel;
     }
 
-    public ModelAndView register(String ref, String usuario, String password, boolean admin) {
-        Empleado empleado = empleados.empleados.get(ref);
+    public ModelAndView register(Empleado empleado, String usuario, String password, boolean admin) {
         Usuario usuarioAux = new Usuario(empleado, password, admin, "");
         usuarios.usuarios.put(usuario, usuarioAux);
         return usuariosModel;
@@ -60,10 +57,10 @@ public class UsuarioController {
 
     public void editarUsuario (Usuario usuario, String nombre, String apellidos, String dni, String telefono, String email,
                                String direccion, String antiguedad, String puesto, String imagen){
-        usuarios.editarUsuario(usuario.getEmpleado().getUsuario(), usuario.getEmpleado().getRef(), nombre, apellidos, dni, telefono, email, direccion, antiguedad, puesto, imagen);
+        usuarios.editarUsuario("", usuario.getEmpleado().getRef(), nombre, apellidos, dni, telefono, email, direccion, antiguedad, puesto, imagen);
     }
 
     public void editarContrasenya (Usuario usuario, String currentPassword, String newPassword){
-        usuarios.editarContrasenya(usuario.getEmpleado().getUsuario(), currentPassword, newPassword);
+        usuarios.editarContrasenya("", currentPassword, newPassword);
     }
 }

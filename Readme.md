@@ -20,6 +20,7 @@
     + [V2.10.0](#V2100)
     + [V3.0.0](#V300)
     + [V3.1.0](#V310)
+    + [V3.2.0](#V320)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -144,6 +145,10 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 
 * Se modifica el tipo de variable de antigüedad del empleado para guardar la fecha de dada de alta.
 
+### V3.2.0
+
+* Se migra el estado de la aplicación actual al necesario para que la Agenda funcione conectada a la base de datos. Para ello se han creado los repositorios de Empleados, Empresas y Proveedores. Se ha modificado el servicio de la Agenda y el controlador de la aplicación.
+
 ## Instalación:
 
 ## Testing:
@@ -154,7 +159,8 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
   + Git-Bash
   + Git-Hub
   + Intel J Idea
-  + Microsoft Word
+  + Microsoft Word  
+  + MySql
   + Trello
   + Visual Studio Code
 

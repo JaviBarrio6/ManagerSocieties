@@ -2,8 +2,13 @@ package com.Controllers;
 
 import com.Agenda.Cliente;
 import com.Agenda.Empleado;
+import com.Agenda.EmpresaSub;
+import com.Agenda.Proveedor;
 import com.Inventario.Producto;
 import com.Repositories.ClientesRepository;
+import com.Repositories.EmpleadosRepository;
+import com.Repositories.EmpresasRepository;
+import com.Repositories.ProveedoresRepository;
 import com.Services.AgendaService;
 import com.Tareas.Tarea;
 import com.Usuario.Empresa;
@@ -14,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +27,15 @@ public class ApplicationController {
 
     @Autowired
     private ClientesRepository clientesRepository;
+
+    @Autowired
+    private EmpleadosRepository empleadosRepository;
+
+    @Autowired
+    private EmpresasRepository empresasRepository;
+
+    @Autowired
+    private ProveedoresRepository proveedoresRepository;
 
     AgendaService agendaService = new AgendaService();
 
@@ -71,7 +84,7 @@ public class ApplicationController {
     @RequestMapping("/pages-register")
     public ModelAndView registerPagesModel() {
         if (this.log){
-            return usuarioController.registerPage();
+            return usuarioController.registerPage(empleadosRepository.findAll());
         } else {
             return loginPageModel(Optional.of(true));
         }
@@ -81,7 +94,7 @@ public class ApplicationController {
     public ModelAndView registerModel(String ref, String username, String password, boolean admin) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                usuarioController.register(ref, username, password, admin);
+                usuarioController.register(empleadosRepository.findEmpleadoByRef(ref), username, password, admin);
                 return index();
             } else {
                 return index();
@@ -112,7 +125,7 @@ public class ApplicationController {
     public ModelAndView anyadirClienteModel(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium, clientesRepository.findAll().size());
+                Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium, clientesRepository.giveLastId());
                 clientesRepository.save(cliente);
                 return agendaClientesModel();
             } else {
@@ -160,7 +173,7 @@ public class ApplicationController {
     public ModelAndView agendaEmpleadosModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.agendaEmpleados(this.usuario);
+                return agendaService.agendaEmpleados(this.usuario, empleadosRepository.findAll());
             } else {
                 return index();
             }
@@ -170,10 +183,13 @@ public class ApplicationController {
     }
 
     @PostMapping("/anyadirEmpleado")
-    public ModelAndView anyadirEmpleadoModel(String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
+    public ModelAndView anyadirEmpleadoModel(String nombre, String apellidos, String usuario, String id, String telefono,
+                                             String email, String direccion, String antiguedad, String numSS, String puesto) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.anyadirEmpleado(this.usuario, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, numSS, puesto);
+                Empleado empleado = new Empleado(nombre, apellidos, id, telefono, email, direccion, null, puesto, antiguedad, numSS, empleadosRepository.giveLastId());
+                empleadosRepository.save(empleado);
+                return agendaEmpleadosModel();
             } else {
                 return index();
             }
@@ -186,7 +202,8 @@ public class ApplicationController {
     public ModelAndView borrarEmpleadoModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.borrarEmpleado(this.usuario, ref);
+                empleadosRepository.delete(empleadosRepository.findEmpleadoByRef(ref));
+                return agendaEmpleadosModel();
             } else {
                 return index();
             }
@@ -199,7 +216,9 @@ public class ApplicationController {
     public ModelAndView editarEmpleadoModel(String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.editarEmpleado(this.usuario, ref, nombre, apellidos, usuario, id, telefono, email, direccion, antiguedad, numSS, puesto);
+                Empleado empleado = new Empleado(ref, nombre, apellidos, id, telefono, email, direccion, null, puesto, antiguedad, numSS);
+                return agendaService.editarEmpleado(this.usuario, empleadosRepository.findEmpleadoByRef(ref), empleado, empleadosRepository.findAll());
+
             } else {
                 return index();
             }
@@ -216,7 +235,7 @@ public class ApplicationController {
     public ModelAndView agendaEmpresasSubcontratadasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.agendaEmpresasSubcontratadas(this.usuario);
+                return agendaService.agendaEmpresasSubcontratadas(this.usuario, empresasRepository.findAll());
             } else {
                 return index();
             }
@@ -229,7 +248,9 @@ public class ApplicationController {
     public ModelAndView anyadirEmpresaModel(String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.anyadirEmpresa(this.usuario, nombre, tipo, id, telefono, email, direccion);
+                EmpresaSub empresa = new EmpresaSub(nombre, tipo, id, telefono, email, direccion, empresasRepository.giveLastId());
+                empresasRepository.save(empresa);
+                return agendaEmpresasSubcontratadasModel();
             } else {
                 return index();
             }
@@ -242,7 +263,8 @@ public class ApplicationController {
     public ModelAndView borrarEmpresaModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.borrarEmpresa(this.usuario, ref);
+                empresasRepository.delete(empresasRepository.findEmpresaByRef(ref));
+                return agendaEmpresasSubcontratadasModel();
             } else {
                 return index();
             }
@@ -255,7 +277,8 @@ public class ApplicationController {
     public ModelAndView editarEmpresaModel(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.editarEmpresa(this.usuario, ref, nombre, tipo, id, telefono, email, direccion);
+                EmpresaSub empresaSub = new EmpresaSub(ref, nombre, tipo, id, telefono, email, direccion);
+                return agendaService.editarEmpresa(this.usuario, empresasRepository.findEmpresaByRef(ref), empresaSub, empresasRepository.findAll());
             } else {
                 return index();
             }
@@ -272,7 +295,7 @@ public class ApplicationController {
     public ModelAndView agendaProveedoresModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.agendaProveedores(this.usuario);
+                return agendaService.agendaProveedores(this.usuario, proveedoresRepository.findAll());
             } else {
                 return index();
             }
@@ -285,7 +308,9 @@ public class ApplicationController {
     public ModelAndView anyadirProveedorModel(String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.anyadirProveedor(this.usuario, nombre, tipo, id, telefono, email, direccion);
+                Proveedor proveedor = new Proveedor(nombre, tipo, id, telefono, email, direccion, proveedoresRepository.giveLastId());
+                proveedoresRepository.save(proveedor);
+                return agendaProveedoresModel();
             } else {
                 return index();
             }
@@ -298,7 +323,8 @@ public class ApplicationController {
     public ModelAndView borrarProveedorModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.borrarProveedor(this.usuario, ref);
+                proveedoresRepository.delete(proveedoresRepository.findProveedorByRef(ref));
+                return agendaProveedoresModel();
             } else {
                 return index();
             }
@@ -311,7 +337,8 @@ public class ApplicationController {
     public ModelAndView editarProveedorModel(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return agendaService.editarProveedor(this.usuario, ref, nombre, tipo, id, telefono, email, direccion);
+                Proveedor proveedor = new Proveedor(ref, nombre, tipo, id, telefono, email, direccion);
+                return agendaService.editarProveedor(this.usuario, proveedoresRepository.findProveedorByRef(ref), proveedor, proveedoresRepository.findAll());
             } else {
                 return index();
             }
@@ -391,9 +418,9 @@ public class ApplicationController {
     }
 
     @RequestMapping("/anyadirAlbaran")
-    public ModelAndView anyadirAlbaranModel (String cliente, String fecha, String[] productos, int[] cantidades, String[] tareas, double iva) {
+    public ModelAndView anyadirAlbaranModel (String ref, String fecha, String[] productos, int[] cantidades, String[] tareas, double iva) {
 
-        Cliente clienteAux = agendaService.dameCliente(cliente);
+        Cliente clienteAux = clientesRepository.findClienteByRef(ref);
         ArrayList<Producto> productosAux = inventarioController.dameProductos(productos);
         ArrayList<Tarea> tareasAux = tareasController.dameTareas(tareas);
         HashMap<Producto, Integer> productosAuxAux = new HashMap<>();
@@ -443,7 +470,7 @@ public class ApplicationController {
     public ModelAndView facturacionGastosModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.facturacionGastos(this.usuario);
+                return facturacionController.facturacionGastos(this.usuario, empleadosRepository.findAll());
             } else {
                 return index();
             }
@@ -455,7 +482,7 @@ public class ApplicationController {
     @RequestMapping("/anyadirGasto")
     public ModelAndView anyadirGastoModel (String empleado, String motivo, String fecha, double gasto) {
 
-        Empleado empleadoAux = agendaService.dameEmpleado(empleado);
+        Empleado empleadoAux = empleadosRepository.findEmpleadoByRef(empleado);
 
         if (this.log){
             if (this.usuario.isAdmin()){
@@ -485,7 +512,7 @@ public class ApplicationController {
     public ModelAndView facturacionNominasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.facturacionNominas(this.usuario);
+                return facturacionController.facturacionNominas(this.usuario, empleadosRepository.findAll());
             } else {
                 return index();
             }
@@ -499,7 +526,7 @@ public class ApplicationController {
                                            double complementoSalarial, double teletrabajo, double productividad, double pagasExtra,
                                            double contingencias, double formacionP, double desempleo) {
 
-        Empleado empleadoAux = agendaService.dameEmpleado(empleado);
+        Empleado empleadoAux = empleadosRepository.findEmpleadoByRef(empleado);
 
         if (this.log){
             if (this.usuario.isAdmin()){
@@ -849,11 +876,11 @@ public class ApplicationController {
 
     @RequestMapping("/anyadirTarea")
     public ModelAndView anyadirTareaModel (String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
-        Cliente clienteAux = agendaService.dameCliente(cliente);
-        Empleado empleado = agendaService.dameEmpleado(empleados[0]);
+        Cliente clienteAux = clientesRepository.findClienteByRef(cliente);
+        Empleado empleado = empleadosRepository.findEmpleadoByRef(empleados[0]);
         String[] nombresEmpleado = new String[empleados.length];
         for (int i = 0; i < empleados.length; i++){
-            nombresEmpleado[i] = agendaService.dameEmpleado(empleados[i]).getNombre() + ' ' + agendaService.dameEmpleado(empleados[i]).getApellidos();
+            nombresEmpleado[i] = empleadosRepository.findEmpleadoByRef(empleados[i]).getNombre() + ' ' + empleadosRepository.findEmpleadoByRef(empleados[i]).getApellidos();
         }
         Tarea tarea = new Tarea(clienteAux, nombresEmpleado, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
         calendarioController.anyadirEvento(this.usuario, tarea.getRef(), "Tarea - ".concat(clienteAux.getNombre()), fechaFin, "¿?",
@@ -912,8 +939,6 @@ public class ApplicationController {
     public ModelAndView editarUsuarioModel(String imagen, String nombre, String apellidos, String dni, String telefono, String email,
                                            String direccion, String antiguedad, String numSS, String puesto){
         usuarioController.editarUsuario(this.usuario, nombre, apellidos, dni, telefono, email, direccion, antiguedad, puesto, imagen);
-        agendaService.editarEmpleado(this.usuario, this.usuario.getEmpleado().getRef(), nombre, apellidos, this.usuario.getEmpleado().getUsuario(), dni, telefono, email, direccion, antiguedad, numSS, puesto);
-        this.usuario = usuarioController.dameUsuario(this.usuario.getEmpleado().getUsuario(), this.usuario.getContrasenya());
         return usersProfileModel();
     }
 
@@ -923,7 +948,7 @@ public class ApplicationController {
             return usersProfileModel();
         } else {
             usuarioController.editarContrasenya(this.usuario, password, newPassword);
-            this.usuario = usuarioController.dameUsuario(this.usuario.getEmpleado().getUsuario(), this.usuario.getContrasenya());
+            this.usuario = usuarioController.dameUsuario("", this.usuario.getContrasenya());
             return usersProfileModel();
         }
     }

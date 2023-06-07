@@ -5,14 +5,17 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table (name = "proveedores")
-public class Proveedor implements Serializable {
+@Table(name = "empresas")
+public class EmpresaSub implements Serializable {
 
     // Inicio Variables
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int generadorId;
-    private static final String refProveedor = "PRV";
+
+    private static final String refEmpresa = "EMS";
+
     @Column (name = "nombre")
     private String nombre;
     @Column (name = "tipo")
@@ -32,7 +35,7 @@ public class Proveedor implements Serializable {
 
     // Inicio Constructores
 
-    public Proveedor () {
+    public EmpresaSub() {
         setNombre("");
         setTipo("");
         setId("");
@@ -42,17 +45,17 @@ public class Proveedor implements Serializable {
         setRef("");
     }
 
-    public Proveedor (String nombre, String tipo, String id, String telefono, String email, String direccion, int pos){
+    public EmpresaSub(String nombre, String tipo, String id, String telefono, String email, String direccion, int pos){
         setNombre(nombre);
         setTipo(tipo);
         setId(id);
         setTelefono(telefono);
         setEmail(email);
         setDireccion(direccion);
-        setRef (generadorRef(++pos, refProveedor));
+        setRef (generadorRef(++pos, refEmpresa));
     }
 
-    public Proveedor (String ref, String nombre, String tipo, String id, String telefono, String email, String direccion){
+    public EmpresaSub(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion){
         setNombre(nombre);
         setTipo(tipo);
         setId(id);
@@ -65,6 +68,7 @@ public class Proveedor implements Serializable {
     // Fin Constructores
 
     // Inicio Setters
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -95,9 +99,11 @@ public class Proveedor implements Serializable {
     private void setRef (String ref){
         this.ref = ref;
     }
+
     // Fin Setters
 
     // Inicio Getters
+
     public String getRef (){
         return this.ref;
     }
@@ -146,10 +152,6 @@ public class Proveedor implements Serializable {
         }
         return (ref + (refAux) + num);
     }
-    // Fin Getters
-
-    // Inicio Funciones
 
     // Fin Funciones
-
 }

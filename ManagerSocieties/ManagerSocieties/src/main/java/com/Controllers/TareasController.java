@@ -1,13 +1,11 @@
 package com.Controllers;
 
-import com.Agenda.Empleados;
 import com.Repositories.ClientesRepository;
 import com.Inventario.*;
+import com.Repositories.EmpleadosRepository;
 import com.Tareas.Tarea;
 import com.Tareas.Tareas;
 import com.Usuario.Usuario;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,9 +15,11 @@ import java.util.ArrayList;
 public class TareasController {
 
     Tareas tareas = new Tareas();
-    Empleados empleadosAux = new Empleados();
 
     private ClientesRepository clientesRepository;
+
+    private EmpleadosRepository empleadosRepository;
+
     Herramientas herramientas = new Herramientas();
     Maquinas maquinas = new Maquinas();
     Materiales materiales = new Materiales();
@@ -31,7 +31,7 @@ public class TareasController {
         tareasModel.setViewName("tareas.html");
         tareasModel.addObject("tareas", tareas.tareas.values());
         tareasModel.addObject("clientes", clientesRepository.findAll());
-        tareasModel.addObject("empleados", empleadosAux.empleados.values());
+        tareasModel.addObject("empleados", empleadosRepository.findAll());
         tareasModel.addObject("herramientas", herramientas.herramientas.values());
         tareasModel.addObject("maquinas", maquinas.maquinas.values());
         tareasModel.addObject("materiales", materiales.materiales.values());
