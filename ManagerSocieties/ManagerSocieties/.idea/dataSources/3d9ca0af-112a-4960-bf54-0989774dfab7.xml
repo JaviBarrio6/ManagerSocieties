@@ -1078,158 +1078,844 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="302" parent="289" name="empresas">
+    <table id="302" parent="289" name="empresa">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="303" parent="300" name="generador_id">
+    <table id="303" parent="289" name="empresas">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="304" parent="289" name="eventos">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="305" parent="289" name="herramientas">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="306" parent="289" name="maquinas">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="307" parent="289" name="materiales">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="308" parent="289" name="productos">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="309" parent="289" name="proveedores">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="310" parent="289" name="tareas">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="311" parent="289" name="tareas_empleados">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="312" parent="289" name="tareas_herramientas">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="313" parent="289" name="tareas_maquinas">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="314" parent="289" name="tareas_materiales">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="315" parent="289" name="tareas_productos">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="316" parent="289" name="tareas_vehiculos">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="317" parent="289" name="usuarios">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="318" parent="289" name="vehiculos">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="319" parent="300" name="generador_id">
       <AutoIncrement>7</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="304" parent="300" name="apellidos">
+    <column id="320" parent="300" name="apellidos">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="305" parent="300" name="direccion">
+    <column id="321" parent="300" name="direccion">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="306" parent="300" name="email">
+    <column id="322" parent="300" name="email">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="307" parent="300" name="id">
+    <column id="323" parent="300" name="id">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="308" parent="300" name="nombre">
+    <column id="324" parent="300" name="nombre">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="309" parent="300" name="premium">
+    <column id="325" parent="300" name="premium">
       <DasType>bit(1)|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="310" parent="300" name="ref">
+    <column id="326" parent="300" name="ref">
       <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
     </column>
-    <column id="311" parent="300" name="telefono">
+    <column id="327" parent="300" name="telefono">
       <DasType>varchar(255)|0s</DasType>
       <Position>9</Position>
     </column>
-    <index id="312" parent="300" name="PRIMARY">
+    <index id="328" parent="300" name="PRIMARY">
       <ColNames>generador_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="313" parent="300" name="PRIMARY">
+    <key id="329" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="314" parent="301" name="generador_id">
-      <AutoIncrement>6</AutoIncrement>
+    <column id="330" parent="301" name="generador_id">
+      <AutoIncrement>7</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="315" parent="301" name="antiguedad">
+    <column id="331" parent="301" name="antiguedad">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="316" parent="301" name="apellidos">
+    <column id="332" parent="301" name="apellidos">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="317" parent="301" name="direccion">
+    <column id="333" parent="301" name="direccion">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="318" parent="301" name="email">
+    <column id="334" parent="301" name="email">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="319" parent="301" name="id">
+    <column id="335" parent="301" name="id">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="320" parent="301" name="nombre">
+    <column id="336" parent="301" name="nombre">
       <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="321" parent="301" name="numss">
+    <column id="337" parent="301" name="numss">
       <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
     </column>
-    <column id="322" parent="301" name="puesto">
+    <column id="338" parent="301" name="puesto">
       <DasType>varchar(255)|0s</DasType>
       <Position>9</Position>
     </column>
-    <column id="323" parent="301" name="ref">
+    <column id="339" parent="301" name="ref">
       <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
     </column>
-    <column id="324" parent="301" name="telefono">
+    <column id="340" parent="301" name="telefono">
       <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
     </column>
-    <column id="325" parent="301" name="usuario">
-      <DasType>varbinary(255)|0s</DasType>
+    <column id="341" parent="301" name="usuario_generador_id">
+      <DasType>int|0s</DasType>
       <Position>12</Position>
     </column>
-    <index id="326" parent="301" name="PRIMARY">
+    <foreign-key id="342" parent="301" name="FK2d8a7sq5j6hdx250kurgqp0jl">
+      <ColNames>usuario_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>usuarios</RefTableName>
+    </foreign-key>
+    <index id="343" parent="301" name="PRIMARY">
       <ColNames>generador_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="327" parent="301" name="PRIMARY">
+    <index id="344" parent="301" name="FK2d8a7sq5j6hdx250kurgqp0jl">
+      <ColNames>usuario_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="345" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="328" parent="302" name="generador_id">
+    <column id="346" parent="302" name="cif">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="347" parent="302" name="direccion">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="348" parent="302" name="email">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="349" parent="302" name="iban">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="350" parent="302" name="logo">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="351" parent="302" name="nombre">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="352" parent="302" name="numss">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="353" parent="302" name="telefono">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <index id="354" parent="302" name="PRIMARY">
+      <ColNames>cif</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="355" parent="302" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="356" parent="303" name="generador_id">
       <AutoIncrement>5</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="329" parent="302" name="direccion">
+    <column id="357" parent="303" name="direccion">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="330" parent="302" name="email">
+    <column id="358" parent="303" name="email">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="331" parent="302" name="id">
+    <column id="359" parent="303" name="id">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="332" parent="302" name="nombre">
+    <column id="360" parent="303" name="nombre">
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="333" parent="302" name="ref">
+    <column id="361" parent="303" name="ref">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="334" parent="302" name="telefono">
+    <column id="362" parent="303" name="telefono">
       <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="335" parent="302" name="tipo">
+    <column id="363" parent="303" name="tipo">
       <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
     </column>
-    <index id="336" parent="302" name="PRIMARY">
+    <index id="364" parent="303" name="PRIMARY">
       <ColNames>generador_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="337" parent="302" name="PRIMARY">
+    <key id="365" parent="303" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="366" parent="304" name="generador_id">
+      <AutoIncrement>6</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="367" parent="304" name="fecha_fin">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="368" parent="304" name="fecha_inicio">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="369" parent="304" name="hora_fin">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="370" parent="304" name="hora_inicio">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="371" parent="304" name="ref">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="372" parent="304" name="ref_tarea">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="373" parent="304" name="titulo">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <index id="374" parent="304" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="375" parent="304" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="376" parent="305" name="generador_id">
+      <AutoIncrement>4</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="377" parent="305" name="cantidad">
+      <DasType>int|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="378" parent="305" name="marca">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="379" parent="305" name="modelo">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="380" parent="305" name="precio">
+      <DasType>double|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="381" parent="305" name="ref">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <index id="382" parent="305" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="383" parent="305" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="384" parent="306" name="generador_id">
+      <AutoIncrement>4</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="385" parent="306" name="cantidad">
+      <DasType>int|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="386" parent="306" name="marca">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="387" parent="306" name="modelo">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="388" parent="306" name="precio">
+      <DasType>double|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="389" parent="306" name="ref">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <index id="390" parent="306" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="391" parent="306" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="392" parent="307" name="generador_id">
+      <AutoIncrement>5</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="393" parent="307" name="cantidad">
+      <DasType>int|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="394" parent="307" name="marca">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="395" parent="307" name="modelo">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="396" parent="307" name="precio">
+      <DasType>double|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="397" parent="307" name="ref">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="398" parent="307" name="unidades">
+      <DasType>int|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <index id="399" parent="307" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="400" parent="307" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="401" parent="308" name="generador_id">
+      <AutoIncrement>6</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="402" parent="308" name="modelo">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="403" parent="308" name="precio">
+      <DasType>double|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="404" parent="308" name="ref">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="405" parent="308" name="stock">
+      <DasType>int|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="406" parent="308" name="url_foto">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <index id="407" parent="308" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="408" parent="308" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="409" parent="309" name="generador_id">
+      <AutoIncrement>3</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="410" parent="309" name="direccion">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="411" parent="309" name="email">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="412" parent="309" name="id">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="413" parent="309" name="nombre">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="414" parent="309" name="ref">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="415" parent="309" name="telefono">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="416" parent="309" name="tipo">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <index id="417" parent="309" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="418" parent="309" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="419" parent="310" name="generador_id">
+      <AutoIncrement>13</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="420" parent="310" name="estado">
+      <DasType>int|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="421" parent="310" name="fecha_fin">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="422" parent="310" name="fecha_inicio">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="423" parent="310" name="gasto_extra">
+      <DasType>double|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="424" parent="310" name="hora">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="425" parent="310" name="info">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="426" parent="310" name="precio">
+      <DasType>double|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="427" parent="310" name="ref">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="428" parent="310" name="cliente_generador_id">
+      <DasType>int|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <foreign-key id="429" parent="310" name="FKg8fag1l0kr011fhygim08q3u0">
+      <ColNames>cliente_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>clientes</RefTableName>
+    </foreign-key>
+    <index id="430" parent="310" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="431" parent="310" name="FKg8fag1l0kr011fhygim08q3u0">
+      <ColNames>cliente_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="432" parent="310" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="433" parent="311" name="tarea_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="434" parent="311" name="empleados_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="435" parent="311" name="FKqpure19sx1gitt7im78o320cb">
+      <ColNames>tarea_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>tareas</RefTableName>
+    </foreign-key>
+    <foreign-key id="436" parent="311" name="FKev7c5c2qr9yyfnb9g82voohg7">
+      <ColNames>empleados_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>empleados</RefTableName>
+    </foreign-key>
+    <index id="437" parent="311" name="UK_bbb7tjdpjei238as7terwrqw">
+      <ColNames>empleados_generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="438" parent="311" name="FKqpure19sx1gitt7im78o320cb">
+      <ColNames>tarea_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="439" parent="311" name="UK_bbb7tjdpjei238as7terwrqw">
+      <UnderlyingIndexName>UK_bbb7tjdpjei238as7terwrqw</UnderlyingIndexName>
+    </key>
+    <column id="440" parent="312" name="tarea_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="441" parent="312" name="herramientas_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="442" parent="312" name="FK5bs5vcfwd9u9d38d1ic3d7lbn">
+      <ColNames>tarea_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>tareas</RefTableName>
+    </foreign-key>
+    <foreign-key id="443" parent="312" name="FKm85pe4l3t83xrte4k0jn16sx2">
+      <ColNames>herramientas_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>herramientas</RefTableName>
+    </foreign-key>
+    <index id="444" parent="312" name="UK_v2cm0q0nxqp464ykuii5i1jw">
+      <ColNames>herramientas_generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="445" parent="312" name="FK5bs5vcfwd9u9d38d1ic3d7lbn">
+      <ColNames>tarea_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="446" parent="312" name="UK_v2cm0q0nxqp464ykuii5i1jw">
+      <UnderlyingIndexName>UK_v2cm0q0nxqp464ykuii5i1jw</UnderlyingIndexName>
+    </key>
+    <column id="447" parent="313" name="tarea_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="448" parent="313" name="maquinas_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="449" parent="313" name="FKf2uks5psuqnq3ccue7ylqj0e3">
+      <ColNames>tarea_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>tareas</RefTableName>
+    </foreign-key>
+    <foreign-key id="450" parent="313" name="FKbcevf7asqp2h6r8rrn9rfbj0g">
+      <ColNames>maquinas_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>maquinas</RefTableName>
+    </foreign-key>
+    <index id="451" parent="313" name="UK_gqm2mxvwrk6xq0vohuclauykk">
+      <ColNames>maquinas_generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="452" parent="313" name="FKf2uks5psuqnq3ccue7ylqj0e3">
+      <ColNames>tarea_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="453" parent="313" name="UK_gqm2mxvwrk6xq0vohuclauykk">
+      <UnderlyingIndexName>UK_gqm2mxvwrk6xq0vohuclauykk</UnderlyingIndexName>
+    </key>
+    <column id="454" parent="314" name="tarea_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="455" parent="314" name="materiales_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="456" parent="314" name="FK8toihsbf16qiftuegot2w8b7j">
+      <ColNames>tarea_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>tareas</RefTableName>
+    </foreign-key>
+    <foreign-key id="457" parent="314" name="FKewua2agar6jik2dqcwgp2imhn">
+      <ColNames>materiales_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>materiales</RefTableName>
+    </foreign-key>
+    <index id="458" parent="314" name="UK_9vuom16nv35dw98nje5aipb94">
+      <ColNames>materiales_generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="459" parent="314" name="FK8toihsbf16qiftuegot2w8b7j">
+      <ColNames>tarea_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="460" parent="314" name="UK_9vuom16nv35dw98nje5aipb94">
+      <UnderlyingIndexName>UK_9vuom16nv35dw98nje5aipb94</UnderlyingIndexName>
+    </key>
+    <column id="461" parent="315" name="tarea_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="462" parent="315" name="productos_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="463" parent="315" name="FKrwn7etolr2fcoxgtahpxv6i61">
+      <ColNames>tarea_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>tareas</RefTableName>
+    </foreign-key>
+    <foreign-key id="464" parent="315" name="FK3rp2iiv5wlk4w0gbcpav8dbkp">
+      <ColNames>productos_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>productos</RefTableName>
+    </foreign-key>
+    <index id="465" parent="315" name="UK_e2i6rnq1shrd3l5tfuwuytfxv">
+      <ColNames>productos_generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="466" parent="315" name="FKrwn7etolr2fcoxgtahpxv6i61">
+      <ColNames>tarea_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="467" parent="315" name="UK_e2i6rnq1shrd3l5tfuwuytfxv">
+      <UnderlyingIndexName>UK_e2i6rnq1shrd3l5tfuwuytfxv</UnderlyingIndexName>
+    </key>
+    <column id="468" parent="316" name="tarea_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="469" parent="316" name="vehiculos_generador_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="470" parent="316" name="FKjhsw31vx0bkds8m1ep8tef13c">
+      <ColNames>tarea_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>tareas</RefTableName>
+    </foreign-key>
+    <foreign-key id="471" parent="316" name="FK8phqsvsupefph782b82j9977x">
+      <ColNames>vehiculos_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>vehiculos</RefTableName>
+    </foreign-key>
+    <index id="472" parent="316" name="UK_32ybrmhfbvfpmu18jtq3tmr20">
+      <ColNames>vehiculos_generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="473" parent="316" name="FKjhsw31vx0bkds8m1ep8tef13c">
+      <ColNames>tarea_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="474" parent="316" name="UK_32ybrmhfbvfpmu18jtq3tmr20">
+      <UnderlyingIndexName>UK_32ybrmhfbvfpmu18jtq3tmr20</UnderlyingIndexName>
+    </key>
+    <column id="475" parent="317" name="generador_id">
+      <AutoIncrement>3</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="476" parent="317" name="admin">
+      <DasType>bit(1)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="477" parent="317" name="contrasenya">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="478" parent="317" name="imagen_url">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="479" parent="317" name="username">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="480" parent="317" name="empleado_generador_id">
+      <DasType>int|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <foreign-key id="481" parent="317" name="FKfdysqg39b0i9b3d27xk1e4lg6">
+      <ColNames>empleado_generador_id</ColNames>
+      <RefColNames>generador_id</RefColNames>
+      <RefTableName>empleados</RefTableName>
+    </foreign-key>
+    <index id="482" parent="317" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="483" parent="317" name="FKfdysqg39b0i9b3d27xk1e4lg6">
+      <ColNames>empleado_generador_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="484" parent="317" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="485" parent="318" name="generador_id">
+      <AutoIncrement>3</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="486" parent="318" name="color">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="487" parent="318" name="marca">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="488" parent="318" name="matricula">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="489" parent="318" name="modelo">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="490" parent="318" name="ref">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <index id="491" parent="318" name="PRIMARY">
+      <ColNames>generador_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="492" parent="318" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

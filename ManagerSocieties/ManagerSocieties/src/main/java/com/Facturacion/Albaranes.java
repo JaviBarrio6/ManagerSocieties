@@ -1,8 +1,8 @@
 package com.Facturacion;
 
-import com.Agenda.Cliente;
-import com.Inventario.Producto;
-import com.Tareas.Tarea;
+import com.Agenda.Cliente.Entidad.Cliente;
+import com.Inventario.Producto.Entidad.Producto;
+import com.Tareas.Entidad.Tarea;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class Albaranes {
 
     Cliente cliente01 = new Cliente("Juan José", "Rodríguez", "53852030Z", "674851283",
             "juan@gmail.com", "Av. Guadarama 21, S.S. de los Reyes", true, 2);
-    Tarea tarea01 = new Tarea(cliente01, new String[]{"Paco López", "Manuela Gracia"}, "2023-02-01", null, "11:00", 1200, 120, "", 0, new String[]{});
+    Tarea tarea01 = new Tarea(cliente01, null, "2023-02-01", "", "11:00", 1200, 120, "", 0, null, null, null, null, null, 5);
 
     ArrayList<Tarea> tareas = new ArrayList<>();
 

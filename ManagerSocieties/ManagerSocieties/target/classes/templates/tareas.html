@@ -385,11 +385,11 @@
                           <div class="col-sm-10">
                             <select class="form-select" multiple name="inventario" id ="inventario">
                               <option selected="">Selecciona Inventario</option>
-                              <option th:each ="herramienta: ${herramientas}" th:value="${herramienta.modelo}" th:text="${herramienta.modelo}"></option>
-                              <option th:each ="maquina: ${maquinas}" th:value="${maquina.modelo}" th:text="${maquina.modelo}"></option>
-                              <option th:each ="material: ${materiales}" th:value="${material.modelo}" th:text="${material.modelo}"></option>
-                              <option th:each ="producto: ${productos}" th:value="${producto.modelo}" th:text="${producto.modelo}"></option>
-                              <option th:each ="vehiculo: ${vehiculos}" th:value="${vehiculo.modelo}" th:text="${vehiculo.modelo}"></option>
+                              <option th:each ="herramienta: ${herramientas}" th:value="${herramienta.ref}" th:text="${herramienta.modelo}"></option>
+                              <option th:each ="maquina: ${maquinas}" th:value="${maquina.ref}" th:text="${maquina.modelo}"></option>
+                              <option th:each ="material: ${materiales}" th:value="${material.ref}" th:text="${material.modelo}"></option>
+                              <option th:each ="producto: ${productos}" th:value="${producto.ref}" th:text="${producto.modelo}"></option>
+                              <option th:each ="vehiculo: ${vehiculos}" th:value="${vehiculo.ref}" th:text="${vehiculo.modelo}"></option>
                             </select>
                           </div>
                         </div>
@@ -457,7 +457,7 @@
                     <div class="card-body">
                       <div th:each="empleado: ${tarea.empleados}" class="row mb-3 input-group">
                         <span class="col-sm-2 col-form-label input-group-text">Nombre</span>
-                        <input th:value="${empleado}" type="text" class="form-control" readonly>
+                        <input th:value="${empleado.getApellidos()} + ', ' + ${empleado.getNombre()}" type="text" class="form-control" readonly>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -477,9 +477,25 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <div th:each="inventario: ${tarea.inventario}" class="row mb-3 input-group">
+                      <div th:each="herramienta: ${tarea.herramientas}" class="row mb-3 input-group">
                         <span class="col-sm-2 col-form-label input-group-text">Modelo</span>
-                        <input th:value="${inventario}" type="text" class="form-control" readonly>
+                        <input th:value="${herramienta.modelo}" type="text" class="form-control" readonly>
+                      </div>
+                      <div th:each="maquina: ${tarea.maquinas}" class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Modelo</span>
+                        <input th:value="${maquina.modelo}" type="text" class="form-control" readonly>
+                      </div>
+                      <div th:each="material: ${tarea.materiales}" class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Modelo</span>
+                        <input th:value="${material.modelo}" type="text" class="form-control" readonly>
+                      </div>
+                      <div th:each="producto: ${tarea.productos}" class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Modelo</span>
+                        <input th:value="${producto.modelo}" type="text" class="form-control" readonly>
+                      </div>
+                      <div th:each="vehiculo: ${tarea.vehiculos}" class="row mb-3 input-group">
+                        <span class="col-sm-2 col-form-label input-group-text">Modelo</span>
+                        <input th:value="${vehiculo.modelo}" type="text" class="form-control" readonly>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -540,10 +556,10 @@
                           <label for="empleados" class="col-sm-2 col-form-label">Empleados</label>
                           <div class="col-sm-10">
                             <select class="form-select" multiple name="empleados" required>
-                              <option selected="" th:if="${tarea.contieneEmpleado(empleado.nombre + ' ' + empleado.apellidos, tarea.empleados)}" th:each ="empleado: ${empleados}"
-                                      th:value="${empleado.nombre} + ' ' + ${empleado.apellidos}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
-                              <option th:if="${!tarea.contieneEmpleado(empleado.nombre + ' ' + empleado.apellidos, tarea.empleados)}" th:each ="empleado: ${empleados}"
-                                      th:value="${empleado.nombre} + ' ' + ${empleado.apellidos}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
+                              <option selected="" th:each ="empleado: ${tarea.empleados}" th:value="${empleado.ref}"
+                                      th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
+                              <option th:if="${!tarea.empleados.contains(empleado)}" th:each ="empleado: ${empleados}"
+                                      th:value="${empleado.ref}" th:text="${empleado.nombre} + ' ' + ${empleado.apellidos}"></option>
                             </select>
                           </div>
                         </div>
@@ -600,27 +616,21 @@
                           <label for="inventario" class="col-sm-2 col-form-label">Inventario</label>
                           <div class="col-sm-10">
                             <select class="form-select" multiple name="inventario">
-                              <option selected="" th:if = "${tarea.contieneInventario(herramienta.modelo, tarea.inventario)}" th:each ="herramienta: ${herramientas}"
-                                      th:value="${herramienta.modelo}" th:text="${herramienta.modelo}"></option>
-                              <option th:if = "${!tarea.contieneInventario(herramienta.modelo, tarea.inventario)}" th:each ="herramienta: ${herramientas}"
-                                      th:value="${herramienta.modelo}" th:text="${herramienta.modelo}"></option>
-                              <option selected="" th:if = "${tarea.contieneInventario(maquina.modelo, tarea.inventario)}" th:each ="maquina: ${maquinas}"
-                                      th:value="${maquina.modelo}" th:text="${maquina.modelo}"></option>
-                              <option th:if = "${!tarea.contieneInventario(maquina.modelo, tarea.inventario)}" th:each ="maquina: ${maquinas}"
-                                      th:value="${maquina.modelo}" th:text="${maquina.modelo}"></option>
-                              <option selected="" th:if = "${tarea.contieneInventario(material.modelo, tarea.inventario)}" th:each ="material: ${materiales}"
-                                      th:value="${material.modelo}" th:text="${material.modelo}"></option>
-                              <option th:if = "${!tarea.contieneInventario(material.modelo, tarea.inventario)}" th:each ="material: ${materiales}"
-                                      th:value="${material.modelo}" th:text="${material.modelo}"></option>
-                              <option selected="" th:if = "${tarea.contieneInventario(producto.modelo, tarea.inventario)}" th:each ="producto: ${productos}"
-                                      th:value="${producto.modelo}" th:text="${producto.modelo}"></option>
-                              <option th:if = "${!tarea.contieneInventario(producto.modelo, tarea.inventario)}" th:each ="producto: ${productos}"
-                                      th:value="${producto.modelo}" th:text="${producto.modelo}"></option>
-                              <option selected="" th:if = "${tarea.contieneInventario(vehiculo.modelo, tarea.inventario)}" th:each ="vehiculo: ${vehiculos}"
-                                      th:value="${vehiculo.modelo}" th:text="${vehiculo.modelo}"></option>
-                              <option th:if = "${!tarea.contieneInventario(vehiculo.modelo, tarea.inventario)}" th:each ="vehiculo: ${vehiculos}"
-                                      th:value="${vehiculo.modelo}" th:text="${vehiculo.modelo}"></option>
-
+                              <option selected="" th:each ="herramienta: ${tarea.herramientas}" th:value="${herramienta.ref}" th:text="${herramienta.modelo}"></option>
+                              <option th:if="${!tarea.herramientas.contains(herramienta)}" th:each ="herramienta: ${herramientas}"
+                                      th:value="${herramienta.ref}" th:text="${herramienta.modelo}"></option>
+                              <option selected="" th:each ="maquina: ${tarea.maquinas}" th:value="${maquina.ref}" th:text="${maquina.modelo}"></option>
+                              <option th:if="${!tarea.maquinas.contains(maquina)}" th:each ="maquina: ${maquinas}"
+                                      th:value="${maquina.ref}" th:text="${maquina.modelo}"></option>
+                              <option selected="" th:each ="material: ${tarea.materiales}" th:value="${material.ref}" th:text="${material.modelo}"></option>
+                              <option th:if="${!tarea.materiales.contains(material)}" th:each ="material: ${materiales}"
+                                      th:value="${material.ref}" th:text="${material.modelo}"></option>
+                              <option selected="" th:each ="producto: ${tarea.productos}" th:value="${producto.ref}" th:text="${producto.modelo}"></option>
+                              <option th:if="${!tarea.productos.contains(producto)}" th:each ="producto: ${productos}"
+                                      th:value="${producto.ref}" th:text="${producto.modelo}"></option>
+                              <option selected="" th:each ="vehiculo: ${tarea.vehiculos}" th:value="${vehiculo.ref}" th:text="${vehiculo.modelo}"></option>
+                              <option th:if="${!tarea.vehiculos.contains(vehiculo)}" th:each ="vehiculo: ${vehiculos}"
+                                      th:value="${vehiculo.ref}" th:text="${vehiculo.modelo}"></option>
                             </select>
                           </div>
                         </div>

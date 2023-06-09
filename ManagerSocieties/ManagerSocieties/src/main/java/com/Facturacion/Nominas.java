@@ -1,6 +1,6 @@
 package com.Facturacion;
 
-import com.Agenda.Empleado;
+import com.Agenda.Empleado.Entidad.Empleado;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;

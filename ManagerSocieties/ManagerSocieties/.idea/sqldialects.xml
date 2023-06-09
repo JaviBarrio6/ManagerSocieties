@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/Repositories/ClientesRepository.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/Repositories/EmpleadosRepository.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/Repositories/EmpresasRepository.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/Repositories/ProveedoresRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Agenda/Cliente/Repository/ClientesRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Agenda/Empleado/Repository/EmpleadosRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Agenda/EmpresaSubcontratada/Repository/EmpresasRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Agenda/Proveedor/Repository/ProveedoresRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Calendario/Evento/Repository/EventosRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Herramienta/Repository/HerramientasRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Maquina/Repository/MaquinasRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Material/Repository/MaterialesRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Vehiculo/Repository/VehiculoRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Repositories/EmpresaRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Tareas/Repository/TareasRepository.java" dialect="GenericSQL" />
   </component>
 </project>

@@ -1,4 +1,4 @@
-# Manager Societies V3.1.0
+# Manager Societies V3.3.0
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Control de Versiones](#control-de-versiones)
@@ -21,6 +21,7 @@
     + [V3.0.0](#V300)
     + [V3.1.0](#V310)
     + [V3.2.0](#V320)
+    + [V3.3.0](#V330)
 - [Instalación](#instalación)
 - [Testing](#testing)
 - [Herramientas](#herramientas-utilizadas)
@@ -148,6 +149,19 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 ### V3.2.0
 
 * Se migra el estado de la aplicación actual al necesario para que la Agenda funcione conectada a la base de datos. Para ello se han creado los repositorios de Empleados, Empresas y Proveedores. Se ha modificado el servicio de la Agenda y el controlador de la aplicación.
+
+### V3.3.0
+
+* Se ha restructurado las carpetas de la Aplicación de la forma: Módulo de la Aplicación > Entidad | Repository | Service.
+
+* Se ha generado el repositorio de eventos y modificado el contralador de eventos por un repositorio.
+
+* Se ha generado el repositorio de herramientas, máquinas, materiales, productos y vehículos del inventario, y se ha modificado el InventarioController por un InventarioService.
+
+* Se ha generado el repositorio de tareas y modificado TareasController por un TareasService.
+
+* Se ha generado el repositorio de usuarios y de empresa, se ha modificado el UsuariosController por un UsuarioService.
+
 
 ## Instalación:
 

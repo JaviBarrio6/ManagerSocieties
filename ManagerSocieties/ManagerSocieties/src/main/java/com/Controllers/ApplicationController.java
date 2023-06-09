@@ -1,28 +1,46 @@
 package com.Controllers;
 
-import com.Agenda.Cliente;
-import com.Agenda.Empleado;
-import com.Agenda.EmpresaSub;
-import com.Agenda.Proveedor;
-import com.Inventario.Producto;
-import com.Repositories.ClientesRepository;
-import com.Repositories.EmpleadosRepository;
-import com.Repositories.EmpresasRepository;
-import com.Repositories.ProveedoresRepository;
-import com.Services.AgendaService;
-import com.Tareas.Tarea;
-import com.Usuario.Empresa;
-import com.Usuario.Usuario;
+import com.Agenda.Cliente.Entidad.Cliente;
+import com.Agenda.Empleado.Entidad.Empleado;
+import com.Agenda.EmpresaSubcontratada.Entidad.EmpresaSub;
+import com.Agenda.Proveedor.Entidad.Proveedor;
+import com.Agenda.Cliente.Repository.ClientesRepository;
+import com.Agenda.Empleado.Repository.EmpleadosRepository;
+import com.Agenda.EmpresaSubcontratada.Repository.EmpresasRepository;
+import com.Agenda.Proveedor.Repository.ProveedoresRepository;
+import com.Calendario.Evento.Entidad.Evento;
+import com.Calendario.Evento.Repository.EventosRepository;
+import com.Inventario.Herramienta.Entidad.Herramienta;
+import com.Inventario.Herramienta.Repository.HerramientasRepository;
+import com.Inventario.Maquina.Entidad.Maquina;
+import com.Inventario.Maquina.Repository.MaquinasRepository;
+import com.Inventario.Material.Entidad.Material;
+import com.Inventario.Material.Repository.MaterialesRepository;
+import com.Inventario.Producto.Entidad.Producto;
+import com.Inventario.Producto.Repository.ProductosRepository;
+import com.Inventario.Vehiculo.Entidad.Vehiculo;
+import com.Inventario.Vehiculo.Repository.VehiculoRepository;
+import com.Repositories.*;
+import com.Agenda.Service.AgendaService;
+import com.Calendario.Service.CalendarioService;
+import com.Inventario.Service.InventarioService;
+import com.Tareas.Repository.TareasRepository;
+import com.Tareas.Service.TareasService;
+import com.Usuario.Service.UsuarioService;
+import com.Tareas.Entidad.Tarea;
+import com.Usuario.Entidad.Empresa;
+import com.Usuario.Entidad.Usuario;
+import com.Usuario.Repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class ApplicationController {
+
+    // Variables
     ModelAndView model = new ModelAndView();
 
     @Autowired
@@ -37,21 +55,47 @@ public class ApplicationController {
     @Autowired
     private ProveedoresRepository proveedoresRepository;
 
+    @Autowired
+    private EventosRepository eventosRepository;
+
+    @Autowired
+    private EmpresaRepository empresaRepository;
+
+    @Autowired
+    private UsuariosRepository usuariosRepository;
+
+    @Autowired
+    private HerramientasRepository herramientasRepository;
+
+    @Autowired
+    private MaquinasRepository maquinasRepository;
+
+    @Autowired
+    private MaterialesRepository materialesRepository;
+
+    @Autowired
+    private ProductosRepository productosRepository;
+
+    @Autowired
+    private VehiculoRepository vehiculoRepository;
+
+    @Autowired
+    private TareasRepository tareasRepository;
+
     AgendaService agendaService = new AgendaService();
 
-    CalendarioController calendarioController = new CalendarioController();
+    CalendarioService calendarioService = new CalendarioService();
 
     FacturacionController facturacionController = new FacturacionController();
-    InventarioController inventarioController = new InventarioController();
-    TareasController tareasController = new TareasController();
-    UsuarioController usuarioController = new UsuarioController();
+    InventarioService inventarioService = new InventarioService();
+    TareasService tareasService = new TareasService();
+    UsuarioService usuarioService = new UsuarioService();
 
-    Empresa empresa = new Empresa("empresa.png", "Superlux S.A.", "A58456484", "934212797", "superlux@superlux.com",
-            "Rambla Badal, 32, Barcelona, 08014", "ES0001822222110123456789", "28/17754764/41");
+    boolean log = false;
 
     Usuario usuario = new Usuario();
 
-    boolean log = false;
+    // Fin Variables
 
     // Inicio Login
 
@@ -61,18 +105,18 @@ public class ApplicationController {
 
     @RequestMapping("/")
     public ModelAndView loginPageModel(Optional<Boolean> credencialesCorrectas) {
-        return usuarioController.loginPage(comprobarLog(credencialesCorrectas));
+        return usuarioService.loginPage(comprobarLog(credencialesCorrectas));
     }
 
     @RequestMapping("/login")
     public ModelAndView loginModel(String username, String password) {
-       if (usuarioController.login(username, password)){
+        this.usuario = usuarioService.login(username, password, usuariosRepository.findAll());
+        if (usuario != null){
            this.log = true;
-           this.usuario = usuarioController.dameUsuario(username, password);
            return index();
-       } else {
+        } else {
            return loginPageModel(Optional.of(false));
-       }
+        }
     }
 
     @RequestMapping("/cerrar-sesion")
@@ -84,7 +128,7 @@ public class ApplicationController {
     @RequestMapping("/pages-register")
     public ModelAndView registerPagesModel() {
         if (this.log){
-            return usuarioController.registerPage(empleadosRepository.findAll());
+            return usuarioService.registerPage(empleadosRepository.findEmpleadosWithoutUser());
         } else {
             return loginPageModel(Optional.of(true));
         }
@@ -94,7 +138,10 @@ public class ApplicationController {
     public ModelAndView registerModel(String ref, String username, String password, boolean admin) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                usuarioController.register(empleadosRepository.findEmpleadoByRef(ref), username, password, admin);
+                Usuario usuarioAux = new Usuario(username, password, admin, "no-img.jpg", empleadosRepository.findEmpleadoByRef(ref));
+                usuariosRepository.save(usuarioAux);
+                empleadosRepository.findEmpleadoByRef(ref).setUsuario(usuarioAux);
+                empleadosRepository.flush();
                 return index();
             } else {
                 return index();
@@ -104,9 +151,11 @@ public class ApplicationController {
         }
     }
 
+    // Fin Login
+
     // Inicio Agenda
 
-    // Inicio Clientes
+        // Inicio Clientes
 
     @RequestMapping("/agenda-clientes")
     public ModelAndView agendaClientesModel() {
@@ -125,7 +174,7 @@ public class ApplicationController {
     public ModelAndView anyadirClienteModel(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium, clientesRepository.giveLastId());
+                Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium, (clientesRepository.giveLastId() != null) ? clientesRepository.giveLastId(): 0);
                 clientesRepository.save(cliente);
                 return agendaClientesModel();
             } else {
@@ -155,8 +204,18 @@ public class ApplicationController {
     public ModelAndView editarClienteModel(String ref, String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Cliente cliente = new Cliente(ref, nombre, apellidos, id, telefono, correo, dir, premium);
-                return agendaService.editarCliente(this.usuario, clientesRepository.findClienteByRef(ref), cliente, clientesRepository.findAll(), clientesRepository.countPeople());
+                Cliente cliente = clientesRepository.findClienteByRef(ref);
+                Cliente clienteAux = new Cliente(ref, nombre, apellidos, id, telefono, correo, dir, premium);
+                cliente.setNombre(clienteAux.getNombre());
+                cliente.setApellidos(clienteAux.getApellidos());
+                cliente.setId(clienteAux.getId());
+                cliente.setTelefono(clienteAux.getTelefono());
+                cliente.setEmail(clienteAux.getEmail());
+                cliente.setDireccion(clienteAux.getDireccion());
+                cliente.setPremium(clienteAux.getPremium());
+                clientesRepository.flush();
+
+                return agendaClientesModel();
             } else {
                 return index();
             }
@@ -187,7 +246,7 @@ public class ApplicationController {
                                              String email, String direccion, String antiguedad, String numSS, String puesto) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Empleado empleado = new Empleado(nombre, apellidos, id, telefono, email, direccion, null, puesto, antiguedad, numSS, empleadosRepository.giveLastId());
+                Empleado empleado = new Empleado(nombre, apellidos, id, telefono, email, direccion, null, puesto, antiguedad, numSS, (empleadosRepository.giveLastId() != null) ? empleadosRepository.giveLastId(): 0);
                 empleadosRepository.save(empleado);
                 return agendaEmpleadosModel();
             } else {
@@ -216,8 +275,20 @@ public class ApplicationController {
     public ModelAndView editarEmpleadoModel(String ref, String nombre, String apellidos, String usuario, String id, String telefono, String email, String direccion, String antiguedad, String numSS, String puesto) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Empleado empleado = new Empleado(ref, nombre, apellidos, id, telefono, email, direccion, null, puesto, antiguedad, numSS);
-                return agendaService.editarEmpleado(this.usuario, empleadosRepository.findEmpleadoByRef(ref), empleado, empleadosRepository.findAll());
+                Empleado empleado = empleadosRepository.findEmpleadoByRef(ref);
+                Empleado empleadoAux = new Empleado(ref, nombre, apellidos, id, telefono, email, direccion, null, puesto, antiguedad, numSS);
+                empleado.setNombre(empleadoAux.getNombre());
+                empleado.setApellidos(empleadoAux.getApellidos());
+                empleado.setId(empleadoAux.getId());
+                empleado.setTelefono(empleadoAux.getTelefono());
+                empleado.setEmail(empleadoAux.getEmail());
+                empleado.setDireccion(empleadoAux.getDireccion());
+                empleado.setPuesto(empleadoAux.getPuesto());
+                empleado.setAntiguedad(empleadoAux.getAntiguedad());
+                empleado.setNumSS(empleadoAux.getNumSS());
+                empleadosRepository.flush();
+
+                return agendaEmpleadosModel();
 
             } else {
                 return index();
@@ -227,9 +298,9 @@ public class ApplicationController {
         }
     }
 
-    // Fin Empleados
+        // Fin Empleados
 
-    // Inicio Empresas Subcontratadas
+        // Inicio Empresas Subcontratadas
 
     @RequestMapping("/agenda-empresassubcontratadas")
     public ModelAndView agendaEmpresasSubcontratadasModel() {
@@ -248,7 +319,7 @@ public class ApplicationController {
     public ModelAndView anyadirEmpresaModel(String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                EmpresaSub empresa = new EmpresaSub(nombre, tipo, id, telefono, email, direccion, empresasRepository.giveLastId());
+                EmpresaSub empresa = new EmpresaSub(nombre, tipo, id, telefono, email, direccion, (empresasRepository.giveLastId() != null) ? empresasRepository.giveLastId(): 0);
                 empresasRepository.save(empresa);
                 return agendaEmpresasSubcontratadasModel();
             } else {
@@ -277,8 +348,17 @@ public class ApplicationController {
     public ModelAndView editarEmpresaModel(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                EmpresaSub empresaSub = new EmpresaSub(ref, nombre, tipo, id, telefono, email, direccion);
-                return agendaService.editarEmpresa(this.usuario, empresasRepository.findEmpresaByRef(ref), empresaSub, empresasRepository.findAll());
+                EmpresaSub empresa = empresasRepository.findEmpresaByRef(ref);
+                EmpresaSub empresaAux = new EmpresaSub(ref, nombre, tipo, id, telefono, email, direccion);
+                empresa.setNombre(empresaAux.getNombre());
+                empresa.setTipo(empresaAux.getTipo());
+                empresa.setId(empresaAux.getId());
+                empresa.setTelefono(empresaAux.getTelefono());
+                empresa.setEmail(empresaAux.getEmail());
+                empresa.setDireccion(empresaAux.getDireccion());
+                empresasRepository.flush();
+
+                return agendaEmpresasSubcontratadasModel();
             } else {
                 return index();
             }
@@ -287,9 +367,9 @@ public class ApplicationController {
         }
     }
 
-    // Fin Empresas Subcontratadas
+        // Fin Empresas Subcontratadas
 
-    // Inicio Proveedores
+        // Inicio Proveedores
 
     @RequestMapping("/agenda-proveedores")
     public ModelAndView agendaProveedoresModel() {
@@ -308,7 +388,7 @@ public class ApplicationController {
     public ModelAndView anyadirProveedorModel(String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Proveedor proveedor = new Proveedor(nombre, tipo, id, telefono, email, direccion, proveedoresRepository.giveLastId());
+                Proveedor proveedor = new Proveedor(nombre, tipo, id, telefono, email, direccion, (proveedoresRepository.giveLastId() != null) ? proveedoresRepository.giveLastId(): 0);
                 proveedoresRepository.save(proveedor);
                 return agendaProveedoresModel();
             } else {
@@ -337,8 +417,17 @@ public class ApplicationController {
     public ModelAndView editarProveedorModel(String ref, String nombre, String tipo, String id, String telefono, String email, String direccion) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Proveedor proveedor = new Proveedor(ref, nombre, tipo, id, telefono, email, direccion);
-                return agendaService.editarProveedor(this.usuario, proveedoresRepository.findProveedorByRef(ref), proveedor, proveedoresRepository.findAll());
+                Proveedor proveedor = proveedoresRepository.findProveedorByRef(ref);
+                Proveedor proveedorAux = new Proveedor(ref, nombre, tipo, id, telefono, email, direccion);
+                proveedor.setNombre(proveedorAux.getNombre());
+                proveedor.setTipo(proveedorAux.getTipo());
+                proveedor.setId(proveedorAux.getId());
+                proveedor.setTelefono(proveedorAux.getTelefono());
+                proveedor.setEmail(proveedorAux.getEmail());
+                proveedor.setDireccion(proveedorAux.getDireccion());
+                proveedoresRepository.flush();
+
+                return agendaProveedoresModel();
             } else {
                 return index();
             }
@@ -347,14 +436,16 @@ public class ApplicationController {
         }
     }
 
-    // Fin Proveedores
+        // Fin Proveedores
 
     // Fin Agenda
+
+    // Inicio Calendario
 
     @RequestMapping("/calendario")
     public ModelAndView calendarioModel() {
         if (this.log){
-            return calendarioController.renderCalendar(this.usuario);
+            return calendarioService.renderCalendar(this.usuario, eventosRepository.findAll());
         } else {
             return loginPageModel(Optional.of(true));
         }
@@ -366,7 +457,7 @@ public class ApplicationController {
             String[] fechaAux = fecha.split(" ");
             int mes = Integer.parseInt(fechaAux[0]);
             int anyo = Integer.parseInt(fechaAux[1]);
-            return calendarioController.renderCalendar(this.usuario, mes + 1, anyo);
+            return calendarioService.renderCalendar(this.usuario, mes + 1, anyo, eventosRepository.findAll());
         } else {
             return loginPageModel(Optional.of(true));
         }
@@ -378,7 +469,7 @@ public class ApplicationController {
             String[] fechaAux = fecha.split(" ");
             int mes = Integer.parseInt(fechaAux[0]);
             int anyo = Integer.parseInt(fechaAux[1]);
-            return calendarioController.renderCalendar(this.usuario, mes - 1, anyo);
+            return calendarioService.renderCalendar(this.usuario, mes - 1, anyo, eventosRepository.findAll());
         } else {
             return loginPageModel(Optional.of(true));
         }
@@ -387,7 +478,9 @@ public class ApplicationController {
     @RequestMapping ("/anyadirEvento")
     public ModelAndView anyadirEventoModel (String tareaAsociada, String titulo, String fechaInicio, String fechaFin, String horaInicio, String horaFin){
         if (this.log){
-            return calendarioController.anyadirEvento (this.usuario, tareaAsociada, titulo, fechaInicio, fechaFin, horaInicio, horaFin);
+            Evento evento = new Evento(tareaAsociada, titulo, fechaInicio, fechaFin, horaInicio, horaFin, (eventosRepository.giveLastId() != null) ? eventosRepository.giveLastId(): 0);
+            eventosRepository.save(evento);
+            return calendarioModel();
         } else {
             return loginPageModel(Optional.of(true));
         }
@@ -396,13 +489,18 @@ public class ApplicationController {
     @RequestMapping ("/borrarEvento")
     public ModelAndView borrarEventoModel (String ref){
         if (this.log){
-            return calendarioController.borrarEvento (this.usuario, ref);
+            eventosRepository.delete(eventosRepository.findEventoByRef(ref));
+            return calendarioModel();
         } else {
             return loginPageModel(Optional.of(true));
         }
     }
 
+    // Fin Calendario
+
     // Inicio Facturación
+
+        // Inicio Albaranes
 
     @RequestMapping("/facturacion-albaranes")
     public ModelAndView facturacionAlbaranesModel() {
@@ -421,8 +519,8 @@ public class ApplicationController {
     public ModelAndView anyadirAlbaranModel (String ref, String fecha, String[] productos, int[] cantidades, String[] tareas, double iva) {
 
         Cliente clienteAux = clientesRepository.findClienteByRef(ref);
-        ArrayList<Producto> productosAux = inventarioController.dameProductos(productos);
-        ArrayList<Tarea> tareasAux = tareasController.dameTareas(tareas);
+        List<Producto> productosAux = productosRepository.findAll();
+        List<Tarea> tareasAux = tareasRepository.findAll();
         HashMap<Producto, Integer> productosAuxAux = new HashMap<>();
         for (int i = 0; i < productosAux.size(); i++){
             productosAuxAux.put(productosAux.get(i), cantidades[i]);
@@ -452,6 +550,10 @@ public class ApplicationController {
         }
     }
 
+        // Fin Albaranes
+
+        // Inicio Facturas
+
     @RequestMapping("/facturacion-facturas")
     public ModelAndView facturacionFacturas() {
         if (this.log){
@@ -465,6 +567,10 @@ public class ApplicationController {
             return loginPageModel(Optional.of(true));
         }
     }
+
+        // Fin Facturas
+
+        // Inicio Gastos
 
     @RequestMapping("/facturacion-gastos")
     public ModelAndView facturacionGastosModel() {
@@ -507,6 +613,10 @@ public class ApplicationController {
             return loginPageModel(Optional.of(true));
         }
     }
+
+        // Fin Gastos
+
+        // Inicio Nóminas
 
     @RequestMapping("/facturacion-nominas")
     public ModelAndView facturacionNominasModel() {
@@ -553,6 +663,12 @@ public class ApplicationController {
         }
     }
 
+        // Fin Nóminas
+
+    // Fin Facturación
+
+    // Inicio Finanzas
+
     @RequestMapping("/finanzas")
     public ModelAndView finanzas() {
         if (this.log){
@@ -567,6 +683,10 @@ public class ApplicationController {
         }
     }
 
+    // Fin Finanzas
+
+    // Inicio Dashboard
+
     @RequestMapping("/index")
     public ModelAndView index() {
         if (this.log){
@@ -578,15 +698,17 @@ public class ApplicationController {
         }
     }
 
+    // Fin Dashboard
+
     // Inicio Inventario
 
-    // Inicio Herramientas
+        // Inicio Herramientas
 
     @RequestMapping("/inventario-herramientas")
     public ModelAndView inventarioHerramientasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.inventarioHerramientas(this.usuario);
+                return inventarioService.inventarioHerramientas(this.usuario, herramientasRepository.findAll());
             } else {
                 return index();
             }
@@ -599,7 +721,9 @@ public class ApplicationController {
     public ModelAndView anyadirHerramientaModel(String marca, String modelo, double precio, int cantidad) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.anyadirHerramienta(this.usuario, marca, modelo, precio, cantidad);
+                Herramienta herramienta = new Herramienta(marca, modelo, precio, cantidad, (herramientasRepository.giveLastId() != null) ? herramientasRepository.giveLastId(): 0);
+                herramientasRepository.save(herramienta);
+                return inventarioHerramientasModel();
             } else {
                 return index();
             }
@@ -612,7 +736,8 @@ public class ApplicationController {
     public ModelAndView borrarHerramientaModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.borrarHerramienta(this.usuario, ref);
+                herramientasRepository.delete(herramientasRepository.findHerramientaByRef(ref));
+                return inventarioHerramientasModel();
             } else {
                 return index();
             }
@@ -625,7 +750,15 @@ public class ApplicationController {
     public ModelAndView editarHerramientaModel(String ref, String marca, String modelo, double precio, int cantidad) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.editarHerramienta(this.usuario, ref, marca, modelo, precio, cantidad);
+                Herramienta herramienta = herramientasRepository.findHerramientaByRef(ref);
+                Herramienta herramientaAux = new Herramienta(ref, marca, modelo, precio, cantidad);
+                herramienta.setMarca(herramientaAux.getMarca());
+                herramienta.setModelo(herramientaAux.getModelo());
+                herramienta.setPrecio(herramientaAux.getPrecio());
+                herramienta.setCantidad(herramientaAux.getCantidad());
+                herramientasRepository.flush();
+
+                return inventarioHerramientasModel();
             } else {
                 return index();
             }
@@ -634,15 +767,15 @@ public class ApplicationController {
         }
     }
 
-    // Fin Herramientas
+        // Fin Herramientas
 
-    // Inicio Máquinas
+        // Inicio Máquinas
 
     @RequestMapping("/inventario-maquinas")
     public ModelAndView inventarioMaquinasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.inventarioMaquinas(this.usuario);
+                return inventarioService.inventarioMaquinas(this.usuario, maquinasRepository.findAll());
             } else {
                 return index();
             }
@@ -655,7 +788,9 @@ public class ApplicationController {
     public ModelAndView anyadirMaquinaModel(String marca, String modelo, double precio, int cantidad) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.anyadirMaquina(this.usuario, marca, modelo, precio, cantidad);
+                Maquina maquina = new Maquina(marca, modelo, precio, cantidad, (maquinasRepository.giveLastId() != null) ? maquinasRepository.giveLastId(): 0);
+                maquinasRepository.save(maquina);
+                return inventarioMaquinasModel();
             } else {
                 return index();
             }
@@ -668,7 +803,8 @@ public class ApplicationController {
     public ModelAndView borrarMaquinaModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.borrarMaquina(this.usuario, ref);
+                maquinasRepository.delete(maquinasRepository.findMaquinaByRef(ref));
+                return inventarioMaquinasModel();
             } else {
                 return index();
             }
@@ -681,7 +817,15 @@ public class ApplicationController {
     public ModelAndView editarMaquinaModel(String ref, String marca, String modelo, double precio, int cantidad) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.editarMaquina(this.usuario, ref, marca, modelo, precio, cantidad);
+                Maquina maquina = maquinasRepository.findMaquinaByRef(ref);
+                Maquina maquinaAux = new Maquina(ref, marca, modelo, precio, cantidad);
+                maquina.setMarca(maquinaAux.getMarca());
+                maquina.setModelo(maquinaAux.getModelo());
+                maquina.setPrecio(maquinaAux.getPrecio());
+                maquina.setCantidad(maquina.getCantidad());
+                maquinasRepository.flush();
+
+                return inventarioMaquinasModel();
             } else {
                 return index();
             }
@@ -690,15 +834,15 @@ public class ApplicationController {
         }
     }
 
-    // Fin Máquinas
+        // Fin Máquinas
 
-    // Inicio Materiales
+        // Inicio Materiales
 
     @RequestMapping("/inventario-materiales")
     public ModelAndView inventarioMaterialesModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.inventarioMateriales(this.usuario);
+                return inventarioService.inventarioMateriales(this.usuario, materialesRepository.findAll());
             } else {
                 return index();
             }
@@ -711,7 +855,9 @@ public class ApplicationController {
     public ModelAndView anyadirMaterialModel(String marca, String modelo, double precio, int cantidad, int unidades) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.anyadirMaterial(this.usuario, marca, modelo, precio, cantidad, unidades);
+                Material material = new Material(marca, modelo, precio, cantidad, unidades, (materialesRepository.giveLastId() != null) ? materialesRepository.giveLastId(): 0);
+                materialesRepository.save(material);
+                return inventarioMaterialesModel();
             } else {
                 return index();
             }
@@ -724,7 +870,8 @@ public class ApplicationController {
     public ModelAndView borrarMaterialModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.borrarMaterial(this.usuario, ref);
+                materialesRepository.delete(materialesRepository.findMaterialByRef(ref));
+                return inventarioMaterialesModel();
             } else {
                 return index();
             }
@@ -737,7 +884,15 @@ public class ApplicationController {
     public ModelAndView editarMaterialModel(String ref, String marca, String modelo, double precio, int cantidad, int unidades) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.editarMaterial(this.usuario, ref, marca, modelo, precio, cantidad, unidades);
+                Material material = materialesRepository.findMaterialByRef(ref);
+                Material materialAux = new Material(ref, modelo, modelo, precio, cantidad, unidades);
+                material.setMarca(materialAux.getMarca());
+                material.setModelo(materialAux.getModelo());
+                material.setPrecio(material.getPrecio());
+                material.setCantidad(material.getCantidad());
+                material.setUnidades(material.getUnidades());
+                materialesRepository.flush();
+                return inventarioMaterialesModel();
             } else {
                 return index();
             }
@@ -746,14 +901,15 @@ public class ApplicationController {
         }
     }
 
-    // Fin Materiales
+        // Fin Materiales
 
-    // Inicio Productos
+        // Inicio Productos
+
     @RequestMapping("/inventario-productos")
     public ModelAndView inventarioProductosModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.inventarioProductos(this.usuario);
+                return inventarioService.inventarioProductos(this.usuario, productosRepository.findAll());
             } else {
                 return index();
             }
@@ -766,7 +922,9 @@ public class ApplicationController {
     public ModelAndView anyadirProductoModel (String modelo, double precio, int stock, String urlFoto){
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.anyadirProducto(this.usuario, modelo, precio, stock, urlFoto);
+                Producto producto = new Producto(modelo, precio, stock, urlFoto, (productosRepository.giveLastId() != null) ? productosRepository.giveLastId(): 0);
+                productosRepository.save(producto);
+                return inventarioProductosModel();
             } else {
                 return index();
             }
@@ -779,7 +937,8 @@ public class ApplicationController {
     public ModelAndView borrarProductoModel (String ref){
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.borrarProducto(this.usuario, ref);
+                productosRepository.delete(productosRepository.findProductoByRef(ref));
+                return inventarioProductosModel();
             } else {
                 return index();
             }
@@ -792,7 +951,14 @@ public class ApplicationController {
     public ModelAndView editarProductoModel (String ref, String modelo, double precio, int stock, String urlFoto){
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.editarProducto(this.usuario, ref, modelo, precio, stock, urlFoto);
+                Producto producto = productosRepository.findProductoByRef(ref);
+                Producto productoAux = new Producto(ref, modelo, precio, stock, urlFoto);
+                producto.setModelo(productoAux.getModelo());
+                producto.setPrecio(productoAux.getPrecio());
+                producto.setStock(productoAux.getStock());
+                producto.setUrlFoto(producto.getUrlFoto());
+                productosRepository.flush();
+                return inventarioProductosModel();
             } else {
                 return index();
             }
@@ -801,15 +967,15 @@ public class ApplicationController {
         }
     }
 
-    // Fin Productos
+        // Fin Productos
 
-    // Inicio Vehículos
+        // Inicio Vehículos
 
     @RequestMapping("/inventario-vehiculos")
     public ModelAndView inventarioVehiculosModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.inventarioVehiculos(this.usuario);
+                return inventarioService.inventarioVehiculos(this.usuario, vehiculoRepository.findAll());
             } else {
                 return index();
             }
@@ -822,7 +988,9 @@ public class ApplicationController {
     public ModelAndView anyadirVehiculoModel(String marca, String modelo, String matricula, String color) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.anyadirVehiculo(this.usuario, marca, modelo, matricula, color);
+                Vehiculo vehiculo = new Vehiculo(marca, modelo, matricula, color, (vehiculoRepository.giveLastId() != null) ? vehiculoRepository.giveLastId(): 0);
+                vehiculoRepository.save(vehiculo);
+                return inventarioVehiculosModel();
             } else {
                 return index();
             }
@@ -835,7 +1003,8 @@ public class ApplicationController {
     public ModelAndView borrarVehiculoModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.borrarVehiculo(this.usuario, ref);
+                vehiculoRepository.delete(vehiculoRepository.findVehiculoByRef(ref));
+                return inventarioVehiculosModel();
             } else {
                 return index();
             }
@@ -848,7 +1017,14 @@ public class ApplicationController {
     public ModelAndView editarVehiculoModel(String ref, String marca, String modelo, String matricula, String color) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return inventarioController.editarVehiculo(this.usuario, ref, marca, modelo, matricula, color);
+                Vehiculo vehiculo = vehiculoRepository.findVehiculoByRef(ref);
+                Vehiculo vehiculoAux = new Vehiculo(ref, marca, modelo, matricula, color);
+                vehiculo.setMarca(vehiculoAux.getMarca());
+                vehiculo.setModelo(vehiculoAux.getModelo());
+                vehiculo.setMatricula(vehiculoAux.getMatricula());
+                vehiculo.setColor(vehiculoAux.getColor());
+                vehiculoRepository.flush();
+                return inventarioVehiculosModel();
             } else {
                 return index();
             }
@@ -857,7 +1033,9 @@ public class ApplicationController {
         }
     }
 
-    // Fin Vehículos
+        // Fin Vehículos
+
+    // Fin Inventario
 
     // Inicio Tareas
 
@@ -865,7 +1043,9 @@ public class ApplicationController {
     public ModelAndView tareasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return tareasController.tareas(this.usuario);
+                return tareasService.tareas(this.usuario, tareasRepository.findAll(), clientesRepository.findAll(),
+                        empleadosRepository.findAll(), herramientasRepository.findAll(), maquinasRepository.findAll(),
+                        materialesRepository.findAll(), productosRepository.findAll(), vehiculoRepository.findAll());
             } else {
                 return index();
             }
@@ -877,27 +1057,140 @@ public class ApplicationController {
     @RequestMapping("/anyadirTarea")
     public ModelAndView anyadirTareaModel (String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
         Cliente clienteAux = clientesRepository.findClienteByRef(cliente);
-        Empleado empleado = empleadosRepository.findEmpleadoByRef(empleados[0]);
-        String[] nombresEmpleado = new String[empleados.length];
-        for (int i = 0; i < empleados.length; i++){
-            nombresEmpleado[i] = empleadosRepository.findEmpleadoByRef(empleados[i]).getNombre() + ' ' + empleadosRepository.findEmpleadoByRef(empleados[i]).getApellidos();
+        List<Empleado> empleadosAux = new ArrayList<>();
+        List<Herramienta> herramientas = new ArrayList<>();
+        List<Maquina> maquinas = new ArrayList<>();
+        List<Material> materiales = new ArrayList<>();
+        List<Producto> productos = new ArrayList<>();
+        List<Vehiculo> vehiculos = new ArrayList<>();
+        String ref;
+        Empleado empleado = null;
+        for (String s : empleados) {
+            empleado = empleadosRepository.findEmpleadoByRef(s);
+            empleadosAux.add(empleado);
         }
-        Tarea tarea = new Tarea(clienteAux, nombresEmpleado, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
-        calendarioController.anyadirEvento(this.usuario, tarea.getRef(), "Tarea - ".concat(clienteAux.getNombre()), fechaFin, "¿?",
-                hora, hora);
+        if (inventario != null){
+            for (String s: inventario) {
+                ref = s.substring(0, 3);
+                if (ref != null) {
+                    switch (ref) {
+                        case "HER":
+                            Herramienta herramienta = herramientasRepository.findHerramientaByRef(s);
+                            herramientas.add(herramienta);
+                            break;
+                        case "MAQ":
+                            Maquina maquina = maquinasRepository.findMaquinaByRef(s);
+                            maquinas.add(maquina);
+                            break;
+                        case "MAT":
+                            Material material = materialesRepository.findMaterialByRef(s);
+                            materiales.add(material);
+                            break;
+                        case "PRO":
+                            Producto producto = productosRepository.findProductoByRef(s);
+                            productos.add(producto);
+                            break;
+                        case "VEH":
+                            Vehiculo vehiculo = vehiculoRepository.findVehiculoByRef(s);
+                            vehiculos.add(vehiculo);
+                            break;
+                    }
+                }
+            }
+        }
+
+        Tarea tarea = new Tarea(clienteAux, empleadosAux, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado,
+                herramientas, maquinas, materiales, productos, vehiculos, (tareasRepository.giveLastId() != null) ? tareasRepository.giveLastId(): 0);
+        Evento evento = new Evento (tarea.getRef(), "Tarea - ".concat(clienteAux.getNombre()), fechaInicio, "-",
+                hora, "-", (eventosRepository.giveLastId() != null) ? eventosRepository.giveLastId(): 0);
+        tareasRepository.save(tarea);
+        eventosRepository.save(evento);
         facturacionController.anyadirGasto(this.usuario, empleado, tarea.getRef(), fechaInicio, gastoExtra);
-        return tareasController.anyadirTarea(this.usuario, tarea);
+        return tareasModel();
 
     }
 
     @RequestMapping("/borrarTarea")
     public ModelAndView borrarTareaModel (String ref){
-        return tareasController.borrarTarea(this.usuario, ref);
+        tareasRepository.delete(tareasRepository.findTareaByRef(ref));
+        eventosRepository.delete(eventosRepository.findEventoByRefTarea(ref));
+        return tareasModel();
     }
 
     @RequestMapping("/editarTarea")
     public ModelAndView editarTareaModel (String ref, String cliente, String[] empleados, String fechaInicio, String fechaFin, String hora, double precio, double gastoExtra, String info, int estado, String[] inventario){
-        return tareasController.editarTarea(this.usuario, ref, cliente, empleados, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, inventario);
+        Tarea tarea = tareasRepository.findTareaByRef(ref);
+
+        Cliente clienteAux = clientesRepository.findClienteByRef(cliente);
+        List<Empleado> empleadosAux = new ArrayList<>();
+        List<Herramienta> herramientas = new ArrayList<>();
+        List<Maquina> maquinas = new ArrayList<>();
+        List<Material> materiales = new ArrayList<>();
+        List<Producto> productos = new ArrayList<>();
+        List<Vehiculo> vehiculos = new ArrayList<>();
+        String refAux;
+        Empleado empleado = null;
+        for (String s : empleados) {
+            empleado = empleadosRepository.findEmpleadoByRef(s);
+            empleadosAux.add(empleado);
+        }
+        if (inventario != null){
+            for (String s: inventario) {
+                refAux = s.substring(0, 3);
+                if (refAux != null) {
+                    switch (refAux) {
+                        case "HER":
+                            Herramienta herramienta = herramientasRepository.findHerramientaByRef(s);
+                            herramientas.add(herramienta);
+                            break;
+                        case "MAQ":
+                            Maquina maquina = maquinasRepository.findMaquinaByRef(s);
+                            maquinas.add(maquina);
+                            break;
+                        case "MAT":
+                            Material material = materialesRepository.findMaterialByRef(s);
+                            materiales.add(material);
+                            break;
+                        case "PRO":
+                            Producto producto = productosRepository.findProductoByRef(s);
+                            productos.add(producto);
+                            break;
+                        case "VEH":
+                            Vehiculo vehiculo = vehiculoRepository.findVehiculoByRef(s);
+                            vehiculos.add(vehiculo);
+                            break;
+                    }
+                }
+            }
+        }
+
+        Tarea tareaAux = new Tarea(ref, clienteAux, empleadosAux, fechaInicio, fechaFin, hora, precio, gastoExtra, info, estado, herramientas, maquinas, materiales, productos, vehiculos);
+        tarea.setCliente(tareaAux.getCliente());
+        tarea.setEmpleados(tareaAux.getEmpleados());
+        tarea.setFechaInicio(tareaAux.getFechaInicio());
+        tarea.setFechaFin(tareaAux.getFechaFin());
+        tarea.setHora(tareaAux.getHora());
+        tarea.setPrecio(tareaAux.getPrecio());
+        tarea.setGastoExtra(tareaAux.getGastoExtra());
+        tarea.setInfo(tareaAux.getInfo());
+        tarea.setEstado(tareaAux.getEstado());
+        tarea.setHerramientas(tareaAux.getHerramientas());
+        tarea.setMaquinas(tareaAux.getMaquinas());
+        tarea.setMateriales(tareaAux.getMateriales());
+        tarea.setProductos(tareaAux.getProductos());
+        tarea.setVehiculos(tareaAux.getVehiculos());
+        tareasRepository.flush();
+
+        Evento evento = eventosRepository.findEventoByRefTarea(tarea.getRef());
+        Evento eventoAux = new Evento (tarea.getRef(), "Tarea - ".concat(clienteAux.getNombre()), fechaInicio, "-",
+                hora, "-", (eventosRepository.giveLastId() != null) ? eventosRepository.giveLastId(): 0);
+        evento.setTitulo(eventoAux.getTitulo());
+        evento.setFechaInicio(eventoAux.getFechaInicio());
+        evento.setFechaFin(eventoAux.getFechaFin());
+        evento.setHoraInicio(eventoAux.getHoraInicio());
+        eventosRepository.flush();
+
+        return tareasModel();
     }
 
     // Fin Tareas
@@ -907,7 +1200,7 @@ public class ApplicationController {
     public ModelAndView usersProfileModel() {
         model.setViewName("users-profile.html");
         model.addObject("usuario", this.usuario);
-        model.addObject("empresa", this.empresa);
+        model.addObject("empresa", empresaRepository.getEmpresa());
         return model;
     }
 
@@ -915,7 +1208,7 @@ public class ApplicationController {
     public ModelAndView editUsersProfileModel() {
         model.setViewName("edit-users-profile.html");
         model.addObject("usuario", this.usuario);
-        model.addObject("empresa", this.empresa);
+        model.addObject("empresa", empresaRepository.getEmpresa());
         return model;
     }
 
@@ -923,7 +1216,7 @@ public class ApplicationController {
     public ModelAndView editUsersPasswordModel() {
         model.setViewName("edit-users-password.html");
         model.addObject("usuario", this.usuario);
-        model.addObject("empresa", this.empresa);
+        model.addObject("empresa", empresaRepository.getEmpresa());
         return model;
     }
 
@@ -931,14 +1224,39 @@ public class ApplicationController {
     public ModelAndView editUsersEnterpriseModel() {
         model.setViewName("edit-users-enterprise.html");
         model.addObject("usuario", this.usuario);
-        model.addObject("empresa", this.empresa);
+        model.addObject("empresa", empresaRepository.getEmpresa());
         return model;
     }
 
     @RequestMapping("/editarUsuario")
     public ModelAndView editarUsuarioModel(String imagen, String nombre, String apellidos, String dni, String telefono, String email,
                                            String direccion, String antiguedad, String numSS, String puesto){
-        usuarioController.editarUsuario(this.usuario, nombre, apellidos, dni, telefono, email, direccion, antiguedad, puesto, imagen);
+
+        Empleado empleado = empleadosRepository.findEmpleadoByRef(usuario.getEmpleado().getRef());
+
+        empleado.setNombre(nombre);
+        empleado.setApellidos(apellidos);
+        empleado.setId(dni);
+        empleado.setTelefono(telefono);
+        empleado.setEmail(email);
+        empleado.setDireccion(direccion);
+        empleado.setAntiguedad(antiguedad);
+        empleado.setNumSS(numSS);
+        empleado.setPuesto(puesto);
+
+        usuario.getEmpleado().setNombre(nombre);
+        usuario.getEmpleado().setApellidos(apellidos);
+        usuario.getEmpleado().setId(dni);
+        usuario.getEmpleado().setTelefono(telefono);
+        usuario.getEmpleado().setEmail(email);
+        usuario.getEmpleado().setDireccion(direccion);
+        usuario.getEmpleado().setAntiguedad(antiguedad);
+        usuario.getEmpleado().setNumSS(numSS);
+        usuario.getEmpleado().setPuesto(puesto);
+        usuario.setImagenUrl(imagen);
+        empleadosRepository.flush();
+        usuariosRepository.flush();
+
         return usersProfileModel();
     }
 
@@ -947,8 +1265,8 @@ public class ApplicationController {
         if (!newPassword.equals(renewPassword)){
             return usersProfileModel();
         } else {
-            usuarioController.editarContrasenya(this.usuario, password, newPassword);
-            this.usuario = usuarioController.dameUsuario("", this.usuario.getContrasenya());
+            usuario.setContrasenya(password);
+            usuariosRepository.flush();
             return usersProfileModel();
         }
     }
@@ -958,9 +1276,26 @@ public class ApplicationController {
         if (this.log){
             if (this.usuario.isAdmin()){
                 if (logo != null){
-                    this.empresa = new Empresa(logo, nombre, cif, telefono, email, direccion, iban, numSS);
+                    Empresa empresa = empresaRepository.getEmpresa();
+                    empresa.setLogo(logo);
+                    empresa.setNombre(nombre);
+                    empresa.setCif(cif);
+                    empresa.setTelefono(telefono);
+                    empresa.setEmail(email);
+                    empresa.setDireccion(direccion);
+                    empresa.setIban(iban);
+                    empresa.setNumSS(numSS);
+                    empresaRepository.flush();
                 } else {
-                    this.empresa.editarEmpresa(nombre, cif, telefono, email, direccion, iban);
+                    Empresa empresa = empresaRepository.getEmpresa();
+                    empresa.setNombre(nombre);
+                    empresa.setCif(cif);
+                    empresa.setTelefono(telefono);
+                    empresa.setEmail(email);
+                    empresa.setDireccion(direccion);
+                    empresa.setIban(iban);
+                    empresa.setNumSS(numSS);
+                    empresaRepository.flush();
                 }
                 return usersProfileModel();
             } else {

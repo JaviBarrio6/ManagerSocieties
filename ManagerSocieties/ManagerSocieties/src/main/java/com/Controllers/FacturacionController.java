@@ -1,13 +1,13 @@
 package com.Controllers;
 
-import com.Agenda.Cliente;
-import com.Agenda.Empleado;
+import com.Agenda.Cliente.Entidad.Cliente;
+import com.Agenda.Empleado.Entidad.Empleado;
 import com.Facturacion.*;
-import com.Inventario.Producto;
-import com.Inventario.Productos;
-import com.Tareas.Tarea;
-import com.Tareas.Tareas;
-import com.Usuario.Usuario;
+import com.Inventario.Producto.Entidad.Producto;
+import com.Inventario.Producto.Repository.ProductosRepository;
+import com.Tareas.Entidad.Tarea;
+import com.Tareas.Repository.TareasRepository;
+import com.Usuario.Entidad.Usuario;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -19,8 +19,10 @@ public class FacturacionController {
     Albaranes albaranes = new Albaranes();
     Gastos gastos = new Gastos();
     Nominas nominas = new Nominas();
-    Productos productos = new Productos();
-    Tareas tareas = new Tareas();
+
+    private ProductosRepository productosRepository;
+
+    private TareasRepository tareasRepository;
     ModelAndView facturacionModel = new ModelAndView();
 
     // Inicio Albaranes
@@ -28,14 +30,14 @@ public class FacturacionController {
         facturacionModel.setViewName("facturacion-albaranes.html");
         facturacionModel.addObject("albaranes", albaranes.albaranes.values());
         facturacionModel.addObject("numAlbaranes", albaranes.albaranes.values().size());
-        facturacionModel.addObject("productos", productos.productos.values());
-        facturacionModel.addObject("tareas", tareas.tareas.values());
+        facturacionModel.addObject("productos", productosRepository.findAll());
+        facturacionModel.addObject("tareas", tareasRepository.findAll());
         //facturacionModel.addObject("clientes", clientes.clientes.values());
         facturacionModel.addObject("usuario", user);
         return facturacionModel;
     }
 
-    public ModelAndView anyadirAlbaran (Usuario user, Cliente cliente, String fecha, HashMap<Producto, Integer> productos, ArrayList<Tarea> tareas, double IVA) {
+    public ModelAndView anyadirAlbaran (Usuario user, Cliente cliente, String fecha, HashMap<Producto, Integer> productos, List<Tarea> tareas, double IVA) {
         Albaran albaran = new Albaran(cliente, fecha, productos, tareas, IVA);
 
         albaranes.albaranes.put(albaran.getRef(), albaran);

@@ -1,13 +1,12 @@
 package com.Facturacion;
 
-import com.Agenda.Cliente;
-import com.Agenda.Empleado;
-import com.Inventario.Producto;
-import com.Tareas.Tarea;
-import com.Tareas.Tareas;
+import com.Agenda.Cliente.Entidad.Cliente;
+import com.Inventario.Producto.Entidad.Producto;
+import com.Tareas.Entidad.Tarea;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Albaran {
 
@@ -21,7 +20,7 @@ public class Albaran {
     private String fecha;
 
     private HashMap<Producto, Integer> productos;
-    private ArrayList<Tarea> tareas;
+    private List<Tarea> tareas;
     private double IVA;
 
     private double precioSinIva;
@@ -43,7 +42,7 @@ public class Albaran {
         setPrecio();
     }
 
-    public Albaran (Cliente cliente, String fecha, HashMap<Producto, Integer> productos, ArrayList<Tarea> tareas, double IVA){
+    public Albaran (Cliente cliente, String fecha, HashMap<Producto, Integer> productos, List<Tarea> tareas, double IVA){
 
         generadorId++;
         setRef (generadorRef(generadorId, refAlbaran));
@@ -87,7 +86,7 @@ public class Albaran {
         this.productos = (productos != null)?productos: new HashMap<>();
     }
 
-    public void setTareas(ArrayList<Tarea> tareas) {
+    public void setTareas(List<Tarea> tareas) {
         this.tareas = (tareas != null)?tareas: new ArrayList<>();
     }
 
@@ -131,7 +130,7 @@ public class Albaran {
         return this.productos;
     }
 
-    public ArrayList<Tarea> getTareas() {
+    public List<Tarea> getTareas() {
         return this.tareas;
     }
 

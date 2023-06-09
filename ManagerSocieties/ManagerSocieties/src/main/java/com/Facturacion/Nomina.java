@@ -1,6 +1,6 @@
 package com.Facturacion;
 
-import com.Agenda.Empleado;
+import com.Agenda.Empleado.Entidad.Empleado;
 
 import java.io.Serializable;
 
@@ -172,7 +172,7 @@ public class Nomina implements Serializable {
 
     public void setSueldoBruto(){
         this.sueldoBruto = Math.round((this.salarioConvenio[1] + this.prestacionAccidente[1] + this.complementoSalarial[1] +
-                this.teletrabajo[1] + this.productividad[1] + + this.pagasExtra[1]) * 100) / 100d;
+                this.teletrabajo[1] + this.productividad[1] + this.pagasExtra[1]) * 100) / 100d;
     }
 
     public void setSueldoNeto(){
