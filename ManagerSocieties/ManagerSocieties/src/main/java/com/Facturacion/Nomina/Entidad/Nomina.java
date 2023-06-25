@@ -1,34 +1,53 @@
-package com.Facturacion;
+package com.Facturacion.Nomina.Entidad;
 
 import com.Agenda.Empleado.Entidad.Empleado;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
+@Entity
+@Table(name = "nominas")
 public class Nomina implements Serializable {
 
     // Inicio Variables
-
-    public static int generadorId = 0;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int generadorId;
     private static final String refNomina = "NOM";
-    private String ref;
-    private String nombreEmpresa;
-    private String direccionEmpresa;
-    private String numSSEmpresa;
-    private Empleado empleado;
-    private String fecha;
-    private int dias;
-    private double[] salarioConvenio = new double[2];
-    private double[] prestacionAccidente = new double[2];
-    private double[] complementoSalarial = new double[2];
-    private double[] teletrabajo = new double[2];
-    private double[] productividad = new double[2];
-    private double[] pagasExtra = new double[2];
-    private double[] contingencias = new double[2];
-    private double[] formacionP = new double[2];
-    private double[] desempleo = new double[2];
-    private double[] tIRPF = new double[2];
 
+    @Column (name = "ref")
+    private String ref;
+
+    @OneToOne
+    private Empleado empleado;
+
+    @Column (name = "fecha")
+    private String fecha;
+    @Column (name = "dias")
+    private int dias;
+    @Column (name = "salario_convenio")
+    private double[] salarioConvenio = new double[2];
+    @Column (name = "prestacion_accidente")
+    private double[] prestacionAccidente = new double[2];
+    @Column (name = "complemento_salarial")
+    private double[] complementoSalarial = new double[2];
+    @Column (name = "teletrabajo")
+    private double[] teletrabajo = new double[2];
+    @Column (name = "productividad")
+    private double[] productividad = new double[2];
+    @Column (name = "pagas_extra")
+    private double[] pagasExtra = new double[2];
+    @Column (name = "contingencias")
+    private double[] contingencias = new double[2];
+    @Column (name = "formacionP")
+    private double[] formacionP = new double[2];
+    @Column (name = "desempleo")
+    private double[] desempleo = new double[2];
+    @Column (name = "tIRPF")
+    private double[] tIRPF = new double[2];
+    @Column (name = "sueldo_bruto")
     private double sueldoBruto;
+    @Column (name = "sueldo_neto")
     private double sueldoNeto;
 
     // Fin Variables
@@ -56,10 +75,9 @@ public class Nomina implements Serializable {
 
     public Nomina (Empleado empleado, String fecha, int dias, double salarioConvenio, double prestacionAccidente,
                    double complementoSalarial, double teletrabajo, double productividad, double pagasExtra,
-                   double contingencias, double formacionP, double desempleo){
+                   double contingencias, double formacionP, double desempleo, int pos){
 
-        generadorId++;
-        setRef (generadorRef(generadorId, refNomina));
+        setRef (generadorRef(++pos, refNomina));
         setEmpleado(empleado);
         setFecha(fecha);
         setDias(dias);
@@ -185,18 +203,6 @@ public class Nomina implements Serializable {
 
     public String getRef() {
         return this.ref;
-    }
-
-    public String getNombreEmpresa() {
-        return this.nombreEmpresa;
-    }
-
-    public String getDireccionEmpresa() {
-        return this.direccionEmpresa;
-    }
-
-    public String getNumSSEmpresa() {
-        return this.numSSEmpresa;
     }
 
     public Empleado getEmpleado() {

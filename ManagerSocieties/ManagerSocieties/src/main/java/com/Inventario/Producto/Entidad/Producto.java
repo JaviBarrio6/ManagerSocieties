@@ -23,7 +23,7 @@ public class Producto implements Serializable {
     private int stock;
     @Column(name = "precio")
     private double precio;
-    @Column(name = "urlFoto")
+    @Column(name = "url_Foto")
     private String urlFoto;
 
     // Fin Variables
@@ -74,7 +74,17 @@ public class Producto implements Serializable {
     }
 
     public void setUrlFoto(String urlFoto) {
-        this.urlFoto = "/img/" + urlFoto;
+        if ((urlFoto == null) || (urlFoto.equals(""))){
+            this.urlFoto = "/img/no-img.jpg";
+        } else {
+            String cadena = urlFoto.substring(0, 5);
+            if (!cadena.equals("/img/")){
+                this.urlFoto = "/img/" + urlFoto;
+            } else {
+                this.urlFoto = urlFoto;
+            }
+        }
+
     }
 
     // Fin Setters

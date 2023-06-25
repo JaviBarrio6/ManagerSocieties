@@ -19,4 +19,6 @@ public interface TareasRepository extends JpaRepository<Tarea, Integer> {
     @Query (value = "SELECT * FROM Empleados WHERE generador_id <> Tareas_Empleados.empleados_generador_id", nativeQuery = true)
     List<Empleado> findEmpleadosLibres();
 
+    List<Tarea> findAllByEstadoIsNot (int estado);
+
 }

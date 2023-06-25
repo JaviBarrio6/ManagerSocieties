@@ -505,7 +505,7 @@
                     <td th:text = "${proveedor.email}"></td>
                     <td th:text = "${proveedor.direccion}"></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarProveedor+${proveedor.ref}"><i class="bi bi-eraser"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarProveedor+${proveedor.ref}"><i class="bi bi-pencil-square"></i></a></td>
                     <td>
                       <form action="#" th:action="@{/borrarProveedor}" method="post">
                         <button class="dropdown-item bi-person-x" name = "ref" th:value="${proveedor.ref}" type="submit"></button>

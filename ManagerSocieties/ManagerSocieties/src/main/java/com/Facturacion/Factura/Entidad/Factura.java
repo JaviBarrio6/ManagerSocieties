@@ -1,38 +1,55 @@
-package com.Facturacion;
+package com.Facturacion.Factura.Entidad;
 
 import com.Agenda.Cliente.Entidad.Cliente;
+import com.Facturacion.Albaran.Entidad.Albaran;
 import com.Inventario.Producto.Entidad.Producto;
 import com.Tareas.Entidad.Tarea;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class Albaran {
+@Entity
+@Table(name = "facturas")
+public class Factura {
 
     // Inicio Variables
-
-    public static int generadorId = 0;
-    private static final String refAlbaran = "ALB";
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int generadorId;
+    private static final String refFactura = "FAC";
+    @Column (name = "ref")
     private String ref;
+
+    @Column
+    private String albaran;
+
+    @OneToOne
     private Cliente cliente;
 
+    @Column (name = "fecha")
     private String fecha;
 
-    private HashMap<Producto, Integer> productos;
+    @ManyToMany
+    private List<Producto> productos;
+    @ManyToMany
     private List<Tarea> tareas;
+    @Column (name = "IVA")
     private double IVA;
 
+    @Column (name = "precio_sin_iva")
     private double precioSinIva;
 
+    @Column (name = "precio")
     private double precio;
 
     // Fin Variables
 
     // Inicio Constructores
 
-    public Albaran(){
+    public Factura(){
         setRef("");
+        setAlbaran(null);
         setCliente(null);
         setFecha("");
         setProductos(null);
@@ -42,10 +59,9 @@ public class Albaran {
         setPrecio();
     }
 
-    public Albaran (Cliente cliente, String fecha, HashMap<Producto, Integer> productos, List<Tarea> tareas, double IVA){
-
-        generadorId++;
-        setRef (generadorRef(generadorId, refAlbaran));
+    public Factura (String albaran, Cliente cliente, String fecha, List<Producto> productos, List<Tarea> tareas, double IVA, int pos){
+        setRef (generadorRef(++pos, refFactura));
+        setAlbaran(albaran);
         setCliente(cliente);
         setFecha(fecha);
         setProductos(productos);
@@ -55,9 +71,10 @@ public class Albaran {
         setPrecio();
     }
 
-    public Albaran (String ref, Cliente cliente, String fecha, HashMap<Producto, Integer> productos, ArrayList<Tarea> tareas, double IVA){
+    public Factura (String ref, String albaran, Cliente cliente, String fecha, List<Producto> productos, ArrayList<Tarea> tareas, double IVA){
 
         setRef (ref);
+        setAlbaran(albaran);
         setCliente(cliente);
         setFecha(fecha);
         setProductos(productos);
@@ -74,6 +91,10 @@ public class Albaran {
         this.ref = ref;
     }
 
+    public void setAlbaran (String albaran){
+        this.albaran = albaran;
+    }
+
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
@@ -82,8 +103,8 @@ public class Albaran {
         this.fecha = darFormatoFecha(fecha);
     }
 
-    public void setProductos(HashMap<Producto, Integer> productos) {
-        this.productos = (productos != null)?productos: new HashMap<>();
+    public void setProductos(List<Producto> productos) {
+        this.productos = (productos != null)?productos: new ArrayList<>();
     }
 
     public void setTareas(List<Tarea> tareas) {
@@ -91,13 +112,13 @@ public class Albaran {
     }
 
     public void setIVA(double IVA) {
-        this.IVA = (IVA / 100);
+        this.IVA = (IVA);
     }
 
     public void setPrecioSinIva() {
         double precio = 0;
-        for (Producto producto: this.productos.keySet()){
-            precio += producto.getPrecio() * this.productos.get(producto);
+        for (Producto producto: this.productos){
+            precio += producto.getPrecio();
         }
         for (Tarea tarea: this.tareas){
             precio += tarea.getPrecio();
@@ -113,9 +134,12 @@ public class Albaran {
 
     // Inicio Getters
 
-
     public String getRef() {
         return this.ref;
+    }
+
+    public String getAlbaran(){
+        return this.albaran;
     }
 
     public Cliente getCliente() {
@@ -126,7 +150,7 @@ public class Albaran {
         return this.fecha;
     }
 
-    public HashMap<Producto, Integer> getProductos() {
+    public List<Producto> getProductos() {
         return this.productos;
     }
 
@@ -191,5 +215,26 @@ public class Albaran {
         }
     }
 
+    public int getNumProductos (String ref){
+        int count = 0;
+        for (Producto producto: this.productos){
+            if (producto.getRef().equals(ref)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getNumTareas (String ref){
+        int count = 0;
+        for (Tarea tarea: this.tareas){
+            if (tarea.getRef().equals(ref)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     // Fin Funciones
 }
+

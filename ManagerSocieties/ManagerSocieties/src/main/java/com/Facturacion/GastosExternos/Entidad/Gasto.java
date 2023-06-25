@@ -1,16 +1,26 @@
-package com.Facturacion;
+package com.Facturacion.GastosExternos.Entidad;
 
 import com.Agenda.Empleado.Entidad.Empleado;
+import jakarta.persistence.*;
 
+@Entity
+@Table (name = "gastos")
 public class Gasto {
-// Inicio Variables
 
-    public static int generadorId = 0;
+    // Inicio Variables
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int generadorId;
     private static final String refGasto = "GEX";
+    @Column (name = "ref")
     private String ref;
+    @OneToOne
     private Empleado empleado;
+    @Column (name = "motivo")
     private String motivo;
+    @Column (name = "fecha")
     private String fecha;
+    @Column (name = "gasto")
     private double gasto;
 
     // Fin Variables
@@ -25,10 +35,8 @@ public class Gasto {
         setGasto(0);
     }
 
-    public Gasto (Empleado empleado, String motivo, String fecha, double gasto){
-
-        generadorId++;
-        setRef (generadorRef(generadorId, refGasto));
+    public Gasto (Empleado empleado, String motivo, String fecha, double gasto, int pos){
+        setRef (generadorRef(++pos, refGasto));
         setEmpleado(empleado);
         setMotivo(motivo);
         setFecha(fecha);
@@ -36,7 +44,6 @@ public class Gasto {
     }
 
     public Gasto (String ref, Empleado empleado, String motivo, String fecha, double gasto){
-
         setRef (ref);
         setEmpleado(empleado);
         setMotivo(motivo);

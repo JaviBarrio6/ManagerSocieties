@@ -545,7 +545,7 @@
                     <td th:if = "${cliente.premium}"><a class="dropdown-item bi-star-fill" href="#"></a></td>
                     <td th:unless = "${cliente.premium}"><a class="dropdown-item bi-star" href="#"></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarCliente+${cliente.ref}"><i class="bi bi-eraser"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarCliente+${cliente.ref}"><i class="bi bi-pencil-square"></i></a></td>
                     <td>
                       <form action="#" th:action="@{/borrarCliente}" method="post">
                         <button class="dropdown-item bi-person-x" name = "ref" th:value="${cliente.ref}" type="submit"></button>

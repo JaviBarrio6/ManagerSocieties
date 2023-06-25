@@ -60,7 +60,6 @@
         </li><!-- End Search Icon-->
 
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img th:src="${usuario.getImagenUrl()}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></span>
@@ -261,7 +260,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Clientes</h1>
+      <h1>Albaranes</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
@@ -302,7 +301,79 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearAlbaran"><i class="bi bi-file-plus" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearAlbaran"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
+            </div>
+
+            <div th:each="albaran: ${albaranes}" class="modal fade" th:id="editarAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Albarán</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarAlbaran}" method="post">
+                        <div class="row mb-3">
+                          <label class="col-sm-5 col-form-label">Ref</label>
+                          <div class="col-sm-7">
+                            <input name="refAlbaran" th:value="${albaran.ref}" type="text" class="form-control" required readonly>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="cliente" class="col-sm-5 col-form-label">Cliente</label>
+                          <div class="col-sm-7">
+                            <select class="form-select" name="ref" required>
+                              <option selected="">Selecciona Cliente</option>
+                              <option selected="" th:value="${albaran.cliente.ref}"
+                                      th:text="${albaran.cliente.nombre} + ' ' + ${albaran.cliente.apellidos}"></option>
+                              <option th:if="${!albaran.cliente.equals(cliente)}" th:each ="cliente: ${clientes}"
+                                      th:value="${cliente.ref}" th:text="${cliente.nombre} + ' ' + ${cliente.apellidos}"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="fecha" class="col-sm-5 col-form-label">Fecha</label>
+                          <div class="col-sm-7">
+                            <input name="fecha" th:value="${albaran.desformatearFecha(albaran.fecha)}" type="date" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3" th:each ="producto: ${productos}">
+                          <label for="fecha" class="col-sm-5 col-form-label" th:text="${producto.modelo}"></label>
+                          <div class="col-sm-7">
+                            <select class="form-select" name="cantidades" required>
+                              <option value="0">Selecciona Cantidad</option>
+                              <option th:value="${albaran.getNumProductos(producto.ref)}" th:text="${albaran.getNumProductos(producto.ref)}" selected=""></option>
+                              <option th:if="!${albaran.getNumProductos(producto.ref)==id}" th:each ="id: ${#numbers.sequence(0, producto.stock, 1)}" th:value="${id}" th:text="${id}"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="tareas" class="col-sm-5 col-form-label">Tareas</label>
+                          <div class="col-sm-7">
+                            <select class="form-select" multiple name="tareas" required>
+                              <option value="null">Selecciona Tareas</option>
+                              <option selected="" th:each ="tarea: ${albaran.tareas}" th:value="${tarea.ref}" th:text="${tarea.ref}"></option>
+                              <option th:if="${!albaran.tareas.contains(tarea)}" th:each ="tarea: ${tareas}"
+                                      th:value="${tarea.ref}" th:text="${tarea.ref}"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="iva" class="col-sm-5 col-form-label">IVA</label>
+                          <div class="col-sm-7">
+                            <input id="iva" type="number" name="iva" class="form-control" required th:value="${albaran.IVA}" step="0.01" min="0" max="1">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
+                          <button type="submit" class="btn btn-primary" onclick="">Editar Albarán</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="modal fade" id="crearAlbaran" tabindex="-1" style="display: none;" aria-hidden="true">
@@ -318,9 +389,9 @@
                         <div class="row mb-3">
                           <label for="cliente" class="col-sm-5 col-form-label">Cliente</label>
                           <div class="col-sm-7">
-                            <select class="form-select" name="cliente" id ="cliente" required>
+                            <select class="form-select" name="ref" id ="cliente" required>
                               <option selected="">Selecciona Cliente</option>
-                              <option th:each ="cliente: ${clientes}" th:value="${cliente.ref}" th:text="${cliente.nombre} + ' ' + ${cliente.apellidos}"></option>
+                              <option th:each ="cliente: ${clientes}" th:value="${cliente.getRef()}" th:text="${cliente.nombre} + ' ' + ${cliente.apellidos}"></option>
                             </select>
                           </div>
                         </div>
@@ -331,31 +402,97 @@
                           </div>
                         </div>
                         <div class="row mb-3" th:each ="producto: ${productos}">
-                          <input class="col-sm-5 col-form-label" type="text" th:value="${producto.ref}" name="productos" readonly>
+                          <label for="fecha" class="col-sm-5 col-form-label" th:text="${producto.modelo}"></label>
                           <div class="col-sm-7">
-                            <input id="productos" type="number" name="cantidades" class="form-control" required th:value="${producto.ref}" min="0" th:max="${producto.stock}">
+                            <select class="form-select" name="cantidades" id ="cantidades" required>
+                              <option value="0" selected="">Selecciona Cantidad</option>
+                              <option th:each ="id: ${#numbers.sequence(0, producto.stock, 1)}" th:value="${id}" th:text="${id}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label for="tareas" class="col-sm-5 col-form-label">Tareas</label>
                           <div class="col-sm-7">
                             <select class="form-select" multiple name="tareas" id ="tareas" required>
-                              <option selected="">Selecciona Tareas</option>
+                              <option value="null" selected="">Selecciona Tareas</option>
                               <option th:each ="tarea: ${tareas}" th:value="${tarea.ref}" th:text="${tarea.ref}"></option>
                             </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="iva" class="col-sm-5 col-form-label">IVA</label>
+                          <label class="col-sm-5 col-form-label">IVA</label>
                           <div class="col-sm-7">
-                            <input id="iva" type="number" name="iva" class="form-control" required value="21">
+                            <input type="number" name="iva" class="form-control" required value="0.21" step="0.01" min="0" max="1">
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                           <button type="submit" class="btn btn-primary" onclick="">Crear Albarán</button>
                         </div>
                       </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="albaran: ${albaranes}" class="modal fade" th:id="mostrarInfoAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Desglose Albarán</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Ref</span>
+                        <input th:value="${albaran.cliente.ref}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Nombre</span>
+                        <input th:value="${albaran.cliente.nombre} + ' ' + ${albaran.cliente.apellidos}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">DNI</span>
+                        <input th:value="${albaran.cliente.id}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Fecha</span>
+                        <input th:value="${albaran.fecha}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-12 col-form-label input-group-text justify-content-center">Productos</span>
+                      </div>
+                      <div th:each="producto: ${albaran.productos}" class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text" th:text ="${producto.modelo}"></span>
+                        <input th:value="${albaran.darFormatoPrecio(producto.precio)}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-12 col-form-label input-group-text justify-content-center">Tareas</span>
+                      </div>
+                      <div th:each="tarea: ${albaran.tareas}" class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text" th:text ="${tarea.ref}"></span>
+                        <input th:value="${albaran.darFormatoPrecio(tarea.precio)}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Precio Sin IVA</span>
+                        <input th:value="${albaran.darFormatoPrecio(albaran.precioSinIva)}" type="text" class="form-control text-secondary" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">IVA</span>
+                        <input th:value="${albaran.IVA + ' %'}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Precio con IVA</span>
+                        <input th:value="${albaran.darFormatoPrecio(albaran.precio)}" type="text" class="form-control text-success" readonly>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -384,7 +521,12 @@
                     <td th:text = "${albaran.cliente.getApellidos()} + ', ' + ${albaran.cliente.getNombre()}"></td>
                     <td th:text = "${albaran.fecha}"></td>
                     <td th:text = "${albaran.darFormatoPrecio(albaran.precio)}"></td>
-                    <td><a class="dropdown-item bi-hand-thumbs-up" href="#"></a></td>
+                    <td th:if = "${albaran.facturado}"><a class="dropdown-item bi-check-square pe-none" href="#"></a></td>
+                    <td th:if = "${!albaran.facturado}">
+                      <form action="#" th:action="@{/facturarAlbaran}" method="post">
+                        <button class="dropdown-item bi-cash-coin" name = "ref" th:value="${albaran.ref}" type="submit"></button>
+                      </form>
+                    </td>
                     <td><a class="dropdown-item bi-download" href="#"></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoAlbaran+${albaran.ref}"><i class="bi-file-earmark-richtext"></i></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarAlbaran+${albaran.ref}"><i class="bi-pencil-square"></i></a></td>

@@ -6,9 +6,14 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/Agenda/EmpresaSubcontratada/Repository/EmpresasRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Agenda/Proveedor/Repository/ProveedoresRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Calendario/Evento/Repository/EventosRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Facturacion/Albaran/Repository/AlbaranesRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Facturacion/Factura/Repository/FacturasRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Facturacion/GastosExternos/Repository/GastosRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Facturacion/Nomina/Repository/NominaRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Herramienta/Repository/HerramientasRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Maquina/Repository/MaquinasRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Material/Repository/MaterialesRepository.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Producto/Repository/ProductosRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Inventario/Vehiculo/Repository/VehiculoRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Repositories/EmpresaRepository.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/Tareas/Repository/TareasRepository.java" dialect="GenericSQL" />

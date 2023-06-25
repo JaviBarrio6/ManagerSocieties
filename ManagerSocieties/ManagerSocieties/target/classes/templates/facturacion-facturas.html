@@ -60,16 +60,16 @@
         </li><!-- End Search Icon-->
 
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">J. Barrio</span>
+            <img th:src="${usuario.getImagenUrl()}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Javier Barrio</h6>
-              <span>Administrador</span>
+              <h6 th:text="${usuario.getEmpleado().getNombre() + ' ' + usuario.getEmpleado().getApellidos()}"></h6>
+              <span th:if="${usuario.isAdmin()}">Administrador</span>
+              <span th:if="${!usuario.isAdmin()}">Empleado</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -89,6 +89,25 @@
               <a class="dropdown-item d-flex align-items-center" href="edit-users-profile">
                 <i class="bi bi-gear"></i>
                 <span>Ajustes de Cuenta</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-password">
+                <i class="bi bi-lock"></i>
+                <span>Cambiar Contraseña</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li th:if="${usuario.isAdmin()}">
+              <a class="dropdown-item d-flex align-items-center" href="edit-users-enterprise">
+                <i class="bi bi-shop"></i>
+                <span>Empresa</span>
               </a>
             </li>
             <li>
@@ -122,7 +141,7 @@
         </a>
       </li><!-- End Dashoard Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" data-bs-target="#agenda-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Agenda</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -156,7 +175,7 @@
         </a>
       </li><!-- End Calendario Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapse" data-bs-target="#facturacion-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-receipt"></i><span>Facturación</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -174,14 +193,11 @@
             <a href="facturacion-nominas">
               <i class="bi bi-circle"></i><span>Nóminas</span>
             </a>
-            <a href="facturacion-presupuestos">
-              <i class="bi bi-circle"></i><span>Presupuestos</span>
-            </a>
           </li>
         </ul>
       </li><!-- End Facturación Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="finanzas">
           <i class="bi bi-cash-coin"></i>
           <span>Finanzas</span>
@@ -228,9 +244,9 @@
       </li>
       <!-- End Tareas Nav -->
 
-      <li class="nav-heading">Administrador</li>
+      <li class="nav-heading" th:if="${usuario.admin}">Administrador</li>
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.admin}">
         <a class="nav-link collapsed" href="pages-register">
           <i class="bi bi-card-list"></i>
           <span>Crear Usuario</span>
@@ -258,24 +274,18 @@
       <div class="row">
         <!-- Top Clientes -->
         <div class="col-12">
-          <div class="row">
-            <!-- Albaranes Card -->
-            <div class="col-12">
-              <div class="card info-card sales-card d-flex align-items-center">
-                <div class="card-body">
-                  <h5 class="card-title">Facturas</h5>
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-file-earmark-binary-fill"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>5</h6>
-                    </div>
-                  </div>
+          <div class="card info-card sales-card d-flex align-items-center">
+            <div class="card-body">
+              <h5 class="card-title ps-3">Facturas</h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-file-earmark-binary"></i>
+                </div>
+                <div class="ps-3 d-flex align-items-center justify-content-center">
+                  <h6 th:text="${numFacturas}"></h6>
                 </div>
               </div>
             </div>
-            <!-- End Albaranes Card -->
           </div>
         </div>
         <!-- End Top Clientes -->
@@ -285,10 +295,82 @@
           <div class="card top-selling overflow-auto">
 
             <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearCliente"><i class="bi bi-file-plus" style="font-size: 20px;"></i></a>
+              <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearFactura"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
             </div>
 
-            <div class="modal fade" id="crearCliente" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div th:each="factura: ${facturas}" class="modal fade" th:id="editarFactura+${factura.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Editar Factura</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <form action = "#" th:action="@{/editarFactura}" method="post">
+                        <div class="row mb-3">
+                          <label class="col-sm-5 col-form-label">Ref</label>
+                          <div class="col-sm-7">
+                            <input name="refFactura" th:value="${factura.ref}" type="text" class="form-control" required readonly>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="cliente" class="col-sm-5 col-form-label">Cliente</label>
+                          <div class="col-sm-7">
+                            <select class="form-select" name="cliente" required>
+                              <option selected="">Selecciona Cliente</option>
+                              <option selected="" th:value="${factura.cliente.ref}"
+                                      th:text="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellidos}"></option>
+                              <option th:if="${!factura.cliente.equals(cliente)}" th:each ="cliente: ${clientes}"
+                                      th:value="${cliente.ref}" th:text="${cliente.nombre} + ' ' + ${cliente.apellidos}"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="fecha" class="col-sm-5 col-form-label">Fecha</label>
+                          <div class="col-sm-7">
+                            <input name="fecha" th:value="${factura.desformatearFecha(factura.fecha)}" type="date" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3" th:each ="producto: ${productos}">
+                          <label for="fecha" class="col-sm-5 col-form-label" th:text="${producto.modelo}"></label>
+                          <div class="col-sm-7">
+                            <select class="form-select" name="cantidades" required>
+                              <option value="0">Selecciona Cantidad</option>
+                              <option th:value="${factura.getNumProductos(producto.ref)}" th:text="${factura.getNumProductos(producto.ref)}" selected=""></option>
+                              <option th:if="!${factura.getNumProductos(producto.ref)==id}" th:each ="id: ${#numbers.sequence(0, producto.stock + factura.getNumProductos(producto.ref), 1)}" th:value="${id}" th:text="${id}"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="tareas" class="col-sm-5 col-form-label">Tareas</label>
+                          <div class="col-sm-7">
+                            <select class="form-select" multiple name="tareas" required>
+                              <option value="null">Selecciona Tareas</option>
+                              <option selected="" th:each ="tarea: ${factura.tareas}" th:value="${tarea.ref}" th:text="${tarea.ref}"></option>
+                              <option th:if="${!factura.tareas.contains(tarea)}" th:each ="tarea: ${tareas}"
+                                      th:value="${tarea.ref}" th:text="${tarea.ref}"></option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="iva" class="col-sm-5 col-form-label">IVA</label>
+                          <div class="col-sm-7">
+                            <input id="iva" type="number" name="iva" class="form-control" required th:value="${factura.IVA}" step="0.01" min="0" max="1">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Editar Factura</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="crearFactura" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -297,57 +379,114 @@
                   </div>
                   <div class="modal-body card">
                     <div class="card-body">
-                      <form>
+                      <form action = "#" th:action="@{/anyadirFactura}" method="post">
                         <div class="row mb-3">
-                          <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
-                          <div class="col-sm-10">
-                            <input id="nombre" type="text" class="form-control">
+                          <label for="cliente" class="col-sm-5 col-form-label">Cliente</label>
+                          <div class="col-sm-7">
+                            <select class="form-select" name="ref" id ="cliente" required>
+                              <option selected="">Selecciona Cliente</option>
+                              <option th:each ="cliente: ${clientes}" th:value="${cliente.getRef()}" th:text="${cliente.nombre} + ' ' + ${cliente.apellidos}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
-                          <div class="col-sm-10">
-                            <input id="apellidos" type="text" class="form-control">
+                          <label for="fecha" class="col-sm-5 col-form-label">Fecha</label>
+                          <div class="col-sm-7">
+                            <input id="fecha" name="fecha" type="date" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3" th:each ="producto: ${productos}">
+                          <label for="fecha" class="col-sm-5 col-form-label" th:text="${producto.modelo}"></label>
+                          <div class="col-sm-7">
+                            <select class="form-select" name="cantidades" id ="cantidades" required>
+                              <option value="0" selected="">Selecciona Cantidad</option>
+                              <option th:each ="id: ${#numbers.sequence(0, producto.stock, 1)}" th:value="${id}" th:text="${id}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="dni" class="col-sm-2 col-form-label">DNI | CIF</label>
-                          <div class="col-sm-10">
-                            <input id="dni" type="text" class="form-control">
+                          <label for="tareas" class="col-sm-5 col-form-label">Tareas</label>
+                          <div class="col-sm-7">
+                            <select class="form-select" multiple name="tareas" id ="tareas" required>
+                              <option value="null" selected="">Selecciona Tareas</option>
+                              <option th:each ="tarea: ${tareas}" th:value="${tarea.ref}" th:text="${tarea.ref}"></option>
+                            </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
-                          <div class="col-sm-10">
-                            <input id="telefono" type="number" class="form-control">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label for="email" class="col-sm-2 col-form-label">Correo</label>
-                          <div class="col-sm-10">
-                            <input id="email" type="text" class="form-control">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
-                          <div class="col-sm-10">
-                            <input id="direccion" type="text" class="form-control">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <legend class="col-form-label col-sm-2 pt-0">Premium</legend>
-                          <div class="col-sm-10">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="premium">
-                              <label class="form-check-label" for="premium"></label>
-                            </div>
+                          <label class="col-sm-5 col-form-label">IVA</label>
+                          <div class="col-sm-7">
+                            <input type="number" name="iva" class="form-control" required value="0.21" step="0.01" min="0" max="1">
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
-                          <button type="submit" class="btn btn-primary" onclick="">Crear Cliente</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="submit" class="btn btn-primary" onclick="">Crear Factura</button>
                         </div>
                       </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:each="factura: ${facturas}" class="modal fade" th:id="mostrarInfoFactura+${factura.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Desglose Factura</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body card">
+                    <div class="card-body">
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Ref</span>
+                        <input th:value="${factura.cliente.ref}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Nombre</span>
+                        <input th:value="${factura.cliente.nombre} + ' ' + ${factura.cliente.apellidos}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">DNI</span>
+                        <input th:value="${factura.cliente.id}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Fecha</span>
+                        <input th:value="${factura.fecha}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-12 col-form-label input-group-text justify-content-center">Productos</span>
+                      </div>
+                      <div th:each="producto: ${factura.productos}" class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text" th:text ="${producto.modelo}"></span>
+                        <input th:value="${factura.darFormatoPrecio(producto.precio)}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-12 col-form-label input-group-text justify-content-center">Tareas</span>
+                      </div>
+                      <div th:each="tarea: ${factura.tareas}" class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text" th:text ="${tarea.ref}"></span>
+                        <input th:value="${factura.darFormatoPrecio(tarea.precio)}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group table-group-divider"></div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Precio Sin IVA</span>
+                        <input th:value="${factura.darFormatoPrecio(factura.precioSinIva)}" type="text" class="form-control text-secondary" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">IVA</span>
+                        <input th:value="${factura.IVA + ' %'}" type="text" class="form-control" readonly>
+                      </div>
+                      <div class="row mb-1 input-group">
+                        <span class="col-sm-8 col-form-label input-group-text">Precio con IVA</span>
+                        <input th:value="${factura.darFormatoPrecio(factura.precio)}" type="text" class="form-control text-success" readonly>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -359,27 +498,33 @@
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
                     <th scope="col">Ref</th>
+                    <th scope="col">Albarán</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Fecha</th>
-                    <th scope="col">Ingreso</th>
+                    <th scope="col">Precio</th>
                     <th data-sortable="false" scope="col">Descargar</th>
+                    <th data-sortable="false" scope="col">Desglose</th>
                     <th data-sortable="false" scope="col">Editar</th>
                     <th data-sortable="false" scope="col">Borrar</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="form-check-input me-1" type="checkbox"></td>
-                    <td>Fac001</td>
-                    <td>Juan José Rodríguez</td>
-                    <td>01/01/2023</td>
-                    <td>1200 €</td>
-                    <td><a class="dropdown-item bi bi-download" href="#"></a></td>
-                    <td><a class="dropdown-item bi-eraser" href="#"></a></td>
-                    <td><a class="dropdown-item bi-person-x" href="#"></a></td>
-                  </tr>
+                <tr th:each = "factura: ${facturas}">
+                  <td th:text = "${factura.ref}"></td>
+                  <td th:text = "${factura.albaran}"></td>
+                  <td th:text = "${factura.cliente.getApellidos()} + ', ' + ${factura.cliente.getNombre()}"></td>
+                  <td th:text = "${factura.fecha}"></td>
+                  <td th:text = "${factura.darFormatoPrecio(factura.precio)}"></td>
+                  <td><a class="dropdown-item bi-download" href="#"></a></td>
+                  <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoFactura+${factura.ref}"><i class="bi-file-earmark-richtext"></i></a></td>
+                  <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarFactura+${factura.ref}"><i class="bi-pencil-square"></i></a></td>
+                  <td>
+                    <form action="#" th:action="@{/borrarFactura}" method="post">
+                      <button class="dropdown-item bi-file-earmark-x" name = "ref" th:value="${factura.ref}" type="submit"></button>
+                    </form>
+                  </td>
+                </tr>
                 </tbody>
               </table>
 

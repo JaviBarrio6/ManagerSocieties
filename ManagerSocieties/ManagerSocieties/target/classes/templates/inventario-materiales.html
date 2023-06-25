@@ -192,9 +192,6 @@
             <a href="facturacion-nominas">
               <i class="bi bi-circle"></i><span>Nóminas</span>
             </a>
-            <a href="facturacion-presupuestos">
-              <i class="bi bi-circle"></i><span>Presupuestos</span>
-            </a>
           </li>
         </ul>
       </li><!-- End Facturación Nav -->
@@ -493,7 +490,7 @@
                     <td th:text = "${material.precio} + ' €'"></td>
                     <td th:text = "${material.cantidad}"></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
-                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarMaterial+${material.ref}"><i class="bi bi-eraser"></i></a></td>
+                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarMaterial+${material.ref}"><i class="bi bi-pencil-square"></i></a></td>
                     <td>
                       <form action="#" th:action="@{/borrarMaterial}" method="post">
                         <button class="dropdown-item bi-trash" name = "ref" th:value="${material.ref}" type="submit"></button>

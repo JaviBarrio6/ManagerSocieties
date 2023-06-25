@@ -1,6 +1,5 @@
 package com.Inventario.Service;
 
-import com.Inventario.*;
 import com.Inventario.Herramienta.Entidad.Herramienta;
 import com.Inventario.Maquina.Entidad.Maquina;
 import com.Inventario.Material.Entidad.Material;

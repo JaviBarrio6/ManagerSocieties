@@ -64,7 +64,7 @@ public class Usuario implements Serializable {
         if (imagenUrl != null){
             this.imagenUrl = "/img/" + imagenUrl;
         } else {
-            this.imagenUrl = "/img/no-img.jpg";
+            this.imagenUrl = "/img/no-img-profile.jpg";
         }
     }
 

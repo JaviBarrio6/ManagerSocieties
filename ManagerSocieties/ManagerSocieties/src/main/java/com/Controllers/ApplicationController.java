@@ -10,6 +10,15 @@ import com.Agenda.EmpresaSubcontratada.Repository.EmpresasRepository;
 import com.Agenda.Proveedor.Repository.ProveedoresRepository;
 import com.Calendario.Evento.Entidad.Evento;
 import com.Calendario.Evento.Repository.EventosRepository;
+import com.Facturacion.Albaran.Entidad.Albaran;
+import com.Facturacion.Albaran.Repository.AlbaranesRepository;
+import com.Facturacion.Factura.Entidad.Factura;
+import com.Facturacion.Factura.Repository.FacturasRepository;
+import com.Facturacion.GastosExternos.Entidad.Gasto;
+import com.Facturacion.GastosExternos.Repository.GastosRepository;
+import com.Facturacion.Nomina.Entidad.Nomina;
+import com.Facturacion.Nomina.Repository.NominaRepository;
+import com.Facturacion.Service.FacturacionService;
 import com.Inventario.Herramienta.Entidad.Herramienta;
 import com.Inventario.Herramienta.Repository.HerramientasRepository;
 import com.Inventario.Maquina.Entidad.Maquina;
@@ -36,6 +45,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class ApplicationController {
@@ -65,6 +75,15 @@ public class ApplicationController {
     private UsuariosRepository usuariosRepository;
 
     @Autowired
+    private AlbaranesRepository albaranesRepository;
+
+    @Autowired
+    private GastosRepository gastosRepository;
+
+    @Autowired
+    private NominaRepository nominaRepository;
+
+    @Autowired
     private HerramientasRepository herramientasRepository;
 
     @Autowired
@@ -82,11 +101,14 @@ public class ApplicationController {
     @Autowired
     private TareasRepository tareasRepository;
 
+    @Autowired
+    private FacturasRepository facturasRepository;
+
     AgendaService agendaService = new AgendaService();
 
     CalendarioService calendarioService = new CalendarioService();
 
-    FacturacionController facturacionController = new FacturacionController();
+    FacturacionService facturacionService = new FacturacionService();
     InventarioService inventarioService = new InventarioService();
     TareasService tareasService = new TareasService();
     UsuarioService usuarioService = new UsuarioService();
@@ -138,7 +160,7 @@ public class ApplicationController {
     public ModelAndView registerModel(String ref, String username, String password, boolean admin) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Usuario usuarioAux = new Usuario(username, password, admin, "no-img.jpg", empleadosRepository.findEmpleadoByRef(ref));
+                Usuario usuarioAux = new Usuario(username, password, admin, "no-img-profile.jpg", empleadosRepository.findEmpleadoByRef(ref));
                 usuariosRepository.save(usuarioAux);
                 empleadosRepository.findEmpleadoByRef(ref).setUsuario(usuarioAux);
                 empleadosRepository.flush();
@@ -174,7 +196,7 @@ public class ApplicationController {
     public ModelAndView anyadirClienteModel(String nombre, String apellidos, String id, String telefono, String correo, String dir, boolean premium) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium, (clientesRepository.giveLastId() != null) ? clientesRepository.giveLastId(): 0);
+                Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium, (clientesRepository.giveLastId() != null) ? clientesRepository.giveLastId(): 1);
                 clientesRepository.save(cliente);
                 return agendaClientesModel();
             } else {
@@ -506,7 +528,7 @@ public class ApplicationController {
     public ModelAndView facturacionAlbaranesModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.facturacionAlbaranes(this.usuario);
+                return facturacionService.facturacionAlbaranes(this.usuario, albaranesRepository.findAll(), productosRepository.findAllByStockGreaterThan(0), tareasRepository.findAllByEstadoIsNot(2), clientesRepository.findAll());
             } else {
                 return index();
             }
@@ -516,19 +538,64 @@ public class ApplicationController {
     }
 
     @RequestMapping("/anyadirAlbaran")
-    public ModelAndView anyadirAlbaranModel (String ref, String fecha, String[] productos, int[] cantidades, String[] tareas, double iva) {
-
-        Cliente clienteAux = clientesRepository.findClienteByRef(ref);
-        List<Producto> productosAux = productosRepository.findAll();
-        List<Tarea> tareasAux = tareasRepository.findAll();
-        HashMap<Producto, Integer> productosAuxAux = new HashMap<>();
-        for (int i = 0; i < productosAux.size(); i++){
-            productosAuxAux.put(productosAux.get(i), cantidades[i]);
-        }
-
+    public ModelAndView anyadirAlbaranModel (String ref, String fecha, int[] cantidades, String[] tareas, double iva) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.anyadirAlbaran(this.usuario, clienteAux, fecha, productosAuxAux, tareasAux, iva);
+                Cliente clienteAux = clientesRepository.findClienteByRef(ref);
+                List<Producto> productosAux = new ArrayList<>();
+                List<Tarea> tareasAux = new ArrayList<>();
+
+                List<Producto> productos = productosRepository.findAll();
+                for (int i = 0; i < cantidades.length; i++){
+                    for (int j = 0; j < cantidades[i]; j++){
+                        productosAux.add(productos.get(i));
+                    }
+                }
+
+                for (String tarea: tareas){
+                    if (!tarea.equals("null")){
+                        tareasAux.add(tareasRepository.findTareaByRef(tarea));
+                    }
+                }
+
+                Albaran albaran = new Albaran(clienteAux, fecha, productosAux, tareasAux, iva, albaranesRepository.giveLastId()!= null ? albaranesRepository.giveLastId(): 0);
+                albaranesRepository.save(albaran);
+                return facturacionAlbaranesModel();
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/facturarAlbaran")
+    public ModelAndView facturarAlbaranModel(String ref) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                Albaran albaran = albaranesRepository.findAlbaranByRef(ref);
+                List<Producto> productos = albaran.getProductos();
+                List<Producto> productosAux = new ArrayList<>();
+                List<Tarea> tareas = albaran.getTareas();
+                List<Tarea> tareasAux = new ArrayList<>();
+                for (Producto producto: productos){
+                    Producto productoAux = productosRepository.findProductoByRef(producto.getRef());
+                    productosAux.add(productoAux);
+                    productoAux.setStock(productoAux.getStock() - 1);
+                }
+                productosRepository.flush();
+                for (Tarea tarea: tareas){
+                    Tarea tareaAux = tareasRepository.findTareaByRef(tarea.getRef());
+                    tareasAux.add(tareaAux);
+                    tareaAux.setEstado(2);
+                }
+                tareasRepository.flush();
+                Factura factura = new Factura(albaran.getRef(), albaran.getCliente(), albaran.getFecha(),
+                        productosAux, tareasAux, albaran.getIVA(), facturasRepository.giveLastId()!= null ? facturasRepository.giveLastId(): 0);
+                albaran.setFacturado(true);
+                facturasRepository.save(factura);
+                albaranesRepository.flush();
+                return facturacionFacturasModel();
             } else {
                 return index();
             }
@@ -541,7 +608,51 @@ public class ApplicationController {
     public ModelAndView borrarAlbaranModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.borrarAlbaran(this.usuario, ref);
+                albaranesRepository.delete(albaranesRepository.findAlbaranByRef(ref));
+                return facturacionAlbaranesModel();
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/editarAlbaran")
+    public ModelAndView editarAlbaranModel (String refAlbaran, String ref, String fecha, int[] cantidades, String[] tareas, double iva) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                Albaran albaran = albaranesRepository.findAlbaranByRef(refAlbaran);
+                Cliente clienteAux = clientesRepository.findClienteByRef(ref);
+                ArrayList<Producto> productosAux = new ArrayList<>();
+                ArrayList<Tarea> tareasAux = new ArrayList<>();
+
+                List<Producto> productos = productosRepository.findAll();
+                for (int i = 0; i < cantidades.length; i++){
+                    for (int j = 0; j < cantidades[i]; j++){
+                        productosAux.add(productos.get(i));
+                    }
+                }
+
+                for (String tarea: tareas){
+                    if (!tarea.equals("null")){
+                        Tarea tareaAux = tareasRepository.findTareaByRef(tarea);
+                        tareaAux.setEstado(2);
+                        tareasAux.add(tareaAux);
+                    }
+                }
+
+                Albaran albaranAux = new Albaran(refAlbaran, clienteAux, fecha, productosAux, tareasAux, iva);
+                albaran.setRef(albaranAux.getRef());
+                albaran.setCliente(albaranAux.getCliente());
+                albaran.setFecha(albaranAux.getFecha());
+                albaran.setProductos(albaranAux.getProductos());
+                albaran.setTareas(albaranAux.getTareas());
+                albaran.setIVA(albaranAux.getIVA());
+                albaran.setPrecioSinIva();
+                albaran.setPrecio();
+                albaranesRepository.flush();
+                return facturacionAlbaranesModel();
             } else {
                 return index();
             }
@@ -555,11 +666,132 @@ public class ApplicationController {
         // Inicio Facturas
 
     @RequestMapping("/facturacion-facturas")
-    public ModelAndView facturacionFacturas() {
+    public ModelAndView facturacionFacturasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                model.setViewName("facturacion-facturas.html");
-                return model;
+                return facturacionService.facturacionFacturas(this.usuario, facturasRepository.findAll(), productosRepository.findAllByStockGreaterThan(0), tareasRepository.findAllByEstadoIsNot(2), clientesRepository.findAll());
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/anyadirFactura")
+    public ModelAndView anyadirFacturaModel (String ref, String fecha, int[] cantidades, String[] tareas, double iva) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                Cliente clienteAux = clientesRepository.findClienteByRef(ref);
+                List<Producto> productosAux = new ArrayList<>();
+                List<Tarea> tareasAux = new ArrayList<>();
+
+                List<Producto> productos = productosRepository.findAll();
+                for (int i = 0; i < cantidades.length; i++){
+                    for (int j = 0; j < cantidades[i]; j++){
+                        Producto productoAux = productosRepository.findProductoByRef(productos.get(i).getRef());
+                        productosAux.add(productoAux);
+                        productoAux.setStock(productoAux.getStock() - 1);
+                    }
+                }
+                productosRepository.flush();
+                for (String tarea: tareas){
+                    if (!tarea.equals("null")){
+                        Tarea tareaAux = tareasRepository.findTareaByRef(tarea);
+                        tareasAux.add(tareaAux);
+                        tareaAux.setEstado(2);
+                    }
+                }
+                tareasRepository.flush();
+                Factura factura = new Factura("", clienteAux, fecha, productosAux, tareasAux, iva, facturasRepository.giveLastId()!= null ? facturasRepository.giveLastId(): 0);
+                facturasRepository.save(factura);
+                return facturacionFacturasModel();
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/editarFactura")
+    public ModelAndView editarFacturaModel (String refFactura, String cliente, String fecha, int[] cantidades, String[] tareas, double iva) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                Factura factura = facturasRepository.findFacturaByRef(refFactura);
+                Cliente clienteAux = clientesRepository.findClienteByRef(cliente);
+                ArrayList<Producto> productosAux = new ArrayList<>();
+                ArrayList<Tarea> tareasAux = new ArrayList<>();
+
+                List<Producto> productos = productosRepository.findAll();
+                for (int i = 0; i < cantidades.length; i++){
+                    for (int j = 0; j < cantidades[i]; j++){
+                        productosAux.add(productos.get(i));
+                        Producto productoAux = productosRepository.findProductoByRef(productos.get(i).getRef());
+                        productosAux.add(productoAux);
+                        productoAux.setStock(productoAux.getStock() - 1);
+                    }
+                }
+
+                for (String tarea: tareas){
+                    if (!tarea.equals("null")){
+                        tareasAux.add(tareasRepository.findTareaByRef(tarea));
+                    }
+                }
+
+                Factura facturaAux = new Factura(refFactura, factura.getAlbaran(), clienteAux, fecha, productosAux, tareasAux, iva);
+                factura.setRef(facturaAux.getRef());
+                factura.setCliente(facturaAux.getCliente());
+                factura.setFecha(facturaAux.getFecha());
+                for (Producto producto : facturaAux.getProductos()){
+                    Producto productoAux = productosRepository.findProductoByRef(producto.getRef());
+                    for (Producto productoFactura: factura.getProductos()){
+                        if (productoFactura.getRef().equals(productoAux.getRef())){
+                            productoAux.setStock(productoAux.getStock() + productoFactura.getStock() - producto.getStock());
+                        }
+                    }
+                }
+                productosRepository.flush();
+                factura.setProductos(facturaAux.getProductos());
+
+                for (Tarea tarea: factura.getTareas()){
+                    if (!tareasAux.contains(tarea)){
+                        tareasRepository.findTareaByRef(tarea.getRef()).setEstado(1);
+                    }
+                }
+                tareasRepository.flush();
+                factura.setTareas(facturaAux.getTareas());
+                factura.setIVA(facturaAux.getIVA());
+                factura.setPrecioSinIva();
+                factura.setPrecio();
+                facturasRepository.flush();
+                return facturacionFacturasModel();
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/borrarFactura")
+    public ModelAndView borrarFacturaModel (String ref) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                Factura factura = facturasRepository.findFacturaByRef(ref);
+                if (!factura.getAlbaran().equals("")){
+                    albaranesRepository.findAlbaranByRef(factura.getAlbaran()).setFacturado(false);
+                }
+                for (Producto producto: factura.getProductos()){
+                    productosRepository.findProductoByRef(producto.getRef()).setStock(producto.getStock() + 1);
+                }
+                for (Tarea tarea: factura.getTareas()){
+                    tareasRepository.findTareaByRef(tarea.getRef()).setEstado(1);
+                }
+                productosRepository.flush();
+                tareasRepository.flush();
+                facturasRepository.delete(factura);
+                return facturacionFacturasModel();
             } else {
                 return index();
             }
@@ -576,7 +808,7 @@ public class ApplicationController {
     public ModelAndView facturacionGastosModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.facturacionGastos(this.usuario, empleadosRepository.findAll());
+                return facturacionService.facturacionGastos(this.usuario, gastosRepository.findAll(), empleadosRepository.findAll());
             } else {
                 return index();
             }
@@ -592,7 +824,9 @@ public class ApplicationController {
 
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.anyadirGasto(this.usuario, empleadoAux, motivo, fecha, gasto);
+                Gasto gastoAux = new Gasto(empleadoAux, motivo, fecha, gasto, (gastosRepository.giveLastId() != null) ? gastosRepository.giveLastId(): 0);
+                gastosRepository.save(gastoAux);
+                return facturacionGastosModel();
             } else {
                 return index();
             }
@@ -605,7 +839,30 @@ public class ApplicationController {
     public ModelAndView borrarGastoModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.borrarGasto(this.usuario, ref);
+                gastosRepository.delete(gastosRepository.findGastoByRef(ref));
+                return facturacionGastosModel();
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/editarGasto")
+    public ModelAndView editarGastoModel(String ref, String empleado, String motivo, String fecha, double gasto) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                Empleado empleadoAux = empleadosRepository.findEmpleadoByRef(empleado);
+                Gasto gastoAux = gastosRepository.findGastoByRef(ref);
+                Gasto gastoDos = new Gasto(ref, empleadoAux, motivo, fecha, gasto);
+                gastoAux.setEmpleado(gastoDos.getEmpleado());
+                gastoAux.setMotivo(gastoDos.getMotivo());
+                gastoAux.setFecha(gastoDos.getFecha());
+                gastoAux.setGasto(gastoDos.getGasto());
+                gastosRepository.flush();
+
+                return facturacionGastosModel();
             } else {
                 return index();
             }
@@ -622,7 +879,7 @@ public class ApplicationController {
     public ModelAndView facturacionNominasModel() {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.facturacionNominas(this.usuario, empleadosRepository.findAll());
+                return facturacionService.facturacionNominas(this.usuario, nominaRepository.findAll(), empleadosRepository.findAll());
             } else {
                 return index();
             }
@@ -640,8 +897,12 @@ public class ApplicationController {
 
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.anyadirNomina(this.usuario, empleadoAux, fecha, dias, salarioConvenio, prestacionAccidente, complementoSalarial,
-                        teletrabajo, productividad, pagasExtra, contingencias, formacionP, desempleo);
+                Nomina nomina = new Nomina(empleadoAux, fecha, dias, salarioConvenio, prestacionAccidente, complementoSalarial,
+                        teletrabajo, productividad, pagasExtra, contingencias, formacionP, desempleo, nominaRepository.giveLastId());
+
+                nominaRepository.save(nomina);
+                return facturacionNominasModel();
+
             } else {
                 return index();
             }
@@ -654,7 +915,43 @@ public class ApplicationController {
     public ModelAndView borrarNominaModel(String ref) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                return facturacionController.borrarNomina(this.usuario, ref);
+                nominaRepository.delete(nominaRepository.findNominaByRef(ref));
+                return facturacionNominasModel();
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/editarNomina")
+    public ModelAndView editarNominaModel(String ref, String empleado, String fecha, int dias, double salarioConvenio,
+                                          double prestacionAccidente, double complementoSalarial, double teletrabajo,
+                                          double productividad, double pagasExtra, double contingencias,
+                                          double formacionP, double desempleo){
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                Nomina nomina = nominaRepository.findNominaByRef(ref);
+                Empleado empleadoAux = empleadosRepository.findEmpleadoByRef(empleado);
+
+                Nomina nominaAux = new Nomina(ref, empleadoAux, fecha, dias, salarioConvenio, prestacionAccidente, complementoSalarial,
+                        teletrabajo, productividad, pagasExtra, contingencias, formacionP, desempleo);
+                nomina.setEmpleado(nominaAux.getEmpleado());
+                nomina.setFecha(nominaAux.getFecha());
+                nomina.setDias(nominaAux.getDias());
+                nomina.setSalarioConvenio(nominaAux.getSalarioConvenio()[0]);
+                nomina.setPrestacionAccidente(nominaAux.getPrestacionAccidente()[0]);
+                nomina.setComplementoSalarial(nominaAux.getComplementoSalarial()[0]);
+                nomina.setTeletrabajo(nominaAux.getTeletrabajo()[0]);
+                nomina.setProductividad(nominaAux.getProductividad()[0]);
+                nomina.setPagasExtra(nominaAux.getPagasExtra()[0]);
+                nomina.setContingencias(nominaAux.getContingencias()[0]);
+                nomina.setFormacionP(nominaAux.getFormacionP()[0]);
+                nomina.setDesempleo(nominaAux.getDesempleo()[0]);
+                nominaRepository.flush();
+
+                return facturacionNominasModel();
             } else {
                 return index();
             }
@@ -1105,7 +1402,7 @@ public class ApplicationController {
                 hora, "-", (eventosRepository.giveLastId() != null) ? eventosRepository.giveLastId(): 0);
         tareasRepository.save(tarea);
         eventosRepository.save(evento);
-        facturacionController.anyadirGasto(this.usuario, empleado, tarea.getRef(), fechaInicio, gastoExtra);
+        gastosRepository.save(new Gasto(empleado, tarea.getRef(), fechaInicio, gastoExtra, (gastosRepository.giveLastId() != null) ? gastosRepository.giveLastId(): 0));
         return tareasModel();
 
     }

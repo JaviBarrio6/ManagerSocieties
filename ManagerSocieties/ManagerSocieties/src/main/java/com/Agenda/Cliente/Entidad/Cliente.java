@@ -9,7 +9,6 @@ import java.io.Serializable;
 public class Cliente implements Serializable {
 
     // Inicio Variables
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int generadorId;
