@@ -1,4 +1,4 @@
-# Manager Societies V3.4.0
+# Manager Societies V3.5.0
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Control de Versiones](#control-de-versiones)
@@ -23,8 +23,7 @@
     + [V3.2.0](#V320)
     + [V3.3.0](#V330)
     + [V3.4.0](#V340)
-- [Instalación](#instalación)
-- [Testing](#testing)
+    + [V3.5.0](#V350)
 - [Herramientas](#herramientas-utilizadas)
 - [Autores](#autores)
 
@@ -153,7 +152,7 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 
 ### V3.3.0
 
-* Se ha restructurado las carpetas de la Aplicación de la forma: Módulo de la Aplicación > Entidad | Repository | Service.
+* Se ha reestructurado las carpetas de la Aplicación de la forma: Módulo de la Aplicación > Entidad | Repository | Service.
 
 * Se ha generado el repositorio de eventos y modificado el controlador de eventos por un Servicio.
 
@@ -163,7 +162,7 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 
 * Se ha generado el repositorio de usuarios y de empresa, se ha modificado el UsuariosController por un UsuarioService.
 
-* Se ha mejorado el contralador de errores.
+* Se ha mejorado el controlador de errores.
 
 ### V3.4.0
 
@@ -175,10 +174,9 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 
 * Se ha generado el repositorio de Facturas y las nuevas funcionalidades referidas a esta.
 
+### V3.5.0
 
-## Instalación:
-
-## Testing:
+* Se ha creado la parte backend de la sección de Finanzas, para ello se ha añadido una columna a la base de datos con la información de la empresas
 
 ## Herramientas Utilizadas:
 

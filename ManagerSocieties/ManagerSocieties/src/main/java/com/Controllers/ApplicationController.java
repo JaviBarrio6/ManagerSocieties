@@ -19,6 +19,7 @@ import com.Facturacion.GastosExternos.Repository.GastosRepository;
 import com.Facturacion.Nomina.Entidad.Nomina;
 import com.Facturacion.Nomina.Repository.NominaRepository;
 import com.Facturacion.Service.FacturacionService;
+import com.Finanzas.Service.FinanzasService;
 import com.Inventario.Herramienta.Entidad.Herramienta;
 import com.Inventario.Herramienta.Repository.HerramientasRepository;
 import com.Inventario.Maquina.Entidad.Maquina;
@@ -44,6 +45,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.ResultSet;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -109,6 +111,8 @@ public class ApplicationController {
     CalendarioService calendarioService = new CalendarioService();
 
     FacturacionService facturacionService = new FacturacionService();
+
+    FinanzasService finanzasService = new FinanzasService();
     InventarioService inventarioService = new InventarioService();
     TareasService tareasService = new TareasService();
     UsuarioService usuarioService = new UsuarioService();
@@ -967,11 +971,64 @@ public class ApplicationController {
     // Inicio Finanzas
 
     @RequestMapping("/finanzas")
-    public ModelAndView finanzas() {
+    public ModelAndView finanzas(String cuatrimestre) {
         if (this.log){
             if (this.usuario.isAdmin()){
-                model.setViewName("finanzas.html");
-                return model;
+                if (cuatrimestre == null){
+                    cuatrimestre = "Q1";
+                }
+                double[] ingresosQ = new double[4];
+                String[] meses = new String[4];
+                double[] objetivosQ = new double[4];
+                double[] objetivos = empresaRepository.getEmpresa().getObjetivos();
+                switch (cuatrimestre){
+                    case "Q1":
+                        ingresosQ = new double[]{facturasRepository.ingresosMes("01"), facturasRepository.ingresosMes("02"),
+                                facturasRepository.ingresosMes("03"), facturasRepository.ingresosMes("04")};
+                        meses = new String[]{"Enero", "Febrero", "Marzo", "Abril"};
+                        System.arraycopy(objetivos, 0, objetivosQ, 0, 4);
+                    break;
+
+                    case "Q2":
+                        ingresosQ = new double[]{facturasRepository.ingresosMes("05"), facturasRepository.ingresosMes("06"),
+                                facturasRepository.ingresosMes("07"), facturasRepository.ingresosMes("08")};
+                        meses = new String[]{"Mayo", "Junio", "Julio", "Agosto"};
+                        System.arraycopy(objetivos, 4, objetivosQ, 0, 4);
+                    break;
+
+                    case "Q3":
+                        ingresosQ = new double[]{facturasRepository.ingresosMes("09"), facturasRepository.ingresosMes("10"),
+                                facturasRepository.ingresosMes("11"), facturasRepository.ingresosMes("12")};
+                        meses = new String[]{"Septiembre", "Octubre", "Noviembre", "Diciembre"};
+                        System.arraycopy(objetivos, 8, objetivosQ, 0, 4);
+                    break;
+                }
+
+                String[][] ingresosPorCliente = finanzasService.obtenerGraficoCircular(facturasRepository.obtenerIngresosPorCliente(),
+                        facturasRepository.sumIngresos());
+
+                return finanzasService.finanzasModel(this.usuario, facturasRepository.sumIngresos(),
+                        nominaRepository.sumNominas(), gastosRepository.sumGastos(), ingresosQ, meses, ingresosPorCliente, objetivos, cuatrimestre, objetivosQ);
+            } else {
+                return index();
+            }
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @RequestMapping("/editarObjetivosQ")
+    public ModelAndView editarObjetivos (String[] objetivos) {
+        if (this.log){
+            if (this.usuario.isAdmin()){
+                Empresa empresa = empresaRepository.getEmpresa();
+                double[] objetivosQ = new double[12];
+                for (int i = 0; i < objetivos.length; i++){
+                    objetivosQ[i] = Double.parseDouble(objetivos[i]);
+                }
+                empresa.setObjetivos(objetivosQ);
+                empresaRepository.flush();
+                return finanzas("Q1");
             } else {
                 return index();
             }

@@ -28,6 +28,9 @@ public class Empresa {
     @Column (name = "numss")
     private String numSS;
 
+    @Column (name = "objetivos")
+    private double[] objetivos = new double[12];
+
     // Fin Variables
 
     // Inicio Constructores
@@ -41,6 +44,7 @@ public class Empresa {
         setDireccion("");
         setIban("");
         setNumSS("");
+        setObjetivos(null);
     }
 
     public Empresa (String logo, String nombre, String cif, String telefono, String email, String direccion, String iban, String numSS){
@@ -52,6 +56,7 @@ public class Empresa {
         setDireccion(direccion);
         setIban(iban);
         setNumSS(numSS);
+        setObjetivos(null);
     }
 
     // Fin Constructores
@@ -114,6 +119,10 @@ public class Empresa {
         this.numSS = numSS;
     }
 
+    public void setObjetivos (double[] objetivos){
+        this.objetivos = objetivos;
+    }
+
     // Fin Setters
 
     // Inicio Getters
@@ -147,6 +156,10 @@ public class Empresa {
 
     public String getNumSS(){
         return this.numSS;
+    }
+
+    public double[] getObjetivos() {
+        return this.objetivos;
     }
 
     // Fin Getters

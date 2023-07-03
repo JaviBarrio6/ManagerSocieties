@@ -11,4 +11,7 @@ public interface NominaRepository extends JpaRepository<Nomina, Integer> {
     @Query (value = "SELECT generador_id FROM Nominas order by generador_id desc limit 1", nativeQuery = true)
     Integer giveLastId();
 
+    @Query (value = "SELECT SUM(sueldo_bruto) FROM managersocieties.nominas WHERE substring(fecha, 7, 4) = YEAR(CURDATE())", nativeQuery = true)
+    double sumNominas();
+
 }

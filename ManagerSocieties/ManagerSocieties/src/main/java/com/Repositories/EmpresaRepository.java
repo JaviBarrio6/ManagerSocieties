@@ -12,5 +12,4 @@ public interface EmpresaRepository extends JpaRepository <Empresa, Integer> {
 
     @Query(value = "SELECT * FROM Empresa limit 1", nativeQuery = true)
     Empresa getEmpresa ();
-
 }

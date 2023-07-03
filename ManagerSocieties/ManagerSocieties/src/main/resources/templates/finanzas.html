@@ -284,7 +284,7 @@
                       <i class="bi bi-currency-euro"></i>
                     </div>
                     <div class="ps-2 text-center">
-                      <h6>120.000 €</h6>  
+                      <h6 th:text="${ingresosTotales} + '€'"></h6>
                     </div>
                   </div>
                 </div>
@@ -303,71 +303,181 @@
                       <i class="bi bi-currency-euro"></i>
                     </div>
                     <div class="ps-2 text-center">
-                      <h6>100.000 €</h6>  
+                      <h6 th:text="${gastosTotales} + '€'"></h6>
                     </div>
                   </div>
                 </div>
 
               </div>
             </div>
-              <!-- End Gastos Card -->
-              <!-- Balance Card -->
-              <div class="col-4">
-                <div class="card info-card sales-card d-flex align-items-center">
-                  <div class="card-body">
-                    <h5 class="card-title text-center">Balance</h5>
-  
-                    <div class="d-flex align-items-center">
-                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-currency-euro"></i>
+            <!-- End Gastos Card -->
+            <!-- Balance Card -->
+            <div class="col-4">
+              <div class="card info-card sales-card d-flex align-items-center">
+                <div class="card-body">
+                  <h5 class="card-title text-center">Balance</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-currency-euro"></i>
+                    </div>
+                    <div class="ps-2 text-center">
+                      <h6 th:text="${balance}"> €</h6>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- End Balance Card -->
+            <!-- End Clientes Card -->
+            <div class="col-12">
+              <div class="card top-selling overflow-auto">
+                <div class="modal fade" id="editarObjetivos" tabindex="-1" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Editar Objetivos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="ps-2 text-center">
-                        <h6>20.000 €</h6>  
+                      <div class="modal-body card">
+                        <div class="card-body">
+                          <form action = "#" th:action="@{/editarObjetivosQ}" method="post">
+                            <div class="row mb-3">
+                              <label for="enero" class="col-sm-5 col-form-label">Enero</label>
+                              <div class="col-sm-7">
+                                <input id="enero" type="number" name="objetivos" th:value="${objetivos[0]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="febrero" class="col-sm-5 col-form-label">Febrero</label>
+                              <div class="col-sm-7">
+                                <input id="febrero" type="number" name="objetivos" th:value="${objetivos[1]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="marzo" class="col-sm-5 col-form-label">Marzo</label>
+                              <div class="col-sm-7">
+                                <input id="marzo" type="number" name="objetivos" th:value="${objetivos[2]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="abril" class="col-sm-5 col-form-label">Abril</label>
+                              <div class="col-sm-7">
+                                <input id="abril" type="number" name="objetivos" th:value="${objetivos[3]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="mayo" class="col-sm-5 col-form-label">Mayo</label>
+                              <div class="col-sm-7">
+                                <input id="mayo" type="number" name="objetivos" th:value="${objetivos[4]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="junio" class="col-sm-5 col-form-label">Junio</label>
+                              <div class="col-sm-7">
+                                <input id="junio" type="number" name="objetivos" th:value="${objetivos[5]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="julio" class="col-sm-5 col-form-label">Julio</label>
+                              <div class="col-sm-7">
+                                <input id="julio" type="number" name="objetivos" th:value="${objetivos[6]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="agosto" class="col-sm-5 col-form-label">Agosto</label>
+                              <div class="col-sm-7">
+                                <input id="agosto" type="number" name="objetivos" th:value="${objetivos[7]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="septiembre" class="col-sm-5 col-form-label">Septiembre</label>
+                              <div class="col-sm-7">
+                                <input id="septiembre" type="number" name="objetivos" th:value="${objetivos[8]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="octubre" class="col-sm-5 col-form-label">Octubre</label>
+                              <div class="col-sm-7">
+                                <input id="octubre" type="number" name="objetivos" th:value="${objetivos[9]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="noviembre" class="col-sm-5 col-form-label">Noviembre</label>
+                              <div class="col-sm-7">
+                                <input id="noviembre" type="number" name="objetivos" th:value="${objetivos[10]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="diciembre" class="col-sm-5 col-form-label">Diciembre</label>
+                              <div class="col-sm-7">
+                                <input id="diciembre" type="number" name="objetivos" th:value="${objetivos[11]}" class="form-control" required step="0.01" min="0">
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                              <button type="submit" class="btn btn-primary" onclick="">Editar Objetivos</button>
+                            </div>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
-  
                 </div>
               </div>
-              <!-- End Balance Card -->
-            <!-- End Clientes Card -->
-          
         </div>
         <!-- End Top Clientes -->
+        <!-- Listado de Clientes Card -->
         <div class="col-12">
           <div class="row">
             <!-- Objetivos -->
             <div class="col-6">
               <div class="card">
                 <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#editarObjetivos"><i class="bi bi-pencil-square"></i></a>
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Q1</a></li>
-                    <li><a class="dropdown-item" href="#">Q2</a></li>
-                    <li><a class="dropdown-item" href="#">Q3</a></li>
-                    <li><a class="dropdown-item" href="#">Q4</a></li>
+                    <li>
+                      <form action="#" th:action="@{/finanzas('Q1')}" method="post">
+                      <button class="dropdown-item" name = "cuatrimestre" value="Q1" type="submit">Q1</button>
+                      </form>
+                    </li>
+                    <li>
+                      <form action="#" th:action="@{/finanzas('Q2')}" method="post">
+                        <button class="dropdown-item" name = "cuatrimestre" value="Q2" type="submit">Q2</button>
+                      </form>
+                    </li>
+                    <li>
+                      <form action="#" th:action="@{/finanzas('Q3')}" method="post">
+                        <button class="dropdown-item" name = "cuatrimestre" value="Q3" type="submit">Q3</button>
+                      </form>
+                    </li>
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Objetivos por Cuatrimestre<span> | Q1</span></h5>
+                  <h5 class="card-title">Objetivos por Cuatrimestre<span th:text = "' | ' + ${cuatrimestre}"></span></h5>
 
                   <!-- Line Chart -->
                   <div id="reportsChart" style="min-height: 400px;"></div>
 
-                  <script>
+                  <script th:inline = "javascript">
+                    var mesesAux = [[${meses}]];
+                    var ingresos = [[${ingresosQ}]];
+                    var objetivosQ = [[${objetivosQ}]];
                     document.addEventListener("DOMContentLoaded", () => {
                       new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
                           name: 'Objetivos',
-                          data: [2000, 1500, 3000, 1000],
+                          data: [objetivosQ[0].toFixed(2) , objetivosQ[1], objetivosQ[2], objetivosQ[3]]
                         }, {
-                          name: 'Balance',
-                          data: [1800, 1650, 2700, 1200]
+                          name: 'Ingresos',
+                          data: [ingresos[0].toFixed(2) , ingresos[1], ingresos[2], ingresos[3]]
                         }],
                         chart: {
                           height: 385,
@@ -399,7 +509,7 @@
                         },
                         xaxis: {
                           type: 'linear',
-                          categories: ["Enero", "Febrero", "Marzo", "Abril"]
+                          categories: [mesesAux[0], mesesAux[1], mesesAux[2], mesesAux[3]]
                         },
                         tooltip: {
                           x: {
@@ -423,7 +533,14 @@
                   <!-- Vertical Bar Chart -->
                   <div id="verticalBarChart" style="min-height: 400px;" class="echart"></div>
     
-                  <script>
+                  <script th:inline="javascript">
+                    var ingresosVariables = ([[${ingresosVariables}]]).toFixed(2);
+                    var gastosFijos = -[[${gastosFijos}]].toFixed(2);
+                    var gastosVariables = -[[${gastosVariables}]].toFixed(2);
+                    var gastosTotales = (-[[${gastosFijos}]] + -[[${gastosVariables}]]).toFixed(2);
+                    var totalVariable = ([[${ingresosVariables}]] -[[${gastosVariables}]]).toFixed(2);
+                    var total = ([[${ingresosVariables}]] -[[${gastosVariables}]] -[[${gastosFijos}]]).toFixed(2);
+
                     document.addEventListener("DOMContentLoaded", () => {
                       echarts.init(document.querySelector("#verticalBarChart")).setOption({
                         title: {
@@ -448,22 +565,22 @@
                         },
                         yAxis: {
                           type: 'category',
-                          data: ['Ingresos', 'Gastos', 'Balance']
+                          data: ['Ingresos', 'Gastos', 'Suma Total']
                         },
                         series: [{
                             name: 'Fijos',
                             type: 'bar',
-                            data: [2400, -10000, -8600]
+                            data: [0, gastosFijos, gastosFijos]
                           },
                           {
                             name: 'Variables',
                             type: 'bar',
-                            data: [9000, -1200, 7800]
+                            data: [ingresosVariables, gastosVariables, totalVariable]
                           },
                           {
-                            name: 'Balance',
+                            name: 'Total',
                             type: 'bar',
-                            data: [11400, -11200, 200]
+                            data: [ingresosVariables, gastosTotales, total]
                           }
                         ]
                       });
@@ -482,8 +599,14 @@
                   <!-- Pie Chart -->
                   <div id="pieChart" style="min-height: 400px;" class="echart"></div>
 
-                  <script>
+                  <script th:inline="javascript">
+
                     document.addEventListener("DOMContentLoaded", () => {
+                      var ingresos = [[${ingresosPorCliente}]];
+                      var objetos = [];
+                      for (var i = 0; i < ingresos.length; i++){
+                        objetos.push({value: parseFloat(ingresos[i][1]).toFixed(2), name: ingresos[i][0]})
+                      }
                       echarts.init(document.querySelector("#pieChart")).setOption({
                         title: {
                           text: '% de Ingresos',
@@ -501,32 +624,7 @@
                           name: '% de Ingresos',
                           type: 'pie',
                           radius: '50%',
-                          data: [
-                            {
-                              value: 68,
-                              name: 'Otros'
-                            },
-                            {
-                              value: 10,
-                              name: 'Juan José Rodríguez'
-                            },
-                            {
-                              value: 8,
-                              name: 'Emiliano Pérez'
-                            },
-                            {
-                              value: 7,
-                              name: 'Mireia Gayá'
-                            },
-                            {
-                              value: 5,
-                              name: 'Manuel Pujol'
-                            },
-                            {
-                              value: 2,
-                              name: 'Alejandra Martín'
-                            }                        
-                          ],
+                          data: objetos,
                           emphasis: {
                             itemStyle: {
                               shadowBlur: 10,

@@ -12,4 +12,7 @@ public interface GastosRepository extends JpaRepository<Gasto, Integer> {
     @Query (value = "SELECT generador_id FROM Gastos order by generador_id desc limit 1", nativeQuery = true)
     Integer giveLastId();
 
+    @Query (value = "SELECT sum(gasto) FROM managersocieties.gastos WHERE substring(fecha, 7, 4) = YEAR(CURDATE())", nativeQuery = true)
+    double sumGastos();
+
 }
