@@ -48,7 +48,7 @@
 
     <!-- == Logo == -->
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index" class="logo d-flex align-items-center">
+      <a href="dashboard" class="logo d-flex align-items-center">
         <img src="/img/logo.png" alt="">
         <span class="d-none d-lg-block">Manager Societies</span>
       </a>
@@ -140,7 +140,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index">
+        <a class="nav-link " href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -174,7 +174,7 @@
         </ul>
       </li><!-- End Agenda Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.isAdmin()}">
         <a class="nav-link collapsed" href="calendario">
           <i class="bi bi-calendar-date"></i><span>Calendario</span>
         </a>
@@ -213,7 +213,7 @@
         </a>
       </li><!-- End Finanzas Nav -->
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.isAdmin()}">
         <a class="nav-link collapsed" data-bs-target="#inventario-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-archive"></i><span>Inventario</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -245,7 +245,7 @@
       </li><!-- End Inventario Nav -->
 
 
-      <li class="nav-item">
+      <li class="nav-item" th:if="${usuario.isAdmin()}">
         <a class="nav-link collapsed" href="tareas">
           <i class="bi bi-hourglass-split"></i><span>Tareas</span>
         </a>
@@ -271,7 +271,7 @@
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index">Inicio</a></li>
+          <li class="breadcrumb-item"><a href="dashboard">Inicio</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
@@ -295,23 +295,35 @@
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                    <li>
+                      <form action="#" th:action="@{/dashboardVentas}" method="post">
+                        <button class="dropdown-item" name = "ventas" value="1" type="submit">Hoy</button>
+                      </form>
+                    </li>
+                    <li>
+                      <form action="#" th:action="@{/dashboardVentas}" method="post">
+                        <button class="dropdown-item" name = "ventas" value="2" type="submit">Este Mes</button>
+                      </form>
+                    </li>
+                    <li>
+                      <form action="#" th:action="@{/dashboardVentas}" method="post">
+                        <button class="dropdown-item" name = "ventas" value="3" type="submit">Este Año</button>
+                      </form>
+                    </li>
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Ventas <span>| Hoy</span></h5>
-
+                  <h5 th:if="${periodoVentas} == null" class="card-title">Ventas <span>| Hoy</span></h5>
+                  <h5 th:if="${periodoVentas} =='01'" class="card-title">Ventas <span>| Hoy</span></h5>
+                  <h5 th:if="${periodoVentas} == '02'" class="card-title">Ventas <span>| Este Mes</span></h5>
+                  <h5 th:if="${periodoVentas} == '03'" class="card-title">Ventas <span>| Este Año</span></h5>
                   <div class="d-flex align-items-center justify-content-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-cart"></i>
                     </div>
                     <div class="ps-3">
-                      <h6 class="text-center">145</h6>
-                      <span class="text-success small pt-1 fw-bold">+ 12% <i class="bi bi-arrow-right"></i> 18 </span>
-
+                      <h6 class="text-center" th:text="${numVentas}"></h6>
                     </div>
                   </div>
                 </div>
@@ -330,22 +342,35 @@
                       <h6>Filtrar</h6>
                     </li>
 
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
+                    <li>
+                      <form action="#" th:action="@{/dashboardIngresos}" method="post">
+                        <button class="dropdown-item" name = "ingresos" value="1" type="submit">Hoy</button>
+                      </form>
+                    </li>
+                    <li>
+                      <form action="#" th:action="@{/dashboardIngresos}" method="post">
+                        <button class="dropdown-item" name = "ingresos" value="2" type="submit">Este Mes</button>
+                      </form>
+                    </li>
+                    <li>
+                      <form action="#" th:action="@{/dashboardIngresos}" method="post">
+                        <button class="dropdown-item" name = "ingresos" value="3" type="submit">Este Año</button>
+                      </form>
+                    </li>
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Ingresos <span>| Este Mes</span></h5>
-
+                  <h5 th:if="${periodoIngresos} == null" class="card-title">Ingresos <span>| Hoy</span></h5>
+                  <h5 th:if="${periodoIngresos} == '01'" class="card-title">Ingresos <span>| Hoy</span></h5>
+                  <h5 th:if="${periodoIngresos} == '02'" class="card-title">Ingresos <span>| Este Mes</span></h5>
+                  <h5 th:if="${periodoIngresos} == '03'" class="card-title">Ingresos <span>| Este Año</span></h5>
                   <div class="d-flex align-items-center justify-content-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-currency-euro"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>3.264€</h6>
-                      <span class="text-success small pt-1 fw-bold">+ 8% <i class="bi bi-arrow-right"></i> 261 € </span>
+                      <h6 th:text="${ingresos} + ' €'"></h6>
                     </div>
                   </div>
                 </div>
@@ -355,256 +380,204 @@
 
             <!-- Customers Card -->
             <div class="col-xxl-4 col-xl-12" th:if="${usuario.isAdmin()}">
-
               <div class="card info-card customers-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtrar</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
-                  </ul>
-                </div>
-
                 <div class="card-body">
                   <h5 class="card-title">Clientes <span>| Este Año</span></h5>
-
                   <div class="d-flex align-items-center justify-content-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">- 12% <i class="bi bi-arrow-right"></i> 30 </span>
+                      <h6 th:text="${clientes}"></h6>
                     </div>
                   </div>
-
                 </div>
               </div>
-
             </div><!-- End Customers Card -->
 
-            <!-- Reports -->
-            <div class="col-12" th:if="${usuario.isAdmin()}">
-              <div class="card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtrar</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
-                  </ul>
+            <!-- Listado de Clientes Card -->
+            <div class="col-12" th:if="!${usuario.isAdmin()}">
+              <div class="card top-selling overflow-auto">
+                <!-- Desglose Nóminas -->
+                <div th:each="nomina: ${nominas}" class="modal fade" th:id="mostrarInfoNomina+${nomina.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Desglose Nómina</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body card">
+                        <div class="card-body">
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Fecha</span>
+                            <input th:value="${nomina.fecha}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Días Trabajados</span>
+                            <input th:value="${nomina.dias}" type="number" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Sueldo Bruto</span>
+                            <input th:value="${nomina.darFormatoSueldo(nomina.sueldoBruto)}" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-1 input-group table-group-divider"></div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Salario Convenio</span>
+                            <input th:value="${nomina.darFormatoSueldo(nomina.salarioConvenio[1])}" type="text" class="form-control text-secondary" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Prestación Accidente</span>
+                            <input th:value="${nomina.darFormatoSueldo(nomina.prestacionAccidente[1])}" type="text" class="form-control text-secondary" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Complemento Salarial</span>
+                            <input th:value="${nomina.darFormatoSueldo(nomina.complementoSalarial[1])}" type="text" class="form-control text-secondary" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Teletrabajo</span>
+                            <input th:value="${nomina.darFormatoSueldo(nomina.teletrabajo[1])}" type="text" class="form-control text-secondary" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Comp. Productividad</span>
+                            <input th:value="${nomina.darFormatoSueldo(nomina.productividad[1])}" type="text" class="form-control text-secondary" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Paga Extra / mes</span>
+                            <input th:value="${nomina.darFormatoSueldo(nomina.pagasExtra[1])}" type="text" class="form-control text-secondary" readonly>
+                          </div>
+                          <div class="row mb-1 input-group table-group-divider"></div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Contingencias</span>
+                            <input th:value="'- ' + ${nomina.darFormatoSueldo(nomina.contingencias[1])}" type="text" class="form-control text-danger" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Gasto Formación</span>
+                            <input th:value="'- ' + ${nomina.darFormatoSueldo(nomina.formacionP[1])}" type="text" class="form-control text-danger" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Desempleo</span>
+                            <input th:value="'- ' + ${nomina.darFormatoSueldo(nomina.desempleo[1])}" type="text" class="form-control text-danger" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">% IRPF</span>
+                            <input th:value="${nomina.tIRPF[0]} + ' %'" type="text" class="form-control" readonly>
+                          </div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Retención IRPF</span>
+                            <input th:value="'- ' + ${nomina.darFormatoSueldo(nomina.tIRPF[1])}" type="text" class="form-control text-danger" readonly>
+                          </div>
+                          <div class="row mb-1 input-group table-group-divider"></div>
+                          <div class="row mb-1 input-group">
+                            <span class="col-sm-8 col-form-label input-group-text">Sueldo Neto</span>
+                            <input th:value="${nomina.darFormatoSueldo(nomina.sueldoNeto)}" type="text" class="form-control text-success" readonly>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="card-body">
-                  <h5 class="card-title">Informes <span>/ Hoy</span></h5>
-
-                  <!-- Line Chart -->
-                  <div id="reportsChart"></div>
-
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Ventas',
-                          data: [0, 31, 40, 28, 51, 42, 82, 56, 25, 10, 0, 0],
-                        }, {
-                          name: 'Ingresos',
-                          data: [0, 11, 32, 45, 32, 34, 52, 41, 10, 25, 0, 0]
-                        }, {
-                          name: 'Clientes',
-                          data: [0, 15, 11, 32, 18, 9, 24, 11, 0, 2, 0, 0]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2022-11-23T08:00:00.000Z", "2022-11-23T09:30:00.000Z", "2022-11-23T11:00:00.000Z", "2022-11-23T12:30:00.000Z", "2022-11-23T14:00:00.000Z",
-                           "2022-11-23T15:30:00.000Z", "2022-11-23T16:00:00.000Z", "2022-11-23T17:30:00.000Z", "2022-11-23T19:00:00.000Z", "2022-11-23T20:30:00.000Z", "2022-11-23T21:00:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Line Chart -->
-
+                <!-- Listado de Nóminas -->
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Listado de Nóminas</h5>
+                  <table class="table table-borderless datatable">
+                    <thead>
+                    <tr>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Bruto</th>
+                      <th scope="col">Neto</th>
+                      <th data-sortable="false" scope="col">Desglose</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each = "nomina: ${nominas}">
+                      <td th:text = "${nomina.fecha}"></td>
+                      <td th:text = "${nomina.darFormatoSueldo(nomina.sueldoBruto)}"></td>
+                      <td th:text = "${nomina.darFormatoSueldo(nomina.sueldoNeto)}"></td>
+                      <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoNomina+${nomina.ref}"><i class="bi-file-earmark-richtext"></i></a></td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </div>
 
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Compañeros</h5>
+                  <table class="table table-borderless datatable" style = "font-size: 0.8rem;">
+                    <thead>
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Apellidos</th>
+                      <th scope="col">Teléfono</th>
+                      <th scope="col">Correo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each = "empleado: ${empleados}">
+                      <td th:text = "${empleado.nombre}"></td>
+                      <td th:text = "${empleado.apellidos}"></td>
+                      <td th:text = "${empleado.telefono}"></td>
+                      <td th:text = "${empleado.email}"></td>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div><!-- End Reports -->
+            </div>
 
             <!-- Recent Sales -->
             <div class="col-12" th:if="${usuario.isAdmin()}">
-              <div class="card recent-sales overflow-auto">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtrar</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
-                  </ul>
-                </div>
-
+              <div class="card top-selling overflow-auto">
                 <div class="card-body">
                   <h5 class="card-title">Ventas Recientes <span>| Hoy</span></h5>
-
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">Ref</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Precio</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"><a href="#">#30</a></th>
-                        <td>Juan José Rodríguez</td>
-                        <td><a href="#" class="text-primary">D-1 Decapante Ácido</a></td>
-                        <td>23 €</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#37</a></th>
-                        <td>Emiliano Pérez</td>
-                        <td><a href="#" class="text-primary">S-1 Restaurador Abrillantador</a></td>
-                        <td>31 €</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#40</a></th>
-                        <td>Mireia Gaya</td>
-                        <td><a href="#" class="text-primary">SUPERLUX A 330 S</a></td>
-                        <td>247 €</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#45</a></th>
-                        <td>Manuel Pujol</td>
-                        <td><a href="#" class="text-primar">SUPERLUX A 500 S</a></td>
-                        <td>437 €</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#62</a></th>
-                        <td>Alejandra Martín</td>
-                        <td><a href="#" class="text-primary">Cepillo 330 Acero</a></td>
-                        <td>12 €</td>
+                      <tr th:each = "factura: ${facturas}">
+                        <td th:text="${factura.ref}"></td>
+                        <td th:text="${factura.cliente.nombre + ' ' + factura.cliente.apellidos}"></td>
+                        <td>
+                          <h6 th:each = "producto: ${factura.productos}" th:text="${producto.modelo}"></h6>
+                        </td>
+                        <td th:text="${factura.precio} + ' €'"></td>
                       </tr>
                     </tbody>
                   </table>
-
                 </div>
-
               </div>
             </div><!-- End Recent Sales -->
 
             <!-- Top Selling -->
             <div class="col-12 " th:if="${usuario.isAdmin()}">
               <div class="card top-selling overflow-auto">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filtrar</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Hoy</a></li>
-                    <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                    <li><a class="dropdown-item" href="#">Este Año</a></li>
-                  </ul>
-                </div>
-
                 <div class="card-body pb-0">
-                  <h5 class="card-title">Más Vendidos <span>| Hoy</span></h5>
+                  <h5 class="card-title">Más Vendidos <span>| Este Año</span></h5>
 
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
                         <th scope="col" data-sortable = "false">Foto</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Precio|Unid.</th>
-                        <th scope="col">Unidades</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Unid.</th>
                         <th scope="col">Total</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="/img/X3.png" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">X-3 Cristalizador Rosa</a></td>
-                        <td>31 €</td>
-                        <td class="fw-bold">72</td>
-                        <td>2.232 €</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="/img/D2.png" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">D-2 Decapante Alcalino</a></td>
-                        <td>28 €</td>
-                        <td class="fw-bold">40</td>
-                        <td>1.120 €</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="/img/A4.png" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">A-4 Abrillantador Suelos Pizarra</a></td>
-                        <td>59 €</td>
-                        <td class="fw-bold">74</td>
-                        <td>4.366 €</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="/img/A330.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">SUPERLUX A 330 S</a></td>
-                        <td>247 €</td>
-                        <td class="fw-bold">10</td>
-                        <td>2.247 €</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="/img/A28.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">SUPERLUX A 28 S</a></td>
-                        <td>130 €</td>
-                        <td class="fw-bold">5</td>
-                        <td>650 €</td>
+                      <tr th:each = "venta: ${masVendidos}">
+                        <th scope="row"><img alt="" th:src="${venta[0]}"></th>
+                        <td th:text="${venta[1]}"></td>
+                        <td th:text="${venta[2]} + ' €'"></td>
+                        <td th:text="${venta[3]}"></td>
+                        <td th:text="${venta[4]} + ' €'"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -621,68 +594,26 @@
         <div class="col-lg-4">
 
           <!-- Recent Activity -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filtrar</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Hoy</a></li>
-                <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                <li><a class="dropdown-item" href="#">Este Año</a></li>
-              </ul>
-            </div>
-
+          <div class="card" th:if="${usuario.isAdmin()}">>
             <div class="card-body" style="min-height: 270px">
               <h5 class="card-title">Actividad Reciente <span>| Hoy</span></h5>
-
               <div class="activity">
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                <div class="activity-item d-flex" th:each ="actividad: ${actividades}">
+                  <div class="activite-label" th:text="${actividad[0]}"></div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start' th:if="${actividad[1]}=='[Inventario'"></i>
+                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start' th:if="${actividad[1]}=='[Facturación'"></i></i>
+                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start' th:if="${actividad[1]}=='[Agenda'"></i></i>
+                  <i class='bi bi-circle-fill activity-badge text-info align-self-start' th:if="${actividad[1]}=='[Calendario'"></i></i>
+                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start' th:if="${actividad[1]}=='[Tareas'"></i></i>
                   <div class="activity-content">
-                    <a href="#" class="fw-bold text-dark">[Facturación]</a> ¡Nuevo ingreso registrado!
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">56 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                  <div class="activity-content">
-                    <a href="#" class="fw-bold text-dark">[Facturación]</a> ¡Nuevo gasto registrado!
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 hrs</div>
-                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                  <div class="activity-content">
-                    <a href="#" class="fw-bold text-dark">[Agenda]</a> ¡Nuevo cliente registrado!
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">1 day</div>
-                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                  <div class="activity-content">
-                    <a href="#" class="fw-bold text-dark">[Inventario]</a> ¡El inventario se ha modificado!
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 days</div>
-                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                  <div class="activity-content">
-                    <a href="#" class="fw-bold text-dark">[Trabajos]</a> ¡Nuevo trabajo registrado!
+                    <span class="fw-bold text-dark" th:text="${actividad[1]} + '] '"></span>
+                    <span th:text="${actividad[2]}"></span>
                   </div>
                 </div><!-- End activity item-->
               </div>
-
             </div>
-          </div><!-- End Recent Activity -->
+          </div>
+
 
           <!-- Budget Report -->
           <div class="card">
@@ -723,76 +654,20 @@
           <!-- End Budget Report -->
           <!-- Trabajos -->
           <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filtrar</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Hoy</a></li>
-                <li><a class="dropdown-item" href="#">Este Mes</a></li>
-                <li><a class="dropdown-item" href="#">Este Año</a></li>
-              </ul>
-            </div>
-
             <div class="card-body">
               <h5 class="card-title">Trabajos <span>| Hoy</span></h5>
-
-              <div class="activity">
-
+              <div class="activity" th:each = "tarea: ${tareasHoy}">
                 <div class="activity-item d-flex">
-                  <div class="activite-label">32 min</div>
+                  <div class="activite-label" th:text = "${tarea.hora}"></div>
                   <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
                   <div class="activity-content">
-                    [Trabajo] Realizar <a href="#" class="fw-bold text-dark"> trabajo </a> calle real
+                    <span class="fw-bold text-dark" th:text="'[' + ${tarea.ref} + ']'"></span>
+                    <span th:text="' Realizar Trabajo en ' + ${tarea.cliente.direccion}"></span>
                   </div>
                 </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">56 min</div>
-                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptatem blanditiis blanditiis eveniet
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 hrs</div>
-                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                  <div class="activity-content">
-                    Voluptates corrupti molestias voluptatem
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">1 day</div>
-                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                  <div class="activity-content">
-                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">2 days</div>
-                  <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                  <div class="activity-content">
-                    Est sit eum reiciendis exercitationem
-                  </div>
-                </div><!-- End activity item-->
-
-                <div class="activity-item d-flex">
-                  <div class="activite-label">4 weeks</div>
-                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                  <div class="activity-content">
-                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                  </div>
-                </div><!-- End activity item-->
-
               </div>
-
             </div>
-          </div><!-- End Recent Activity -->
+          </div>
         </div><!-- End Right side columns -->
 
       </div>

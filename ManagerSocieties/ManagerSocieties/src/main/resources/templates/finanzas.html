@@ -43,7 +43,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index" class="logo d-flex align-items-center">
+      <a href="dashboard" class="logo d-flex align-items-center">
         <img src="/img/logo.png" alt="">
         <span class="d-none d-lg-block">Manager Societies</span>
       </a>
@@ -134,7 +134,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -259,10 +259,10 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Calendario</h1>
+      <h1>Finanzas</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
           <li class="breadcrumb-item">Calendario</li>
         </ol>
       </nav>
@@ -333,7 +333,7 @@
             <!-- End Clientes Card -->
             <div class="col-12">
               <div class="card top-selling overflow-auto">
-                <div class="modal fade" id="editarObjetivos" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal fade" id="editarObjetivos" tabdashboard="-1" style="display: none;" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -444,7 +444,7 @@
 
                     <li>
                       <form action="#" th:action="@{/finanzas('Q1')}" method="post">
-                      <button class="dropdown-item" name = "cuatrimestre" value="Q1" type="submit">Q1</button>
+                        <button class="dropdown-item" name = "cuatrimestre" value="Q1" type="submit">Q1</button>
                       </form>
                     </li>
                     <li>
@@ -594,7 +594,7 @@
             <div class="col-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Clientes</h5>
+                  <h5 class="card-title">Mejores Clientes</h5>
 
                   <!-- Pie Chart -->
                   <div id="pieChart" style="min-height: 400px;" class="echart"></div>

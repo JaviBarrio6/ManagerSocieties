@@ -21,4 +21,8 @@ public interface TareasRepository extends JpaRepository<Tarea, Integer> {
 
     List<Tarea> findAllByEstadoIsNot (int estado);
 
+    @Query(value = "SELECT * FROM managersocieties.tareas WHERE (substring(fecha_inicio, 7, 4) = YEAR(curdate())) AND " +
+            "(substring(fecha_inicio, 4, 2) = MONTH(curdate())) AND (substring(fecha_inicio, 1, 4) = DAY(curdate()))", nativeQuery = true)
+    List<Tarea> findTareasHoy();
+
 }

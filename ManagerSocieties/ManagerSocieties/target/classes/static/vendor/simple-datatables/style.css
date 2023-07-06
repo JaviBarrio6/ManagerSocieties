@@ -133,7 +133,7 @@
 	display: inline-block;
 	height: 100%;
 	position: relative;
-	width: 100%;
+	width: 50%;
 }
 
 .dataTable-sorter::before,

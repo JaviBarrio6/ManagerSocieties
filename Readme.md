@@ -1,4 +1,4 @@
-# Manager Societies V3.5.0
+# Manager Societies V3.6.0
 ## Tabla de Contenido:
 - [Inicio](#inicio)
 - [Control de Versiones](#control-de-versiones)
@@ -24,6 +24,7 @@
     + [V3.3.0](#V330)
     + [V3.4.0](#V340)
     + [V3.5.0](#V350)
+    + [V3.6.0](#V360)
 - [Herramientas](#herramientas-utilizadas)
 - [Autores](#autores)
 
@@ -177,6 +178,10 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 ### V3.5.0
 
 * Se ha creado la parte backend de la sección de Finanzas, para ello se ha añadido una columna a la base de datos con la información de la empresas
+
+### V3.6.0
+
+* Se ha creado la parte backend de la sección de Dashboard tanto para un cliente administrador como para el que no.
 
 ## Herramientas Utilizadas:
 

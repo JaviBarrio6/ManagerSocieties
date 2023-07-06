@@ -10,6 +10,9 @@ import com.Agenda.EmpresaSubcontratada.Repository.EmpresasRepository;
 import com.Agenda.Proveedor.Repository.ProveedoresRepository;
 import com.Calendario.Evento.Entidad.Evento;
 import com.Calendario.Evento.Repository.EventosRepository;
+import com.Dashboard.Entidad.Actividad;
+import com.Dashboard.Repository.ActividadesRepositoy;
+import com.Dashboard.Service.DashboardService;
 import com.Facturacion.Albaran.Entidad.Albaran;
 import com.Facturacion.Albaran.Repository.AlbaranesRepository;
 import com.Facturacion.Factura.Entidad.Factura;
@@ -30,12 +33,12 @@ import com.Inventario.Producto.Entidad.Producto;
 import com.Inventario.Producto.Repository.ProductosRepository;
 import com.Inventario.Vehiculo.Entidad.Vehiculo;
 import com.Inventario.Vehiculo.Repository.VehiculoRepository;
-import com.Repositories.*;
 import com.Agenda.Service.AgendaService;
 import com.Calendario.Service.CalendarioService;
 import com.Inventario.Service.InventarioService;
 import com.Tareas.Repository.TareasRepository;
 import com.Tareas.Service.TareasService;
+import com.Usuario.Repository.EmpresaRepository;
 import com.Usuario.Service.UsuarioService;
 import com.Tareas.Entidad.Tarea;
 import com.Usuario.Entidad.Empresa;
@@ -45,9 +48,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 public class ApplicationController {
@@ -106,6 +108,10 @@ public class ApplicationController {
     @Autowired
     private FacturasRepository facturasRepository;
 
+    @Autowired
+    private ActividadesRepositoy actividadesRepositoy;
+
+    DashboardService dashboardService = new DashboardService();
     AgendaService agendaService = new AgendaService();
 
     CalendarioService calendarioService = new CalendarioService();
@@ -120,6 +126,8 @@ public class ApplicationController {
     boolean log = false;
 
     Usuario usuario = new Usuario();
+    
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     // Fin Variables
 
@@ -139,7 +147,7 @@ public class ApplicationController {
         this.usuario = usuarioService.login(username, password, usuariosRepository.findAll());
         if (usuario != null){
            this.log = true;
-           return index();
+           return dashboardModel(null, null);
         } else {
            return loginPageModel(Optional.of(false));
         }
@@ -168,9 +176,9 @@ public class ApplicationController {
                 usuariosRepository.save(usuarioAux);
                 empleadosRepository.findEmpleadoByRef(ref).setUsuario(usuarioAux);
                 empleadosRepository.flush();
-                return index();
+                return dashboardModel(null, null);
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -178,6 +186,93 @@ public class ApplicationController {
     }
 
     // Fin Login
+
+    // Inicio Dashboard
+
+    @RequestMapping("/dashboard")
+    public ModelAndView dashboardModel(String ventas, String ingresos){
+        if (this.log){
+            if (ventas == null){
+                ventas = "1";
+            } if (ingresos == null){
+                ingresos = "1";
+            }
+
+            int numVentas = 0;
+            double totalIngresos = 0;
+            String[][] masVendidos = facturasRepository.getTable();
+            List<Tarea> tareasHoy = tareasRepository.findTareasHoy();
+            List<Actividad> actividadesHoy = actividadesRepositoy.findActividadesHoy();
+            String[][] actividades = new String[actividadesHoy.size()][3];
+
+            for (int i = 0; i < actividades.length; i++){
+                int hora = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                int minutos = Calendar.getInstance().get(Calendar.MINUTE);
+
+                if (hora == actividadesHoy.get(i).getHora()){
+                    actividades[i][0] = String.valueOf(minutos - actividadesHoy.get(i).getMinutos()).concat(" min");
+                } else {
+                    actividades[i][0] = String.valueOf(hora - actividadesHoy.get(i).getHora()).concat(" hrs");
+                }
+                actividades[i][1] = actividadesHoy.get(i).getMensaje().split("]")[0];
+                actividades[i][2] = actividadesHoy.get(i).getMensaje().split("]")[1];
+            }
+
+            switch (ventas){
+                case "1":
+                    numVentas = facturasRepository.numVentasHoy();
+                    break;
+
+                case "2":
+                    numVentas = facturasRepository.numVentasEsteMes();
+                    break;
+
+                case "3":
+                    numVentas = facturasRepository.numVentasEsteAnyo();
+                    break;
+            }
+
+            switch (ingresos){
+                case "1":
+                    totalIngresos = facturasRepository.ingresosHoy();
+                    break;
+
+                case "2":
+                    totalIngresos = facturasRepository.ingresosEsteMes();
+                    break;
+
+                case "3":
+                    totalIngresos = facturasRepository.ingresosEsteAnyo();
+                    break;
+            }
+
+            List<Nomina> nominas = new ArrayList<>();
+            for (Nomina nomina: nominaRepository.findAll()){
+                if (nomina.getEmpleado().getRef().equals(this.usuario.getEmpleado().getRef())){
+                    nominas.add(nomina);
+                }
+            }
+            List<Empleado> empleados = empleadosRepository.findAll();
+            empleados.remove(empleadosRepository.findEmpleadoByRef(this.usuario.getEmpleado().getRef()));
+
+            return dashboardService.dashboard(this.usuario, numVentas, ventas, totalIngresos, ingresos, clientesRepository.findAll().size(),
+                    facturasRepository.facturasHoy(), masVendidos, tareasHoy, actividades, nominas, empleados);
+        } else {
+            return loginPageModel(Optional.of(true));
+        }
+    }
+
+    @PostMapping("/dashboardVentas")
+    public ModelAndView dashboardVentas(String ventas){
+        return dashboardModel(ventas, null);
+    }
+
+    @PostMapping("/dashboardIngresos")
+    public ModelAndView dashboardIngresos(String ingresos){
+        return dashboardModel(null, ingresos);
+    }
+
+    // Fin Dashboard
 
     // Inicio Agenda
 
@@ -189,7 +284,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return agendaService.agendaClientes(this.usuario, clientesRepository.findAll(), clientesRepository.countPeople());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -202,9 +297,14 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Cliente cliente = new Cliente(nombre, apellidos, id, telefono, correo, dir, premium, (clientesRepository.giveLastId() != null) ? clientesRepository.giveLastId(): 1);
                 clientesRepository.save(cliente);
+                
+                Actividad actividad = new Actividad("[Agenda] ¡Nuevo Cliente Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return agendaClientesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -218,7 +318,7 @@ public class ApplicationController {
                 clientesRepository.delete(clientesRepository.findClienteByRef(ref));
                 return agendaClientesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -243,7 +343,7 @@ public class ApplicationController {
 
                 return agendaClientesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -260,7 +360,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return agendaService.agendaEmpleados(this.usuario, empleadosRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -274,9 +374,13 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Empleado empleado = new Empleado(nombre, apellidos, id, telefono, email, direccion, null, puesto, antiguedad, numSS, (empleadosRepository.giveLastId() != null) ? empleadosRepository.giveLastId(): 0);
                 empleadosRepository.save(empleado);
+                Actividad actividad = new Actividad("[Agenda] ¡Nuevo Empleado Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return agendaEmpleadosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -290,7 +394,7 @@ public class ApplicationController {
                 empleadosRepository.delete(empleadosRepository.findEmpleadoByRef(ref));
                 return agendaEmpleadosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -317,7 +421,7 @@ public class ApplicationController {
                 return agendaEmpleadosModel();
 
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -334,7 +438,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return agendaService.agendaEmpresasSubcontratadas(this.usuario, empresasRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -347,9 +451,12 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 EmpresaSub empresa = new EmpresaSub(nombre, tipo, id, telefono, email, direccion, (empresasRepository.giveLastId() != null) ? empresasRepository.giveLastId(): 0);
                 empresasRepository.save(empresa);
+                Actividad actividad = new Actividad("[Agenda] ¡Nuevo Empresa Registrada!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE), dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return agendaEmpresasSubcontratadasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -363,7 +470,7 @@ public class ApplicationController {
                 empresasRepository.delete(empresasRepository.findEmpresaByRef(ref));
                 return agendaEmpresasSubcontratadasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -386,7 +493,7 @@ public class ApplicationController {
 
                 return agendaEmpresasSubcontratadasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -403,7 +510,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return agendaService.agendaProveedores(this.usuario, proveedoresRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -416,9 +523,13 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Proveedor proveedor = new Proveedor(nombre, tipo, id, telefono, email, direccion, (proveedoresRepository.giveLastId() != null) ? proveedoresRepository.giveLastId(): 0);
                 proveedoresRepository.save(proveedor);
+                Actividad actividad = new Actividad("[Agenda] ¡Nuevo Proveedor Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return agendaProveedoresModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -432,7 +543,7 @@ public class ApplicationController {
                 proveedoresRepository.delete(proveedoresRepository.findProveedorByRef(ref));
                 return agendaProveedoresModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -455,7 +566,7 @@ public class ApplicationController {
 
                 return agendaProveedoresModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -506,6 +617,10 @@ public class ApplicationController {
         if (this.log){
             Evento evento = new Evento(tareaAsociada, titulo, fechaInicio, fechaFin, horaInicio, horaFin, (eventosRepository.giveLastId() != null) ? eventosRepository.giveLastId(): 0);
             eventosRepository.save(evento);
+            Actividad actividad = new Actividad("[Calendario] ¡Nuevo Evento Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                    dateFormat.format(Calendar.getInstance().getTime()));
+            actividadesRepositoy.save(actividad);
             return calendarioModel();
         } else {
             return loginPageModel(Optional.of(true));
@@ -534,7 +649,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return facturacionService.facturacionAlbaranes(this.usuario, albaranesRepository.findAll(), productosRepository.findAllByStockGreaterThan(0), tareasRepository.findAllByEstadoIsNot(2), clientesRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -564,9 +679,13 @@ public class ApplicationController {
 
                 Albaran albaran = new Albaran(clienteAux, fecha, productosAux, tareasAux, iva, albaranesRepository.giveLastId()!= null ? albaranesRepository.giveLastId(): 0);
                 albaranesRepository.save(albaran);
+                Actividad actividad = new Actividad("[Facturación] ¡Nuevo Albarán Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return facturacionAlbaranesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -599,9 +718,13 @@ public class ApplicationController {
                 albaran.setFacturado(true);
                 facturasRepository.save(factura);
                 albaranesRepository.flush();
+                Actividad actividad = new Actividad("[Facturación] ¡Nueva Factura Registrada!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return facturacionFacturasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -615,7 +738,7 @@ public class ApplicationController {
                 albaranesRepository.delete(albaranesRepository.findAlbaranByRef(ref));
                 return facturacionAlbaranesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -658,7 +781,7 @@ public class ApplicationController {
                 albaranesRepository.flush();
                 return facturacionAlbaranesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -675,7 +798,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return facturacionService.facturacionFacturas(this.usuario, facturasRepository.findAll(), productosRepository.findAllByStockGreaterThan(0), tareasRepository.findAllByEstadoIsNot(2), clientesRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -709,9 +832,12 @@ public class ApplicationController {
                 tareasRepository.flush();
                 Factura factura = new Factura("", clienteAux, fecha, productosAux, tareasAux, iva, facturasRepository.giveLastId()!= null ? facturasRepository.giveLastId(): 0);
                 facturasRepository.save(factura);
+                Actividad actividad = new Actividad("[Facturación] ¡Nueva Factura Registrada!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE), dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return facturacionFacturasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -771,7 +897,7 @@ public class ApplicationController {
                 facturasRepository.flush();
                 return facturacionFacturasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -797,7 +923,7 @@ public class ApplicationController {
                 facturasRepository.delete(factura);
                 return facturacionFacturasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -814,7 +940,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return facturacionService.facturacionGastos(this.usuario, gastosRepository.findAll(), empleadosRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -830,9 +956,13 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Gasto gastoAux = new Gasto(empleadoAux, motivo, fecha, gasto, (gastosRepository.giveLastId() != null) ? gastosRepository.giveLastId(): 0);
                 gastosRepository.save(gastoAux);
+                Actividad actividad = new Actividad("[Facturación] ¡Nuevo Gasto Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return facturacionGastosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -846,7 +976,7 @@ public class ApplicationController {
                 gastosRepository.delete(gastosRepository.findGastoByRef(ref));
                 return facturacionGastosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -868,7 +998,7 @@ public class ApplicationController {
 
                 return facturacionGastosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -885,7 +1015,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return facturacionService.facturacionNominas(this.usuario, nominaRepository.findAll(), empleadosRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -905,10 +1035,14 @@ public class ApplicationController {
                         teletrabajo, productividad, pagasExtra, contingencias, formacionP, desempleo, nominaRepository.giveLastId());
 
                 nominaRepository.save(nomina);
+                Actividad actividad = new Actividad("[Facturación] ¡Nueva Nómina Registrada!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return facturacionNominasModel();
 
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -922,7 +1056,7 @@ public class ApplicationController {
                 nominaRepository.delete(nominaRepository.findNominaByRef(ref));
                 return facturacionNominasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -957,7 +1091,7 @@ public class ApplicationController {
 
                 return facturacionNominasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1010,7 +1144,7 @@ public class ApplicationController {
                 return finanzasService.finanzasModel(this.usuario, facturasRepository.sumIngresos(),
                         nominaRepository.sumNominas(), gastosRepository.sumGastos(), ingresosQ, meses, ingresosPorCliente, objetivos, cuatrimestre, objetivosQ);
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1030,7 +1164,7 @@ public class ApplicationController {
                 empresaRepository.flush();
                 return finanzas("Q1");
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1038,21 +1172,6 @@ public class ApplicationController {
     }
 
     // Fin Finanzas
-
-    // Inicio Dashboard
-
-    @RequestMapping("/index")
-    public ModelAndView index() {
-        if (this.log){
-            model.setViewName("index.html");
-            model.addObject("usuario", this.usuario);
-            return model;
-        } else {
-            return loginPageModel(Optional.of(true));
-        }
-    }
-
-    // Fin Dashboard
 
     // Inicio Inventario
 
@@ -1064,7 +1183,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return inventarioService.inventarioHerramientas(this.usuario, herramientasRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1077,9 +1196,13 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Herramienta herramienta = new Herramienta(marca, modelo, precio, cantidad, (herramientasRepository.giveLastId() != null) ? herramientasRepository.giveLastId(): 0);
                 herramientasRepository.save(herramienta);
+                Actividad actividad = new Actividad("[Inventario] ¡Nueva Herramienta Registrada!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return inventarioHerramientasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1093,7 +1216,7 @@ public class ApplicationController {
                 herramientasRepository.delete(herramientasRepository.findHerramientaByRef(ref));
                 return inventarioHerramientasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1114,7 +1237,7 @@ public class ApplicationController {
 
                 return inventarioHerramientasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1131,7 +1254,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return inventarioService.inventarioMaquinas(this.usuario, maquinasRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1144,9 +1267,13 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Maquina maquina = new Maquina(marca, modelo, precio, cantidad, (maquinasRepository.giveLastId() != null) ? maquinasRepository.giveLastId(): 0);
                 maquinasRepository.save(maquina);
+                Actividad actividad = new Actividad("[Inventario] ¡Nueva Máquina Registrada!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return inventarioMaquinasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1160,7 +1287,7 @@ public class ApplicationController {
                 maquinasRepository.delete(maquinasRepository.findMaquinaByRef(ref));
                 return inventarioMaquinasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1181,7 +1308,7 @@ public class ApplicationController {
 
                 return inventarioMaquinasModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1198,7 +1325,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return inventarioService.inventarioMateriales(this.usuario, materialesRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1211,9 +1338,13 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Material material = new Material(marca, modelo, precio, cantidad, unidades, (materialesRepository.giveLastId() != null) ? materialesRepository.giveLastId(): 0);
                 materialesRepository.save(material);
+                Actividad actividad = new Actividad("[Inventario] ¡Nuevo Material Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return inventarioMaterialesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1227,7 +1358,7 @@ public class ApplicationController {
                 materialesRepository.delete(materialesRepository.findMaterialByRef(ref));
                 return inventarioMaterialesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1248,7 +1379,7 @@ public class ApplicationController {
                 materialesRepository.flush();
                 return inventarioMaterialesModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1265,7 +1396,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return inventarioService.inventarioProductos(this.usuario, productosRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1278,9 +1409,13 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Producto producto = new Producto(modelo, precio, stock, urlFoto, (productosRepository.giveLastId() != null) ? productosRepository.giveLastId(): 0);
                 productosRepository.save(producto);
+                Actividad actividad = new Actividad("[Inventario] ¡Nuevo Producto Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return inventarioProductosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1294,7 +1429,7 @@ public class ApplicationController {
                 productosRepository.delete(productosRepository.findProductoByRef(ref));
                 return inventarioProductosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1314,7 +1449,7 @@ public class ApplicationController {
                 productosRepository.flush();
                 return inventarioProductosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1331,7 +1466,7 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 return inventarioService.inventarioVehiculos(this.usuario, vehiculoRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1344,9 +1479,13 @@ public class ApplicationController {
             if (this.usuario.isAdmin()){
                 Vehiculo vehiculo = new Vehiculo(marca, modelo, matricula, color, (vehiculoRepository.giveLastId() != null) ? vehiculoRepository.giveLastId(): 0);
                 vehiculoRepository.save(vehiculo);
+                Actividad actividad = new Actividad("[Inventario] ¡Nuevo Vehículo Registrado!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                        dateFormat.format(Calendar.getInstance().getTime()));
+                actividadesRepositoy.save(actividad);
                 return inventarioVehiculosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1360,7 +1499,7 @@ public class ApplicationController {
                 vehiculoRepository.delete(vehiculoRepository.findVehiculoByRef(ref));
                 return inventarioVehiculosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1380,7 +1519,7 @@ public class ApplicationController {
                 vehiculoRepository.flush();
                 return inventarioVehiculosModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1401,7 +1540,7 @@ public class ApplicationController {
                         empleadosRepository.findAll(), herramientasRepository.findAll(), maquinasRepository.findAll(),
                         materialesRepository.findAll(), productosRepository.findAll(), vehiculoRepository.findAll());
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));
@@ -1459,6 +1598,10 @@ public class ApplicationController {
                 hora, "-", (eventosRepository.giveLastId() != null) ? eventosRepository.giveLastId(): 0);
         tareasRepository.save(tarea);
         eventosRepository.save(evento);
+        Actividad actividad = new Actividad("[Tareas] ¡Nueva Tarea Registrada!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
+                        Calendar.getInstance().get(Calendar.MINUTE),
+                dateFormat.format(Calendar.getInstance().getTime()));
+        actividadesRepositoy.save(actividad);
         gastosRepository.save(new Gasto(empleado, tarea.getRef(), fechaInicio, gastoExtra, (gastosRepository.giveLastId() != null) ? gastosRepository.giveLastId(): 0));
         return tareasModel();
 
@@ -1653,7 +1796,7 @@ public class ApplicationController {
                 }
                 return usersProfileModel();
             } else {
-                return index();
+                return dashboardModel(null, null);
             }
         } else {
             return loginPageModel(Optional.of(true));

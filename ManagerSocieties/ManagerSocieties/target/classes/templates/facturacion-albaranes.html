@@ -43,7 +43,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index" class="logo d-flex align-items-center">
+      <a href="dashboard" class="logo d-flex align-items-center">
         <img src="/img/logo.png" alt="">
         <span class="d-none d-lg-block">Manager Societies</span>
       </a>
@@ -135,7 +135,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -263,7 +263,7 @@
       <h1>Albaranes</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
           <li class="breadcrumb-item">Facturación</li>
           <li class="breadcrumb-item active">Albaranes</li>
         </ol>
@@ -304,7 +304,7 @@
               <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearAlbaran"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
             </div>
 
-            <div th:each="albaran: ${albaranes}" class="modal fade" th:id="editarAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div th:each="albaran: ${albaranes}" class="modal fade" dashboard"editarAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -436,7 +436,7 @@
               </div>
             </div>
 
-            <div th:each="albaran: ${albaranes}" class="modal fade" th:id="mostrarInfoAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div th:each="albaran: ${albaranes}" class="modal fade" dashboard"mostrarInfoAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
