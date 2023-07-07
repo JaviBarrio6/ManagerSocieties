@@ -25,6 +25,7 @@
     + [V3.4.0](#V340)
     + [V3.5.0](#V350)
     + [V3.6.0](#V360)
+    + [V3.6.1](#V360)
 - [Herramientas](#herramientas-utilizadas)
 - [Autores](#autores)
 
@@ -182,6 +183,10 @@ Así como sus plurales de igual manera que en la agenda. Además, se genera el c
 ### V3.6.0
 
 * Se ha creado la parte backend de la sección de Dashboard tanto para un cliente administrador como para el que no.
+
+### V3.6.1
+
+* Corrección de errores encontrador en la aplicación y refactorización del código.
 
 ## Herramientas Utilizadas:
 

@@ -609,7 +609,6 @@
                     <th scope="col">Fecha</th>
                     <th scope="col">Bruto</th>
                     <th scope="col">Neto</th>
-                    <th data-sortable="false" scope="col">Descargar</th>
                     <th data-sortable="false" scope="col">Desglose</th>
                     <th data-sortable="false" scope="col">Editar</th>
                     <th data-sortable="false" scope="col">Borrar</th>
@@ -622,7 +621,6 @@
                     <td th:text = "${nomina.fecha}"></td>
                     <td th:text = "${nomina.darFormatoSueldo(nomina.sueldoBruto)}"></td>
                     <td th:text = "${nomina.darFormatoSueldo(nomina.sueldoNeto)}"></td>
-                    <td><a class="dropdown-item bi-download" href="#"></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoNomina+${nomina.ref}"><i class="bi-file-earmark-richtext"></i></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarNomina+${nomina.ref}"><i class="bi-pencil-square"></i></a></td>
                     <td>
@@ -633,9 +631,7 @@
                   </tr>
                 </tbody>
               </table>
-
             </div>
-
           </div>
         </div><!-- End Clientes -->
       </div>

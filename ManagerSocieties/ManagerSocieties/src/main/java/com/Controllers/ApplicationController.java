@@ -1032,7 +1032,8 @@ public class ApplicationController {
         if (this.log){
             if (this.usuario.isAdmin()){
                 Nomina nomina = new Nomina(empleadoAux, fecha, dias, salarioConvenio, prestacionAccidente, complementoSalarial,
-                        teletrabajo, productividad, pagasExtra, contingencias, formacionP, desempleo, nominaRepository.giveLastId());
+                        teletrabajo, productividad, pagasExtra, contingencias, formacionP, desempleo,
+                        (nominaRepository.giveLastId() != null) ? nominaRepository.giveLastId() : 0);
 
                 nominaRepository.save(nomina);
                 Actividad actividad = new Actividad("[Facturación] ¡Nueva Nómina Registrada!", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), 
@@ -1087,6 +1088,8 @@ public class ApplicationController {
                 nomina.setContingencias(nominaAux.getContingencias()[0]);
                 nomina.setFormacionP(nominaAux.getFormacionP()[0]);
                 nomina.setDesempleo(nominaAux.getDesempleo()[0]);
+                nomina.setSueldoBruto();
+                nomina.setSueldoNeto();
                 nominaRepository.flush();
 
                 return facturacionNominasModel();
@@ -1602,7 +1605,9 @@ public class ApplicationController {
                         Calendar.getInstance().get(Calendar.MINUTE),
                 dateFormat.format(Calendar.getInstance().getTime()));
         actividadesRepositoy.save(actividad);
-        gastosRepository.save(new Gasto(empleado, tarea.getRef(), fechaInicio, gastoExtra, (gastosRepository.giveLastId() != null) ? gastosRepository.giveLastId(): 0));
+        if (gastoExtra != 0){
+            gastosRepository.save(new Gasto(empleado, tarea.getRef(), fechaInicio, gastoExtra, (gastosRepository.giveLastId() != null) ? gastosRepository.giveLastId(): 0));
+        }
         return tareasModel();
 
     }

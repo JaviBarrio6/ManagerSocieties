@@ -463,72 +463,17 @@
 
             <div class="card-body pb-0">
               <h5 class="card-title">Listado de Clientes</h5>
-
-              <div class="modal fade" id="facturas" tabindex="-1" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Facturas</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body card">
-                      <div class="card-body">
-                        <table class="table table-borderless datatable">
-                          <thead>
-                            <tr>
-                              <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
-                              <th scope="col" data-sortable="false">Ref</th>
-                              <th scope="col">Nombre Factura</th>
-                              <th scope="col">Fecha</th>
-                              <th data-sortable="false" scope="col">Descargar</th>
-                              <th data-sortable="false" scope="col">Borrar</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td><input class="form-check-input me-1" type="checkbox"></td>
-                              <td>1</td>
-                              <td>Fact01.pdf</td>
-                              <td>12/10/2020</td>
-                              <td><a class="dropdown-item bi-download" href="#"></a></td>
-                              <td><a class="dropdown-item bi-clipboard-x" href="#"></a></td>
-                            </tr>
-                            <tr>
-                              <td><input class="form-check-input me-1" type="checkbox"></td>
-                              <td>2</td>
-                              <td>Fact02.pdf</td>
-                              <td>13/10/2020</td>
-                              <td><a class="dropdown-item bi-download" href="#"></a></td>
-                              <td><a class="dropdown-item bi-clipboard-x" href="#"></a></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <form>
-                          <div class="row">
-                            <div class="col-sm-10">
-                              <input style="font-size: 0.7rem;" id="documento" type="file" class="form-control">
-                            </div>         
-                            <label for="documento" class="col-sm-2"><button type="submit" class="btn btn-outline-success btn-sm bi bi-upload" onclick=""></button></label>                         
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th scope="col">Ref</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellidos</th>
-                    <th scope="col">DNI | CIF</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Dirección</th>
+                    <th scope="col" >Ref</th>
+                    <th scope="col" >Nombre</th>
+                    <th scope="col" >Apellidos</th>
+                    <th scope="col" >DNI | CIF</th>
+                    <th scope="col" >Teléfono</th>
+                    <th scope="col" >Correo</th>
+                    <th scope="col" >Dirección</th>
                     <th data-sortable="false" scope="col">Premium</th>
-                    <th data-sortable="false" scope="col">Facturas</th>
                     <th data-sortable="false" scope="col">Editar</th>
                     <th data-sortable="false" scope="col">Borrar</th>
                   </tr>
@@ -544,7 +489,6 @@
                     <td th:text = "${cliente.direccion}"></td>
                     <td th:if = "${cliente.premium}"><a class="dropdown-item bi-star-fill" href="#"></a></td>
                     <td th:unless = "${cliente.premium}"><a class="dropdown-item bi-star" href="#"></a></td>
-                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarCliente+${cliente.ref}"><i class="bi bi-pencil-square"></i></a></td>
                     <td>
                       <form action="#" th:action="@{/borrarCliente}" method="post">

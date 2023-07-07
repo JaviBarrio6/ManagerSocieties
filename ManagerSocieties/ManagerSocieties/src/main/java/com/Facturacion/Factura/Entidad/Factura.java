@@ -32,7 +32,7 @@ public class Factura {
 
     @ManyToMany
     private List<Producto> productos;
-    @ManyToMany
+    @OneToMany
     private List<Tarea> tareas;
     @Column (name = "IVA")
     private double IVA;

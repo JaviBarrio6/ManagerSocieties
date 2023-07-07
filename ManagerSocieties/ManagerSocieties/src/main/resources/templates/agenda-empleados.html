@@ -487,59 +487,6 @@
             <div class="card-body pb-0">
               <h5 class="card-title">Listado de Empleados</h5>
 
-              <div class="modal fade" id="facturas" tabindex="-1" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Documentos</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body card">
-                      <div class="card-body">
-                        <table class="table table-borderless datatable">
-                          <thead>
-                            <tr>
-                              <th data-sortable="false" scope="col"><input class="form-check-input me-1" type="checkbox"></th>
-                              <th scope="col" data-sortable="false">Ref</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Fecha</th>
-                              <th data-sortable="false" scope="col">Descargar</th>
-                              <th data-sortable="false" scope="col">Borrar</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td><input class="form-check-input me-1" type="checkbox"></td>
-                              <td>1</td>
-                              <td>Nóm26092022.pdf</td>
-                              <td>26/09/2022</td>
-                              <td><a class="dropdown-item bi-download" href="#"></a></td>
-                              <td><a class="dropdown-item bi-clipboard-x" href="#"></a></td>
-                            </tr>
-                            <tr>
-                              <td><input class="form-check-input me-1" type="checkbox"></td>
-                              <td>2</td>
-                              <td>Contrato.pdf</td>
-                              <td>26/10/2022</td>
-                              <td><a class="dropdown-item bi-download" href="#"></a></td>
-                              <td><a class="dropdown-item bi-clipboard-x" href="#"></a></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <form>
-                          <div class="row">
-                            <div class="col-sm-10">
-                              <input style="font-size: 0.7rem;" id="documento" type="file" class="form-control">
-                            </div>         
-                            <label for="documento" class="col-sm-2"><button type="submit" class="btn btn-outline-success btn-sm bi bi-upload" onclick=""></button></label>                         
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <table class="table table-borderless datatable" style = "font-size: 0.8rem;">
                 <thead>
                   <tr>
@@ -553,7 +500,6 @@
                     <th scope="col">Dirección</th>
                     <th scope="col">Antigüedad</th>
                     <th scope="col">Puesto</th>
-                    <th data-sortable="false" scope="col">Documentos</th>
                     <th data-sortable="false" scope="col">Editar</th>
                     <th data-sortable="false" scope="col">Borrar</th>
                   </tr>
@@ -571,7 +517,6 @@
                     <td th:text = "${empleado.direccion}"></td>
                     <td th:text = "${empleado.antiguedad}"></td>
                     <td th:text = "${empleado.puesto}"></td>
-                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarEmpleado+${empleado.ref}"><i class="bi bi-pencil-square"></i></a></td>
                     <td>
                       <form action="#" th:action="@{/borrarEmpleado}" method="post">

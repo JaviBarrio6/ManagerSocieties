@@ -130,10 +130,9 @@
 }
 
 .dataTable-sorter {
-	display: inline-block;
 	height: 100%;
 	position: relative;
-	width: 50%;
+	width: 100%;
 }
 
 .dataTable-sorter::before,

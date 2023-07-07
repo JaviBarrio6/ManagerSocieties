@@ -304,7 +304,7 @@
               <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#crearAlbaran"><i class="bi bi-plus-circle" style="font-size: 20px;"></i></a>
             </div>
 
-            <div th:each="albaran: ${albaranes}" class="modal fade" dashboard"editarAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div th:each="albaran: ${albaranes}" class="modal fade" th:id="editarAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -436,7 +436,7 @@
               </div>
             </div>
 
-            <div th:each="albaran: ${albaranes}" class="modal fade" dashboard"mostrarInfoAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div th:each="albaran: ${albaranes}" class="modal fade" th:id="mostrarInfoAlbaran+${albaran.ref}" tabindex="-1" style="display: none;" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -509,7 +509,6 @@
                     <th scope="col">Fecha</th>
                     <th scope="col">Precio</th>
                     <th data-sortable="false" scope="col">Facturar</th>
-                    <th data-sortable="false" scope="col">Descargar</th>
                     <th data-sortable="false" scope="col">Desglose</th>
                     <th data-sortable="false" scope="col">Editar</th>
                     <th data-sortable="false" scope="col">Borrar</th>
@@ -527,7 +526,6 @@
                         <button class="dropdown-item bi-cash-coin" name = "ref" th:value="${albaran.ref}" type="submit"></button>
                       </form>
                     </td>
-                    <td><a class="dropdown-item bi-download" href="#"></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+mostrarInfoAlbaran+${albaran.ref}"><i class="bi-file-earmark-richtext"></i></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+editarAlbaran+${albaran.ref}"><i class="bi-pencil-square"></i></a></td>
                     <td>

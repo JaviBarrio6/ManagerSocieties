@@ -2,6 +2,8 @@ package com.Facturacion.Nomina.Entidad;
 
 import com.Agenda.Empleado.Entidad.Empleado;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 

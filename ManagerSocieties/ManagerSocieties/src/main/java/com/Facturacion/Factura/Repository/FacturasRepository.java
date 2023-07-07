@@ -13,7 +13,7 @@ public interface FacturasRepository extends JpaRepository<Factura, Integer> {
     @Query(value = "SELECT generador_id FROM Facturas order by generador_id desc limit 1", nativeQuery = true)
     Integer giveLastId();
 
-    @Query(value = "SELECT SUM(precio) FROM managersocieties.facturas WHERE substring(fecha, 7, 4) = YEAR(CURDATE())", nativeQuery = true)
+    @Query(value = "SELECT CASE WHEN SUM(precio) IS NOT NULL THEN SUM(precio) ELSE 0 END FROM managersocieties.facturas WHERE substring(fecha, 7, 4) = YEAR(CURDATE())", nativeQuery = true)
     double sumIngresos();
 
     @Query(value = "SELECT CASE WHEN SUM(precio) IS NOT NULL THEN SUM(precio) ELSE 0 END FROM managersocieties.facturas " +

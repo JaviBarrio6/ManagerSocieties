@@ -697,7 +697,6 @@
                   </div>
                 </div>
               </div>
-
               <table class="table table-borderless datatable">
                 <thead>
                   <tr>
@@ -711,7 +710,6 @@
                     <th scope="col">Gasto Extra</th>
                     <th scope="col">Inventario</th>
                     <th data-sortable="false" scope="col">Info</th>
-                    <th data-sortable="false" scope="col">Facturas</th>
                     <th data-sortable="false" scope="col">Estado</th>
                     <th data-sortable="false" scope="col">Editar</th>
                     <th data-sortable="false" scope="col">Borrar</th>
@@ -729,7 +727,6 @@
                     <td th:text= "${tarea.gastoExtra} + ' €'"></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+inventarioTarea+${tarea.ref}"><i class="bi bi-archive"></i></a></td>
                     <td><a class="dropdown-item" href="#" data-bs-toggle="modal" th:data-bs-target="'#'+infoTarea+${tarea.ref}"><i class="bi bi-card-text"></i></a></td>
-                    <td><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#facturas"><i class="bi bi-book"></i></a></td>
                     <td th:if = "${tarea.estado==0}"><i class="bi bi-clock" ></i></td>
                     <td th:if = "${tarea.estado==1}"><i class="bi bi-check2" ></i></td>
                     <td th:if = "${tarea.estado==2}"><i class="bi bi-check2-all" ></i></td>
@@ -742,9 +739,7 @@
                   </tr>
                 </tbody>
               </table>
-
             </div>
-
           </div>
         </div><!-- End Clientes -->
       </div>
